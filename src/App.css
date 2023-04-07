@@ -618,3 +618,9 @@ strong {
   border: none;
   color: white;
 }
+
+@media screen and (min-width: 1400px) {
+  .dashboard-container {
+    width: 1580px;
+  }
+}

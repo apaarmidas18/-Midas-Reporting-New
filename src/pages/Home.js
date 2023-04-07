@@ -6,7 +6,7 @@ const Home = () => {
   const user = JSON.parse(loginData);
   return (
     <>
-      <div className="container">
+      <div className="container dashboard-container">
         <div className="row">
           <div className=" col-md-4">
             <Dashboardcard type="Total Users" number="24" style="total-user" />
