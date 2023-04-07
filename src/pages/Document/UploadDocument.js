@@ -14,6 +14,7 @@ import moment from "moment";
 import DatalistInput from "react-datalist-input";
 import UploadDocsAPI from "../../API/Documents/UploadDocsAPI";
 import GetDocById from "../../API/Documents/GetDocById";
+import DeleteDocument from "../../API/Documents/DeleteDocument";
 const TAGS_OPTION = [
   { id: 1, value: "Driving-License" },
   { id: 2, value: "SSN-Card" },
@@ -77,13 +78,23 @@ const UploadDoc = () => {
       ...element,
       sNo: index + 1,
       action: (
-        <Link
-          class="btn btn-success"
-          to={element.documentPath}
-          target="__blank"
-        >
-          <i class="fa fa-eye"></i>
-        </Link>
+        <>
+          <Link
+            to={element.documentPath}
+            className="btn btn-success"
+            style={{ padding: "7px 13px", height: "33px", marginRight: "10px" }}
+            target="__blank"
+          >
+            <i class="fa fa-eye"></i>
+          </Link>
+          <button
+            className="btn btn-danger"
+            style={{ padding: "7px 13px", height: "33px", marginRight: "10px" }}
+            onClick={() => DeleteDocument(element)}
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </>
       ),
     });
   }

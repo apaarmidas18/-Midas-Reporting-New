@@ -1,5 +1,5 @@
 import axios from "axios";
-import { host } from "src/static";
+import { host } from "../../static";
 import swal from "sweetalert";
 
 const DeleteDocument = (data) => {
