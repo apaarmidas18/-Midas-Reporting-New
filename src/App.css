@@ -278,6 +278,7 @@ form.example::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: fit-content;
 }
 .export-btn {
   background: #f7901e;
