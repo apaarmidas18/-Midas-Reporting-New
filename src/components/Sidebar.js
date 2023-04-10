@@ -92,7 +92,7 @@ const Sidebar = () => {
         <Collapsible
           trigger={[
             <i class="fa-solid fa-briefcase"></i>,
-            <span className="trig-span">Vms</span>,
+            <span className="trig-span">VMS</span>,
             <i class="fas fa-chevron-right"></i>,
           ]}
         >
