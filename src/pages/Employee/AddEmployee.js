@@ -20,7 +20,8 @@ const AddEmployee = () => {
 
   const formik = useFormik({
     initialValues: {
-      companyName: {},
+      companyName: "",
+      companyId: 0,
       firstName: "",
       lastName: "",
       dob: "",
@@ -63,6 +64,7 @@ const AddEmployee = () => {
     },
   });
 
+  console.log(formik.values);
   //validation**************************************************************************
 
   return (
@@ -91,9 +93,12 @@ const AddEmployee = () => {
               <select
                 class="form-select"
                 aria-label="Default select example"
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  const CompanyValues = JSON.parse(e.target.value);
+                  formik.setFieldValue("companyName", CompanyValues.label);
+                  formik.setFieldValue("companyId", CompanyValues.value);
+                }}
                 onBlur={formik.handleBlur}
-                value={formik.values.companyName}
                 name="companyName"
               >
                 <option selected>Open this select menu</option>

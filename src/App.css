@@ -278,7 +278,7 @@ form.example::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: fit-content;
+  width: auto;
 }
 .export-btn {
   background: #f7901e;
@@ -622,5 +622,8 @@ strong {
 @media screen and (min-width: 1400px) {
   .dashboard-container {
     max-width: 1580px !important;
+  }
+  .heading {
+    max-width: 1800px !important;
   }
 }

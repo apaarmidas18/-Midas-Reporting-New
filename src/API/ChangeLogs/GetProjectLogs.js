@@ -27,7 +27,7 @@ const GetProjectLogs = ({ setProjectLogs, setLoading }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error");
     });
 };
 

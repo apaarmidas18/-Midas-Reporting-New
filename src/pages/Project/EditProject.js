@@ -10,6 +10,7 @@ import { useState } from "react";
 import GetFacilityByCId from "../../API/Master/Facitlity/GetFacilityByCId";
 import GetAllVMSs from "../../API/Master/VMS/GetAllVMSs";
 import EditProjectAPI from "../../API/Project/EditProject";
+import GetUserByRollId from "../../API/User/GetUserByRollId";
 
 const OCCUPATION = [
   {
@@ -56,6 +57,7 @@ const EditProject = () => {
   const [facilityData, setFacilityData] = useState([]);
   const [vmsDetails, setVMSDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [onBoardingData, setOnBoardingData] = useState([]);
   const [editClientValue, setEditClientValue] = useState(true);
   const [editStartDate, setEditStartDate] = useState(true);
   const [editEndDate, setEditEndDate] = useState(true);
@@ -63,11 +65,11 @@ const EditProject = () => {
   const location = useLocation();
   const { data } = location.state;
   //validation******************************************************************
-  console.log(data);
+  console.log("data:", data);
   const formik = useFormik({
     initialValues: {
       employeeCode: data.id,
-      employeeId: data.employeeId,
+      employeeId: data.employeId,
       clientName: data.client,
       facilityName: data.facility,
       vms: data.vms,
@@ -85,6 +87,9 @@ const EditProject = () => {
       overTimeRates: data.overTimeRates,
       guaranteedHours: data.guaranteedHours,
       travelAllowance: data.travelAllowance,
+      editRemarks: "",
+      userName: "",
+      userId: 0,
     },
     validationSchema: Yup.object({
       clientName: Yup.string().required("Required"),
@@ -102,9 +107,10 @@ const EditProject = () => {
       payRates: Yup.string().required("Required"),
       preDeim: Yup.string().required("Required"),
       overTimeRates: Yup.string().required("Required"),
+      editRemarks: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      EditProjectAPI(values, navigate);
+      EditProjectAPI(values, navigate, data);
       alert(JSON.stringify(values, null, 2));
       // setFormState(values);
     },
@@ -112,9 +118,9 @@ const EditProject = () => {
   useEffect(() => {
     GetAllClients({ setClientDetails, setLoading });
     GetAllVMSs({ setVMSDetails, setLoading });
+    GetUserByRollId({ setOnBoardingData });
   }, []);
 
-  console.log(data);
   //validation**************************************************************************
 
   /* clientArrayModification */
@@ -124,21 +130,20 @@ const EditProject = () => {
     ClienArr.push({ id: item.id, value: item.name })
   );
   /* clientArrayModification */
-  /* clientArrayModification */
+  /* facilityArrModification */
   var facilityArr = [];
 
   facilityData.map((item, index) =>
     facilityArr.push({ id: item.id, value: item.name })
   );
-  /* clientArrayModification */
-  /* clientArrayModification */
+  /* facilityArrModification */
+  /*VMSArrayModification */
   var VMSArray = [];
 
   vmsDetails.map((item, index) =>
     VMSArray.push({ id: item.id, value: item.name })
   );
-  /* clientArrayModification */
-
+  /* VMSArrayModification */
   return (
     <>
       <div className="container-fluid">
@@ -615,6 +620,75 @@ const EditProject = () => {
                   <div className="text-danger">
                     {formik.errors.travelAllowance}
                   </div>
+                ) : null}
+              </span>
+            </div>
+            {console.log("formik.values;", formik.values)}
+            {user.rollId <= 2 ? (
+              <>
+                {onBoardingData.length == 0 ||
+                onBoardingData.length == undefined ? (
+                  "No OnBaording User Exists"
+                ) : (
+                  <div className="col-md-12">
+                    <label
+                      className="form-label"
+                      for="exampleFormControlSelect2"
+                      style={{ marginBottom: "8px" }}
+                    >
+                      User-Name
+                    </label>
+
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      // value={formik.values.type}
+                      onChange={(e) => {
+                        const userValue = JSON.parse(e.target.value);
+                        formik.setFieldValue("userName", userValue.name);
+                        formik.setFieldValue("userId", userValue.id);
+                      }}
+                      name="userValues"
+                    >
+                      <option selected>Open this select menu</option>
+                      {onBoardingData.map((item, index) => {
+                        return (
+                          <option value={JSON.stringify(item)}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                )}
+              </>
+            ) : (
+              ""
+            )}
+            <div class="form-group">
+              <label
+                for="exampleFormControlTextarea1"
+                style={{
+                  marginTop: "10px",
+                  fontWeight: "500",
+                  fontSize: "14px",
+                }}
+              >
+                Add Remarks
+              </label>
+              <textarea
+                class="form-control"
+                id="editRemarks"
+                rows="3"
+                name="editRemarks"
+                controlId="editRemarks"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.editRemarks}
+              ></textarea>
+              <span className="text-danger">
+                {formik.touched.editRemarks && formik.errors.editRemarks ? (
+                  <div className="text-danger">{formik.errors.editRemarks}</div>
                 ) : null}
               </span>
             </div>

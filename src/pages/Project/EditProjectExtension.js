@@ -8,7 +8,10 @@ import GetAllClients from "../../API/Master/Client/GetAllClients";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import GetAllExtensions from "../../API/Extension/GetAllExtensions";
-import EditExtension from "../../API/Extension/EditExtension";
+import EditExtension, {
+  EditExtensionAPI,
+} from "../../API/Extension/EditExtension";
+import moment from "moment";
 
 const EditProjectExtension = () => {
   const userData = localStorage.getItem("User");
@@ -50,7 +53,7 @@ const EditProjectExtension = () => {
       editRemarks: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      EditExtension(values, navigate, PId);
+      EditExtensionAPI(values, navigate, PId);
       alert(JSON.stringify(values, null, 2));
       // setFormState(values);
     },
@@ -172,7 +175,7 @@ const EditProjectExtension = () => {
                 aria-describedby="emailHelp"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.startDate}
+                value={moment(formik.values.startDate).format("YYYY-MM-DD")}
                 controlId="startDate"
               />
               <span className="text-danger">

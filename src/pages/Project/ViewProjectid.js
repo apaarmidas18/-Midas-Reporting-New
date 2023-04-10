@@ -3,13 +3,15 @@ import { MDBDataTable } from "mdbreact";
 import { HiOutlineDownload } from "react-icons/hi";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import GetAllProjects from "../../API/Project/GetAllProjects";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 const ViewProjectid = () => {
-  const [projectDetails, setProjectDetails] = useState([]);
+  const location = useLocation();
+  const { data } = location.state;
   const [loading, setLoading] = useState("");
+  const [projectDetails, setProjectDetails] = useState([]);
   var rows = [];
-
+  console.log(data);
   useEffect(() => {
     GetAllProjects({ setProjectDetails, setLoading });
   }, []);
@@ -60,7 +62,7 @@ const ViewProjectid = () => {
   }
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
 
-  const data = {
+  const Tabledata = {
     columns: [
       {
         label: "S.No",
@@ -142,13 +144,29 @@ const ViewProjectid = () => {
           />
           <div className="button-group">
             <button className="export-btn" style={{ width: "120px" }}>
-              <HiOutlineDownload size={22} /> Export List
+              <HiOutlineDownload size={22} />
+              <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="export-list"
+                table="table-to-xls"
+                filename={`Project List Of Employee ${data.employeeId}`}
+                sheet={`Project List Of Employee ${data.employeeId}`}
+                buttonText=" Export List"
+              />
             </button>
           </div>
         </div>
       </div>
       <div className="container-fluid round-border bg-white mt-4 p-2 px-4">
-        <MDBDataTable striped bordered hover sorting={true} small data={data} />
+        <MDBDataTable
+          id="table-to-xls"
+          striped
+          bordered
+          hover
+          sorting={true}
+          small
+          data={Tabledata}
+        />
       </div>
     </>
   );

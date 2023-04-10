@@ -7,8 +7,7 @@ export const EditEmployeeAPI = (values, navigate, EMPID) => {
   const date = moment(values.dob).format("MM/DD/YYYY");
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
-  const userValue = JSON.parse(values.userValues);
-  const companyValue = JSON.parse(values.companyValues);
+
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -17,16 +16,16 @@ export const EditEmployeeAPI = (values, navigate, EMPID) => {
     dob: date,
     address: values.address,
     contactDetails: values.contactDetails,
-    companyId: companyValue.value,
+    companyId: values.companyId,
     email: values.email,
     city: values.city,
     state: values.state,
     zipCode: values.zipCode,
     ssn: values.ssn,
-    userName: userValue.name,
-    userId: userValue.id,
+    userName: values.userName,
+    userId: values.userId,
     editRemarks: values.editRemarks,
-    companyName: companyValue.label,
+    companyName: values.companyName,
   });
   var requestOptions = {
     method: "POST",

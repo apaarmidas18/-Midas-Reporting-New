@@ -27,7 +27,7 @@ const GetEmployeeLogs = ({ setEmployeeLogs, setLoading }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error");
     });
 };
 

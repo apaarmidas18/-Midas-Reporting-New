@@ -26,7 +26,7 @@ const GetTimesheetLogs = ({ setTimsheetLogs, setLoading }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error");
     });
 };
 

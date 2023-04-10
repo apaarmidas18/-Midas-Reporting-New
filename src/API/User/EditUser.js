@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router";
-import { PATH_DASHBOARD } from "src/routes/paths";
-import { host } from "src/static";
+import { host } from "../../static";
 import swal from "sweetalert";
 
-export const EditUser = (values, data, navigate) => {
-  const userId = data.id;
+export const EditUserAPI = (values, selectedUser, navigate) => {
+  const userId = selectedUser.id;
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
@@ -26,7 +25,7 @@ export const EditUser = (values, data, navigate) => {
     .then((response) => response.json())
     .then((result) => {
       if (result.status == 200) {
-        navigate(PATH_DASHBOARD.user_internal.viewUser);
+        navigate("/dashboard/view-user");
       } else {
         swal({
           title: "Submission Error.",

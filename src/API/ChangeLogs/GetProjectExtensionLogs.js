@@ -27,7 +27,7 @@ const GetProjectExtensionLogs = ({ setProjectExtensionLogs, setLoading }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error");
     });
 };
 

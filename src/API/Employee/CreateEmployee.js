@@ -7,8 +7,7 @@ export const CreateEmployee = (values, navigate) => {
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
   var date = moment(values.dob).format("MM/DD/YYYY");
-  const parseCompanyValue = JSON.parse(values.companyName);
-  console.log(values.companyName);
+
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -17,8 +16,8 @@ export const CreateEmployee = (values, navigate) => {
     ssn: values.ssn,
     dob: date,
     address: values.address,
-    companyName: parseCompanyValue.label,
-    companyId: parseCompanyValue.value,
+    companyName: values.companyName,
+    companyId: values.companyId,
     email: values.email,
     city: values.city,
     state: values.state,

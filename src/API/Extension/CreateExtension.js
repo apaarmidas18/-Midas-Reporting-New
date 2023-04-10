@@ -15,7 +15,7 @@ const CreateExtension = (values) => {
     endDate: end,
     designation: values.designation,
     overTimeRates: values.overTimeRates,
-    guaranteeHours: values.guaranteeHours,
+    guaranteeHours: values.guaranteedHours,
     travelAllowance: values.travelAllowance,
     billRates: values.billRates,
     userName: UserData.name,

@@ -5,31 +5,31 @@ import { host } from "../../static";
 const EditProjectAPI = (values, navigate, data) => {
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
-  const name = UserData.name;
+  const name = UserData.name.replace(" ", "");
   const id = data.id;
 
   var data = JSON.stringify({
-    facility: values.facility,
+    facility: values.facilityName,
     organisation: values.organisation,
     designation: values.designation,
     startDate: values.startDate,
-    recruter: values.recruter,
+    recruter: values.recruiter,
     teamLeader: values.teamLeader,
-    employeDBId: values.employeDBId,
-    employeId: values.employeId,
+    employeDBId: values.employeeCode,
+    employeId: values.employeeId,
     occupationType: values.occupationType,
     billRates: parseInt(values.billRates),
     payRates: parseInt(values.payRates),
-    preDeim: parseInt(values.perDeim),
+    preDeim: parseInt(values.preDeim),
     overTimeRates: parseInt(values.overTimeRates),
     guaranteeHours: values.guaranteeHours,
-    client: values.client,
+    client: values.clientName,
     vms: values.vms,
     endDate: values.endDate,
     travelAllowance: values.travelAllowance,
     editRemarks: values.editRemarks,
-    userName: values.userValues.name,
-    userId: values.userValues.id,
+    userName: values.userName,
+    userId: values.userId,
     status: values.projectStatus,
   });
 
@@ -41,6 +41,8 @@ const EditProjectAPI = (values, navigate, data) => {
     },
     data: data,
   };
+
+  console.log("dataLL", data);
 
   axios(config)
     .then(function(response) {

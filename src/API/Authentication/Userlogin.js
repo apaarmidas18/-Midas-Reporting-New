@@ -4,7 +4,7 @@ import swal from "sweetalert";
 import { host } from "../../static";
 
 const Userlogin = async ({ username, password, navigate }) => {
-  console.log(username);
+ 
 
   const options = {
     method: "POST",
@@ -32,7 +32,6 @@ const Userlogin = async ({ username, password, navigate }) => {
     name: name,
   };
 
-  console.log("apiire");
 
   if (response.data === "User Not found") {
     swal({

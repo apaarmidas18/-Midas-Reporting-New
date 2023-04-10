@@ -81,7 +81,7 @@ const Viewuser = () => {
         width: 200,
       },
       {
-        label: "Email",
+        // label: "Username",
         field: "username",
         sort: "asc",
         width: 270,

@@ -3,7 +3,7 @@ import moment from "moment";
 import swal from "sweetalert";
 import { host } from "../../static";
 
-const EditExtension = (values, navigate, PId) => {
+export const EditExtensionAPI = (values, navigate, PId) => {
   console.log(PId);
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
@@ -51,5 +51,3 @@ const EditExtension = (values, navigate, PId) => {
       console.log(error);
     });
 };
-
-export default EditExtension;

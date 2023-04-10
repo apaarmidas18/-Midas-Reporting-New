@@ -40,7 +40,7 @@ const Addclient = () => {
   return (
     <>
       <div className="container-fluid">
-        <div className="heading">
+        <div className="heading ">
           <HeaderBreadcrumbs
             meta={"Client"}
             main={"Add Client"}

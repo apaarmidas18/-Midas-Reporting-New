@@ -12,10 +12,10 @@ const Employeecontrol = () => {
   const [employeeDetails, setEmployeeDetails] = useState([]);
   const [loading, setLoading] = useState("");
   var rows = [];
-
   useEffect(() => {
     GetAllEmployee({ setEmployeeDetails, setLoading });
   }, []);
+  console.log(employeeDetails);
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
   for (let index = 0; index < employeeDetails.length; index++) {
     const element = employeeDetails[index];

@@ -30,7 +30,6 @@ const EditEmployee = () => {
   const lastName = selectedUser.name.split(" ")[1];
   const formik = useFormik({
     initialValues: {
-      companyValues: selectedUser.companyName,
       firstName: FirstName ? FirstName : "",
       lastName: lastName ? lastName : "",
       dob: selectedUser.dob,
@@ -42,16 +41,17 @@ const EditEmployee = () => {
       email: selectedUser.email,
       contactDetails: selectedUser.contactDetails,
       editRemarks: "",
-      userValues: {},
+      userName: "",
+      userId: 0,
       companyName: selectedUser.companyName,
+      companyId: selectedUser.companyId,
     },
     validationSchema: Yup.object({
-      companyValues: Yup.string().required("Required"),
+      companyName: Yup.string().required("Required"),
       firstName: Yup.string().required("Required"),
-      lastName: Yup.string().required("Required"),
       dob: Yup.string().required("Required"),
       ssn: Yup.string()
-        .required("Social Security Number is required")
+        .required("Social Security Number is required") 
         .min(9, "Social Security Number Must be 9 Digits long")
         .max(9, "Social Security Number Must be 9 Digits long"),
       address: Yup.string().required("Required"),
@@ -77,11 +77,15 @@ const EditEmployee = () => {
     },
   });
 
+  console.log(formik.values);
   useEffect(() => {
     GetUserByRollId({ setOnBoardingData });
   }, []);
 
   //validation**************************************************************************
+
+  console.log(formik.values);
+
   return (
     <>
       <div className="container-fluid">
@@ -105,21 +109,26 @@ const EditEmployee = () => {
                 >
                   Company Name
                 </label>
-
-                <select
-                  class="form-select"
-                  aria-label="Default select example"
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dob"
+                  aria-describedby="emailHelp"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.companyValues}
-                  name="companyValues"
+                  value={formik.values.companyName}
+                  controlId="dob"
                   onClick={() => setCompanyName(false)}
-                >
-                  <option selected>Open this select menu</option>
-                  {COMPANYNAME.map((item, index) => {
-                    return <option value={item.label}>{item.label}</option>;
-                  })}
-                </select>
+                />
+
+                <span className="text-danger">
+                  {formik.touched.companyValues &&
+                  formik.errors.companyValues ? (
+                    <div className="text-danger">
+                      {formik.errors.companyValues}
+                    </div>
+                  ) : null}
+                </span>
               </div>
             ) : (
               <div className="col-md-12">
@@ -134,14 +143,18 @@ const EditEmployee = () => {
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.companyValues}
-                  name="companyValues"
+                  onChange={(e) => {
+                    const CompanyValues = JSON.parse(e.target.value);
+                    formik.setFieldValue("companyName", CompanyValues.label);
+                    formik.setFieldValue("companyId", CompanyValues.value);
+                  }}
+                  name="companyName"
                 >
                   <option selected>Open this select menu</option>
                   {COMPANYNAME.map((item, index) => {
-                    return <option value={item}>{item.label}</option>;
+                    return (
+                      <option value={JSON.stringify(item)}>{item.label}</option>
+                    );
                   })}
                 </select>
                 <span className="text-danger">
@@ -402,9 +415,11 @@ const EditEmployee = () => {
                       class="form-select"
                       aria-label="Default select example"
                       // value={formik.values.type}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.userValues}
+                      onChange={(e) => {
+                        const userValue = JSON.parse(e.target.value);
+                        formik.setFieldValue("userName", userValue.name);
+                        formik.setFieldValue("userId", userValue.id);
+                      }}
                       name="userValues"
                     >
                       <option selected>Open this select menu</option>

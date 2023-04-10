@@ -27,9 +27,7 @@ const Header = () => {
             </button>
           </form>
           <Dropdown>
-            <Dropdown.Toggle id="dropdown-login">
-              Hello {user.name}
-            </Dropdown.Toggle>
+            <Dropdown.Toggle id="dropdown-login">{user.name}</Dropdown.Toggle>
 
             <Dropdown.Menu>
               <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>

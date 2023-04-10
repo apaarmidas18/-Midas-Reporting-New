@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLocation, useNavigate } from "react-router";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
+import { EditUserAPI } from "../../API/User/EditUser";
 
 const ROLLSSUPERADMIN = [
   {
@@ -134,8 +135,7 @@ const EditUser = () => {
       type: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      // setFormState(values);
+      EditUserAPI(values, selectedUser, navigate);
     },
   });
   //validation**************************************************************************8
@@ -227,7 +227,7 @@ const EditUser = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 name="status"
-                // value={formik.values.status}
+                value={formik.values.status}
               >
                 <option selected>Open this select menu</option>
                 {STATUS.map((item, index) => {
@@ -254,7 +254,7 @@ const EditUser = () => {
                 aria-label="Default select example"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                // value={formik.values.roll}
+                value={formik.values.rollId}
                 name="rollId"
               >
                 <option selected>Open this select menu</option>
@@ -263,8 +263,8 @@ const EditUser = () => {
                 })}
               </select>
               <span className="text-danger">
-                {formik.touched.roll && formik.errors.roll ? (
-                  <div className="text-danger">{formik.errors.roll}</div>
+                {formik.touched.rollId && formik.errors.rollId ? (
+                  <div className="text-danger">{formik.errors.rollId}</div>
                 ) : null}
               </span>
             </div>
@@ -282,7 +282,7 @@ const EditUser = () => {
                 aria-label="Default select example"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                // value={formik.values.type}
+                value={formik.values.type}
                 name="type"
               >
                 <option selected>Open this select menu</option>

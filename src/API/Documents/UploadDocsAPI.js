@@ -18,9 +18,7 @@ const UploadDocsAPI = ({ data, filename, file, setUploadDocResult }) => {
     body: formdata,
     redirect: "follow",
   };
-  console.log(
-    `${host}auth/employee/uploadFiles/${data.employeeId}/${data.id}?userName=${RemoveSpaceUserName}&userId=${userData.id}`
-  );
+
   fetch(
     `${host}auth/employee/uploadFiles/${data.employeeId}/${data.id}?userName=${RemoveSpaceUserName}&userId=${userData.id}`,
     requestOptions
