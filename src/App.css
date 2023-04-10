@@ -627,3 +627,7 @@ strong {
     max-width: 1800px !important;
   }
 }
+
+tbody + thead {
+  display: none;
+}

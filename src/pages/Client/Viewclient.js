@@ -45,13 +45,13 @@ const Viewclient = () => {
         width: 150,
       },
       {
-        label: "Name",
+        label: "Client Name",
         field: "name",
         sort: "asc",
         width: 150,
       },
       {
-        label: "Client Name",
+        label: "Contact Person",
         field: "contactPersonName",
         sort: "asc",
         width: 270,
