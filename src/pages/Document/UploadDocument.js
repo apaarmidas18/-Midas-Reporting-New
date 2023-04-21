@@ -8,13 +8,16 @@ import GetAllClients from "../../API/Master/Client/GetAllClients";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
-import CreateTimeSheet from "../../API/Timesheet/CreateTimeSheet";
-import GetTimeSheetByPId from "../../API/Timesheet/GetTimeSheetByPId";
-import moment from "moment";
 import DatalistInput from "react-datalist-input";
 import UploadDocsAPI from "../../API/Documents/UploadDocsAPI";
 import GetDocById from "../../API/Documents/GetDocById";
 import DeleteDocument from "../../API/Documents/DeleteDocument";
+import fileDownload from "js-file-download";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import axios from "axios";
+import { vercelHost } from "../../static";
+
 const TAGS_OPTION = [
   { id: 1, value: "Driving-License" },
   { id: 2, value: "SSN-Card" },
@@ -61,10 +64,40 @@ const UploadDoc = () => {
   const [file, setFile] = useState("");
   const [loading, setLoading] = useState(false);
   //validation******************************************************************
-  console.log(documentData);
+
+  const GetAllDocuments = () => {
+    const options = { method: "GET" };
+
+    fetch(
+      `${vercelHost}doc/download/getDocuemnts/employeeId=${data.id}`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     GetDocById(setDocumentDetails, data.id, setLoading);
+    GetAllDocuments();
   }, []);
+
+  const downloadEmployeeData = () => {
+    documentData.map((item, index) => {
+      axios({
+        url: `${vercelHost}doc/${item.documentFileName}`,
+        method: "GET",
+        responseType: "blob", // important
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${item.documentFileName}`);
+        document.body.appendChild(link);
+        link.click();
+      });
+    });
+  };
   //validation**************************************************************************
 
   //table *********************************************************************
@@ -133,6 +166,7 @@ const UploadDoc = () => {
   const handleIMage = (event) => {
     setFile(event.target.files[0]);
   };
+
   return (
     <>
       <div className="container-fluid">
@@ -181,9 +215,17 @@ const UploadDoc = () => {
               Upload Document
             </button>
           </div>
+          <div class="mb-3 col-md-6">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              onClick={() => downloadEmployeeData()}
+            >
+              Download Document
+            </button>
+          </div>
         </div>
       </div>
-
       <div className="container-fluid round-border bg-white mt-4 p-2 px-4">
         <MDBDataTable
           striped
