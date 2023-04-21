@@ -12,8 +12,6 @@ import DatalistInput from "react-datalist-input";
 import UploadDocsAPI from "../../API/Documents/UploadDocsAPI";
 import GetDocById from "../../API/Documents/GetDocById";
 import DeleteDocument from "../../API/Documents/DeleteDocument";
-import fileDownload from "js-file-download";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import axios from "axios";
 import { vercelHost } from "../../static";
