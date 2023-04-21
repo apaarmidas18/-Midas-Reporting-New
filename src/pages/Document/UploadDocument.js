@@ -1,10 +1,7 @@
 import React from "react";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
-import GetAllClients from "../../API/Master/Client/GetAllClients";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
@@ -12,7 +9,6 @@ import DatalistInput from "react-datalist-input";
 import UploadDocsAPI from "../../API/Documents/UploadDocsAPI";
 import GetDocById from "../../API/Documents/GetDocById";
 import DeleteDocument from "../../API/Documents/DeleteDocument";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import axios from "axios";
 import { vercelHost } from "../../static";
 
