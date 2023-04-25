@@ -18,7 +18,7 @@ const Timesheetlogs = () => {
 
     rows.push({
       ...element,
-      createDate: moment(element.createDate).format("DD/MM/YYYY"),
+      createDate: moment(element.createDate).format("MM/DD/YYYY"),
     });
   }
   /* ------------------------------------------Adding Elements To Array-------------------------------- */

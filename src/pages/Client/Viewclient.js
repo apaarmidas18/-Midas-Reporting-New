@@ -21,7 +21,7 @@ const Viewclient = () => {
 
     rows.push({
       ...element,
-      createDate: moment(element.createDate).format("DD/MM/YYYY"),
+      createDate: moment(element.createDate).format("MM/DD/YYYY"),
       edit: (
         <Link
           type="button"

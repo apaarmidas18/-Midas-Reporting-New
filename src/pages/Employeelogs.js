@@ -22,7 +22,7 @@ const Employeelogs = () => {
 
     rows.push({
       ...element,
-      createDate: moment(element.createDate).format("DD/MM/YYYY"),
+      createDate: moment(element.createDate).format("MM/DD/YYYY"),
       edit: (
         <button type="button" class="edit-btn">
           <i class="fa fa-pencil"></i>
