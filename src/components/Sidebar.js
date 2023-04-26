@@ -3,8 +3,31 @@ import Collapsible from "react-collapsible";
 // import { GoChevronRight,  } from "react-icons/go";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import SuperAdminRoutes from "../utils/Sidebar/SuperAdminRoutes";
+import AdminRoutes from "../utils/Sidebar/AdminRoutes";
+import ModeratorRoutes from "../utils/Sidebar/ModeratorRoutes";
+import OnboardingRoutes from "../utils/Sidebar/OnboardingRoutes";
+import RecruiterRoutes from "../utils/Sidebar/RecruiterRoutes";
+import TeamLeadRoutes from "../utils/Sidebar/TeamLeadRoutes";
 
 const Sidebar = () => {
+  const userData = localStorage.getItem("User");
+  const user = JSON.parse(userData);
+  const ROLLS =
+    user.rollId == 1
+      ? SuperAdminRoutes
+      : user.rollId == 2
+      ? AdminRoutes
+      : user.rollId == 3
+      ? ModeratorRoutes
+      : user.rollId == 4
+      ? OnboardingRoutes
+      : user.rollId == 5
+      ? RecruiterRoutes
+      : user.rollId == 6
+      ? TeamLeadRoutes
+      : "";
+
   return (
     <>
       <Header />
@@ -15,118 +38,29 @@ const Sidebar = () => {
             <span>Dashboard</span>
           </Link>
         </div>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-user"></i>,
-            <span className="trig-span">User</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/add-user">
-              <li>Add User</li>
-            </Link>
-            <Link to="/dashboard/view-user">
-              <li>View User</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-id-card-clip"></i>,
-            <span className="trig-span">Employees</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/view-employee">
-              <li>Employee Controls</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-building-columns"></i>,
-            <span className="trig-span">Projects</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/view-project">
-              <li>Manage Projects</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-users"></i>,
-            <span className="trig-span">Client</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/add-client">
-              <li>Add Client</li>
-            </Link>
-            <Link to="/dashboard/view-client">
-              <li>View Client</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-file-export"></i>,
-            <span className="trig-span">Facility</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/add-facility">
-              <li>Add Facility</li>
-            </Link>
-            <Link to="/dashboard/view-facility">
-              <li>View Facility</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-briefcase"></i>,
-            <span className="trig-span">VMS</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/add-vms">
-              <li>Add VMS</li>
-            </Link>
-            <Link to="/dashboard/view-vms">
-              <li>View VMS</li>
-            </Link>
-          </ul>
-        </Collapsible>
-        <Collapsible
-          trigger={[
-            <i class="fa-solid fa-chart-simple"></i>,
-            <span className="trig-span">Change-Logs</span>,
-            <i class="fas fa-chevron-right"></i>,
-          ]}
-        >
-          <ul className="sidebar-list">
-            <Link to="/dashboard/employee-logs">
-              <li>Employee Logs</li>
-            </Link>
-            <Link to="/dashboard/project-logs">
-              <li>Project Logs</li>
-            </Link>
-            <Link to="/dashboard/project-extension-logs">
-              <li>Project Extension Logs</li>
-            </Link>
-            <Link to="/dashboard/timesheet-logs">
-              <li>Timesheet Logs</li>
-            </Link>
-          </ul>
-        </Collapsible>
+        {ROLLS.map((item, index) => {
+          return (
+            <Collapsible
+              trigger={[
+                <i class={item.iconleft}></i>,
+                <span className="trig-span">{item.subheader}</span>,
+                <i class={item.icon}></i>,
+                ,
+              ]}
+            >
+              {item.items.map((children, index) => {
+                const { title, path } = children;
+                return (
+                  <ul className="sidebar-list">
+                    <Link to={path}>
+                      <li>{title}</li>
+                    </Link>
+                  </ul>
+                );
+              })}
+            </Collapsible>
+          );
+        })}
       </div>
     </>
   );
