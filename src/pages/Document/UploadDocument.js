@@ -11,6 +11,7 @@ import GetDocById from "../../API/Documents/GetDocById";
 import DeleteDocument from "../../API/Documents/DeleteDocument";
 import axios from "axios";
 import { vercelHost } from "../../static";
+import moment from "moment/moment";
 
 const TAGS_OPTION = [
   { id: 1, value: "Driving-License" },
@@ -57,6 +58,10 @@ const UploadDoc = () => {
   const [filename, setFileName] = useState("");
   const [file, setFile] = useState("");
   const [loading, setLoading] = useState(false);
+  const [expiryDate, setExpiryDate] = useState(false);
+  const [renewal, setRenewal] = useState(false);
+  const [renewalInput, setRenewalInput] = useState("NEW");
+  const formattedDate = moment(expiryDate).format("MM/DD/YYYY");
   //validation******************************************************************
 
   const GetAllDocuments = () => {
@@ -76,31 +81,44 @@ const UploadDoc = () => {
     GetAllDocuments();
   }, []);
 
-  const downloadEmployeeData = () => {
-    documentData.map((item, index) => {
-      axios({
-        url: `${vercelHost}doc/${item.documentFileName}`,
-        method: "GET",
-        responseType: "blob", // important
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${item.documentFileName}`);
-        document.body.appendChild(link);
-        link.click();
-      });
-    });
-  };
+  // const downloadEmployeeData = () => {
+  //   documentData.map((item, index) => {
+  //     axios({
+  //       url: `${vercelHost}doc/${item.documentFileName}`,
+  //       method: "GET",
+  //       responseType: "blob", // important
+  //     }).then((response) => {
+  //       const url = window.URL.createObjectURL(new Blob([response.data]));
+  //       const link = document.createElement("a");
+  //       link.href = url;
+  //       link.setAttribute("download", `${item.documentFileName}`);
+  //       document.body.appendChild(link);
+  //       link.click();
+  //     });
+  //   });
+  // };
   //validation**************************************************************************
 
   //table *********************************************************************
 
   var rows = [];
 
+  const CheckValidity = (ele) => {
+    const date = new Date();
+    // Add 60 Days
+    date.setDate(date.getDate() + 60);
+    const sixtyDays = moment(date).format("DD/MM/YYYY");
+    const currDate = moment(ele.expiryDate).format("DD/MM/YYYY");
+    if (sixtyDays === currDate) {
+      DeleteDocument(ele);
+    } else {
+      return;
+    }
+  };
+
   for (let index = 0; index < documentData.length; index++) {
     const element = documentData[index];
-
+    CheckValidity(element);
     rows.push({
       ...element,
       sNo: index + 1,
@@ -149,6 +167,12 @@ const UploadDoc = () => {
       },
 
       {
+        label: "Expiry Date",
+        field: "expiryDate",
+        sort: "asc",
+        width: 100,
+      },
+      {
         label: "Action",
         field: "action",
         sort: "asc",
@@ -166,23 +190,80 @@ const UploadDoc = () => {
       <div className="container-fluid">
         <div className="heading">
           <HeaderBreadcrumbs
-            meta={"Timesheet"}
-            main={"Timesheet"}
-            heading={"Time sheet of employee"}
+            meta={" Document"}
+            main={"Upload Document"}
+            heading={"Upload Document"}
           />
         </div>
       </div>
       <div className="container-fluid round-border bg-white p-4 mt-4 rounded-2xl">
         <div className="row" style={{ alignItems: "end" }}>
-          <div class="mb-3 col-md-6">
-            <DatalistInput
-              placeholder="Please Choose Client"
-              label="Choose Document"
-              name="fileName"
-              onSelect={(item) => setFileName(item.value)}
-              items={TAGS_OPTION}
-            />
+          <div className="col-md-12">
+            <strong>Renewal Document (Please Select One.)</strong>
+            <div
+              className="radio-check"
+              style={{ display: "flex", gap: "20px" }}
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  onChange={() => setRenewal(true)}
+                />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  onChange={() => setRenewal(false)}
+                />
+                <label class="form-check-label" for="flexRadioDefault2">
+                  No
+                </label>
+              </div>
+            </div>
           </div>
+          {renewal === true ? (
+            <div class="col-md-6 d-flex flex-row">
+              <div class="mx-2">
+                <strong class="form-label">New-Document</strong>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder=""
+                  value={"NEW"}
+                  disabled
+                />
+              </div>
+              <div class="col-md-7">
+                <DatalistInput
+                  placeholder="Please Choose Client"
+                  label="Choose Document"
+                  name="fileName"
+                  onSelect={(item) => setFileName(item.value)}
+                  items={TAGS_OPTION}
+                />
+              </div>
+            </div>
+          ) : (
+            <div class="col-md-6">
+              <DatalistInput
+                placeholder="Please Choose Client"
+                label="Choose Document"
+                name="fileName"
+                onSelect={(item) => setFileName(item.value)}
+                items={TAGS_OPTION}
+              />
+            </div>
+          )}
+
           <div
             class="mb-3 col-md-6"
             style={{ display: "flex", flexDirection: "column" }}
@@ -199,23 +280,34 @@ const UploadDoc = () => {
             />
           </div>
           <div class="mb-3 col-md-6">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onClick={() =>
-                UploadDocsAPI({ data, filename, file, setUploadDocResult })
-              }
-            >
-              Upload Document
-            </button>
+            <label for="date" class="form-label">
+              Select Expiry Date
+            </label>
+            <input
+              type="date"
+              class="form-control"
+              id="expirydate"
+              onChange={(e) => setExpiryDate(e.target.value)}
+            />
           </div>
+
           <div class="mb-3 col-md-6">
             <button
               type="submit"
               class="btn btn-primary"
-              onClick={() => downloadEmployeeData()}
+              onClick={() =>
+                UploadDocsAPI({
+                  data,
+                  filename,
+                  file,
+                  setUploadDocResult,
+                  formattedDate,
+                  renewalInput,
+                  renewal,
+                })
+              }
             >
-              Download Document
+              Upload Document
             </button>
           </div>
         </div>

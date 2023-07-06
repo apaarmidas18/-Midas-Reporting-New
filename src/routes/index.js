@@ -33,6 +33,7 @@ import EditProjectExtension from "../pages/Project/EditProjectExtension";
 import Timesheet from "../pages/Timesheet/CreateAndViewTimesheer";
 import EditTimeSheet from "../pages/Timesheet/EditTimeSheet";
 import UploadDoc from "../pages/Document/UploadDocument";
+import PendingDocument from "../pages/PendingDocument";
 
 export const Router = () => {
   return useRoutes([
@@ -102,6 +103,7 @@ export const Router = () => {
         { path: "timesheet", element: <Timesheet /> },
         { path: "edit-timesheet", element: <EditTimeSheet /> },
         { path: "upload-document", element: <UploadDoc /> },
+        { path: "view-pending", element: <PendingDocument /> },
         // { path: "edit-timesheet", element: <EditTimeSheet /> },
       ],
     },

@@ -1,16 +1,13 @@
 import React from "react";
 import { host } from "../../static";
 
-const GetDocById = (setDocumentsDetails, EmpID, setLoading) => {
+const GetAllDoc = (setDocumentsDetails, setLoading) => {
   var requestOptions = {
     method: "GET",
     redirect: "follow",
   };
 
-  fetch(
-    `${host}auth/employee/get-all-documents?employeeId=${EmpID}`,
-    requestOptions
-  )
+  fetch(`${host}auth/employee/get-documents`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {
@@ -22,4 +19,4 @@ const GetDocById = (setDocumentsDetails, EmpID, setLoading) => {
     .catch((error) => console.log("error", error));
 };
 
-export default GetDocById;
+export default GetAllDoc;

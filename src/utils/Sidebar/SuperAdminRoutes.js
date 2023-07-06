@@ -111,4 +111,15 @@ export default [
       },
     ],
   },
+  {
+    iconleft: "fa-solid fa-circle-exclamation",
+    subheader: "Pending Documents",
+    icon: "fas fa-chevron-right",
+    items: [
+      {
+        title: "View Documents",
+        path: "/dashboard/view-pending",
+      },
+    ],
+  },
 ];
