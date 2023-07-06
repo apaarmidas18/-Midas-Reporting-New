@@ -25,7 +25,6 @@ const PendingDocument = () => {
   const [file, setFile] = useState("");
   const [loading, setLoading] = useState(false);
   const [expiryDate, setExpiryDate] = useState(false);
-  console.log(expiryDate);
   const formattedDate = moment(expiryDate).format("MM/DD/YYYY");
 
   //validation******************************************************************
@@ -72,16 +71,22 @@ const PendingDocument = () => {
     }
   };
   const date = new Date();
+  const Year = date.getFullYear();
   // Add 60 Days
+
   date.setDate(date.getDate() + 60);
   const sixtyDays = moment(date).format("MM/DD/YYYY");
-  const expiryDateData = documentData.filter(
-    (item, index) => item.expiryDate <= sixtyDays
-  );
+  const expiryDateData = documentData.filter((item, index) => {
+    if (item.expiryDate !== null) {
+      if (item.expiryDate.includes(Year)) {
+        return item.expiryDate <= sixtyDays;
+      }
+    }
+  });
 
   for (let index = 0; index < expiryDateData.length; index++) {
     const element = expiryDateData[index];
-    CheckValidity(element);
+    // CheckValidity(element);
     rows.push({
       ...element,
       sNo: index + 1,
