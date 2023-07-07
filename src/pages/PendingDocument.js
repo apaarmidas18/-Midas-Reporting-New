@@ -84,46 +84,56 @@ const PendingDocument = () => {
     }
   });
 
-  for (let index = 0; index < expiryDateData.length; index++) {
-    const element = expiryDateData[index];
-    // CheckValidity(element);
-    rows.push({
-      ...element,
-      sNo: index + 1,
+  const FilterWithNew = () => {
+    const NewData = expiryDateData.filter((item) =>
+      item.documentName.includes("NEW")
+    );
+    for (let index = 0; index < NewData.length; index++) {
+      const element = NewData[index];
+      CheckValidity(element);
+      rows.push({
+        ...element,
+        sNo: index + 1,
 
-      status:
-        element.documentName.includes("NEW") === true
-          ? "Renewed Document"
-          : "Old Document",
-      action: (
-        <>
-          <Link
-            to={element.documentPath}
-            className="btn btn-success"
-            style={{
-              padding: "7px 13px",
-              height: "33px",
-              marginRight: "10px",
-            }}
-            target="__blank"
-          >
-            <i class="fa fa-eye"></i>
-          </Link>
-          <button
-            className="btn btn-danger"
-            style={{
-              padding: "7px 13px",
-              height: "33px",
-              marginRight: "10px",
-            }}
-            onClick={() => DeleteDocument(element)}
-          >
-            <i class="fa fa-trash"></i>
-          </button>
-        </>
-      ),
-    });
-  }
+        status:
+          element.documentName.includes("NEW") === true
+            ? "Renewed Document"
+            : "Old Document",
+        action: (
+          <>
+            <Link
+              to={element.documentPath}
+              className="btn btn-success"
+              style={{
+                padding: "7px 13px",
+                height: "33px",
+                marginRight: "10px",
+              }}
+              target="__blank"
+            >
+              <i class="fa fa-eye"></i>
+            </Link>
+            <button
+              className="btn btn-danger"
+              style={{
+                padding: "7px 13px",
+                height: "33px",
+                marginRight: "10px",
+              }}
+              onClick={() => DeleteDocument(element)}
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </>
+        ),
+      });
+    }
+  };
+
+  useEffect(() => {
+    FilterWithNew();
+  });
+
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
 
   const dataT = {
