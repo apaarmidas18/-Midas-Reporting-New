@@ -183,7 +183,7 @@ const ChecklistDetails = () => {
                 style={{ display: "inherit" }}
                 key={index}
               >
-                <table className="table table-bordered">
+                <table className="table checklist-table table-bordered">
                   <thead className="health-table">
                     <tr>
                       <th className="health-row" colspan="4">
