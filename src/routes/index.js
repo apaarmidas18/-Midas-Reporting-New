@@ -74,6 +74,8 @@ import AddTemplates from "../pages/Templates/AddTemplates";
 import EditTemplates from "../pages/Templates/EditTemplates";
 import ViewTemplates from "../pages/Templates/ViewTemplates";
 import PendingDocument from "../pages/PendingDocument";
+import PortalLayout from "../layout/PortalLayout";
+import PortalHome from "../pages/PortalRoutes/PortalHome";
 
 export const Router = () => {
   return useRoutes([
@@ -192,6 +194,21 @@ export const Router = () => {
         { path: "view-list-details", element: <ChecklistDetails /> },
         { path: "view-pending", element: <PendingDocument /> },
         // { path: "edit-timesheet", element: <EditTimeSheet /> },
+      ],
+    },
+    {
+      path: "/portal",
+
+      element: (
+        <>
+          <PortalLayout />
+        </>
+      ),
+
+      children: [
+        { path: "portal", element: <Navigate to="/portal/home" replace /> },
+
+        { path: "job-home", element: <PortalHome /> },
       ],
     },
   ]);

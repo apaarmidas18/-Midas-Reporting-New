@@ -39,6 +39,21 @@ export default [
       },
     ],
   },
+  {
+    iconleft: "fa-solid fa-briefcase",
+
+    subheader: "Checklist",
+
+    icon: "fas fa-chevron-right",
+
+    items: [
+      {
+        title: "View Checklist",
+
+        path: "/dashboard/view-checklist",
+      },
+    ],
+  },
 
   //   {
   //     iconleft: "fa-solid fa-users",

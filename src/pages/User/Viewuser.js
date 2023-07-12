@@ -42,9 +42,9 @@ const Viewuser = () => {
           : element.rollId == 4
           ? "On-Boarding"
           : element.rollId == 5
-          ? "Team-Lead"
-          : element.rollId == 6
           ? "Recruiter"
+          : element.rollId == 6
+          ? "Team-Lead"
           : element.rollId,
       type:
         element.type == 1
