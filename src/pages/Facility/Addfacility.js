@@ -67,6 +67,7 @@ const Addfacility = () => {
       name: "",
       address: "",
       clientName: "",
+      clientId: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is Required"),
@@ -75,8 +76,6 @@ const Addfacility = () => {
     }),
     onSubmit: (values) => {
       CreateFacitlity(values, navigate);
-      // alert(JSON.stringify(values, null, 2));
-      // setFormState(values);
     },
   });
   //validation**************************************************************************8
@@ -86,7 +85,7 @@ const Addfacility = () => {
   }, []);
   clientDetails.map((item, index) => [
     ClientData.push({
-      id: item.name,
+      id: item.id,
       value: item.name,
     }),
   ]);
@@ -150,9 +149,10 @@ const Addfacility = () => {
               <DatalistInput
                 placeholder="Please Choose Client"
                 label="Choose Client"
-                onSelect={(item) =>
-                  formik.setFieldValue("clientName", item.value)
-                }
+                onSelect={(item) => {
+                  formik.setFieldValue("clientId", item.id);
+                  formik.setFieldValue("clientName", item.value);
+                }}
                 items={ClientData}
               />
             </div>

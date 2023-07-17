@@ -957,6 +957,11 @@ input[switch="warning"]:checked + label:before {
   color: steelblue !important;
 }
 
+/* //View Document Css ************************************************ */
+.view-document {
+  display: flex;
+}
+
 /* // Template Modal CSS************************************************************************** */
 
 .modal-dialog .main-modal {

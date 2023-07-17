@@ -59,7 +59,6 @@ const AddProject = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { data } = location.state;
-  console.log(data);
   //validation******************************************************************
 
   const formik = useFormik({

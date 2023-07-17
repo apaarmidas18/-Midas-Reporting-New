@@ -4,7 +4,6 @@ import { host } from "../../../static";
 const CreateFacitlity = (values, router) => {
   const user = localStorage.getItem("User");
   const userData = JSON.parse(user);
-
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 

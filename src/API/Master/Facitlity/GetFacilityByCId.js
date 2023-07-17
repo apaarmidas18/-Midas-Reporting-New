@@ -14,7 +14,10 @@ const GetFacilityByCId = (id, setFacilityData) => {
     requestOptions
   )
     .then((response) => response.json())
-    .then((result) => setFacilityData(result))
+    .then((result) => {
+      console.log("result:", result);
+      setFacilityData(result);
+    })
     .catch((error) => console.log("error", error));
 };
 
