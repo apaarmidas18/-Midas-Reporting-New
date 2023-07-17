@@ -31,7 +31,6 @@ const Addclient = () => {
     }),
     onSubmit: (values) => {
       CreateClient(values, navigate);
-      alert(JSON.stringify(values, null, 2));
       // setFormState(values);
     },
   });
