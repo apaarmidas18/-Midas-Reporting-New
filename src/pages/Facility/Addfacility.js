@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import CreateFacitlity from "../../API/Master/Facitlity/CreateFacitlity";
 import DatalistInput from "react-datalist-input";
+import { useEffect } from "react";
+import GetAllClients from "../../API/Master/Client/GetAllClients";
 
 const CLIENT = [
   {
@@ -54,6 +56,8 @@ const CLIENT = [
 
 const Addfacility = () => {
   const [formState, setFormState] = useState(true);
+  const [clientDetails, setClientDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
   const userData = localStorage.getItem("User");
   const user = JSON.parse(userData);
   const navigate = useNavigate();
@@ -76,6 +80,17 @@ const Addfacility = () => {
     },
   });
   //validation**************************************************************************8
+  var ClientData = [];
+  useEffect(() => {
+    GetAllClients({ setClientDetails, setLoading });
+  }, []);
+  clientDetails.map((item, index) => [
+    ClientData.push({
+      id: item.name,
+      value: item.name,
+    }),
+  ]);
+
   return (
     <>
       <div className="container-fluid">
@@ -138,16 +153,7 @@ const Addfacility = () => {
                 onSelect={(item) =>
                   formik.setFieldValue("clientName", item.value)
                 }
-                items={[
-                  { id: "Career Staff", value: "Career Staff" },
-                  { id: "Davin", value: "Davin" },
-                  { id: "Medical Solution", value: "Medical Solution" },
-                  { id: "Medefix", value: "Medefix" },
-                  { id: "Igenesis", value: "Igenesis" },
-                  { id: "Adaptive", value: "Adaptive" },
-                  { id: "CHLA", value: "CHLA" },
-                  { id: "Shiftwise", value: "Shiftwise" },
-                ]}
+                items={ClientData}
               />
             </div>
           </div>

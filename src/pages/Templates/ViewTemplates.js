@@ -267,7 +267,7 @@ const ViewTemplates = () => {
                   ></i>
                   Edit
                 </Link>
-                <Link to={"/dashboard/view-document"} state={element}>
+                <Link to={"/template/view-document"} state={element}>
                   <i
                     class="fa-solid fa-file"
                     style={{ marginRight: "10px", color: "#000" }}

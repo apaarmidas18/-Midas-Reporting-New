@@ -8,7 +8,7 @@ const GetAllClients = ({ setClientDetails, setLoading }) => {
 
   fetch(`${host}auth/project/get-clients`, requestOptions)
     .then((response) => response.json())
-    // .then((result) => console.log(result))
+
     .then((result) => {
       if (result) {
         return setClientDetails(result), setLoading(false);
