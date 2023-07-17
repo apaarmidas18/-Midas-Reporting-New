@@ -61,6 +61,12 @@ const Sidebar = () => {
             </Collapsible>
           );
         })}
+        <div className="home-btn">
+          <i class="fa fa-home"></i>
+          <Link to="/portal">
+            <span>Dashboard</span>
+          </Link>
+        </div>
       </div>
     </>
   );

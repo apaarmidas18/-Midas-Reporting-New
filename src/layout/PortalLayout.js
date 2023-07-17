@@ -7,7 +7,7 @@ const PortalLayout = () => {
     <div>
       <HorizontalMenu />
       {/* <Layout /> */}
-      <div className="outlet-container">
+      <div className="outlet-horizontal">
         <Outlet />
       </div>
     </div>

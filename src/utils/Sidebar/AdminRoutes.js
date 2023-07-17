@@ -67,7 +67,7 @@ export default [
       },
       {
         title: "View Facility",
-        path: "/dashboard/view-client",
+        path: "/dashboard/view-facility",
       },
     ],
   },

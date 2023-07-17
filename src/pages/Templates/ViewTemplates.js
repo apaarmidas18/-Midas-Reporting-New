@@ -243,7 +243,7 @@ const ViewTemplates = () => {
 
   for (let index = 0; index < allDocuments.length; index++) {
     const element = allDocuments[index];
-    console.log("element:L", element);
+
     rows.push({
       ...element,
       id: index + 1,
@@ -267,16 +267,13 @@ const ViewTemplates = () => {
                   ></i>
                   Edit
                 </Link>
-                <a
-                  target="__blank"
-                  href={`https://sign.zoho.in/zs/60020492410#/template/viewer/${element.template_id}`}
-                >
+                <Link to={"/dashboard/view-document"} state={element}>
                   <i
                     class="fa-solid fa-file"
                     style={{ marginRight: "10px", color: "#000" }}
                   ></i>
-                  View template
-                </a>
+                  View Document
+                </Link>
                 <Link href="/diversity">
                   <i
                     class="fa-solid fa-link"
@@ -579,7 +576,6 @@ const ViewTemplates = () => {
                               id="emailcheck"
                               onClick={() => setSmschecked(false)}
                               value={"Email"}
-                              onChange={(e) => console.log(e.target.value)}
                               name="checklink"
                             />
 
@@ -590,7 +586,6 @@ const ViewTemplates = () => {
                               id="smscheck"
                               onClick={() => setSmschecked(true)}
                               value={"Email + SMS"}
-                              onChange={(e) => console.log(e.target.value)}
                               name="checklink"
                             />
                           </div>

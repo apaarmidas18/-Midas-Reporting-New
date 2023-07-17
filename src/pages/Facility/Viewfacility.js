@@ -21,6 +21,7 @@ const Viewfacility = () => {
 
     rows.push({
       ...element,
+      sno: index + 1,
       createDate: moment(element.createDate).format("MM/DD/YYYY"),
       edit: (
         <Link

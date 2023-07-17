@@ -76,6 +76,7 @@ import ViewTemplates from "../pages/Templates/ViewTemplates";
 import PendingDocument from "../pages/PendingDocument";
 import PortalLayout from "../layout/PortalLayout";
 import PortalHome from "../pages/PortalRoutes/PortalHome";
+import ViewDocument from "../pages/Templates/ViewDocument";
 
 export const Router = () => {
   return useRoutes([
@@ -111,6 +112,11 @@ export const Router = () => {
       ],
     },
 
+    {
+      path: "/template",
+      element: "",
+      children: [{ path: "view-document", element: <ViewDocument /> }],
+    },
     {
       path: "/dashboard",
 
@@ -183,17 +189,15 @@ export const Router = () => {
 
         { path: "upload-document", element: <UploadDoc /> },
 
+        { path: "view-checklist", element: <ViewChecklist /> },
+
+        { path: "view-list-details", element: <ChecklistDetails /> },
+        { path: "view-pending", element: <PendingDocument /> },
         { path: "view-templates", element: <ViewTemplates /> },
 
         { path: "edit-templates", element: <EditTemplates /> },
 
         { path: "add-templates", element: <AddTemplates /> },
-
-        { path: "view-checklist", element: <ViewChecklist /> },
-
-        { path: "view-list-details", element: <ChecklistDetails /> },
-        { path: "view-pending", element: <PendingDocument /> },
-        // { path: "edit-timesheet", element: <EditTimeSheet /> },
       ],
     },
     {
