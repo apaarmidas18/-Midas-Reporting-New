@@ -959,9 +959,135 @@ input[switch="warning"]:checked + label:before {
 
 /* //View Document Css ************************************************ */
 .view-document {
+  height: 100vh;
+}
+.document-list {
+  overflow-x: scroll;
+  height: 100vh;
+}
+.drag-info {
   display: flex;
+  flex-direction: column;
+}
+.header-head {
+  background-color: #1da586;
+  color: #fff;
+  padding: 10px;
+}
+.reciept-email {
+  height: 50%;
+}
+.drag-field {
+  height: 50%;
+}
+.Collapsible__contentInner img {
+  width: 150px;
+  height: 180px;
+  margin-top: 20px;
 }
 
+.reciept-email span {
+  padding: 15px 10px;
+  display: block;
+  width: 100%;
+}
+.reciept-email span:hover {
+  background-color: #0ba3614f;
+}
+.drag-btn {
+  width: 135px;
+  height: 25px;
+  font-size: 13px;
+  display: flex;
+  gap: 15px;
+  align-items: baseline;
+  border: 0.5px solid #1da586;
+}
+.drag-btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.light-nav-list li {
+  list-style-type: none;
+  padding: 11px 0px;
+}
+.light-nav-list {
+  justify-content: space-around;
+  background: #4e606c;
+  margin: 10px 15px 0px 15px;
+  border-radius: 10px;
+  padding-left: 0;
+}
+.light-nav-list li span {
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.light-nav-list a {
+  color: #fff;
+}
+.light-active {
+  background-color: #0033c4;
+}
+.tab-name {
+  display: inline-block;
+  margin-top: 10px;
+  background: #0033c4;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tab-container {
+  padding: 15px;
+}
+.job-table td {
+  font-size: 12px;
+}
+.job-table th {
+  font-size: 12px;
+}
+
+.job-select .form-select {
+  font-size: 13px;
+  font-weight: 400;
+}
+.job-select label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.modal-dialog .job-modal {
+  margin-top: 68px !important;
+  width: 1300px !important;
+  position: absolute;
+  left: -32%;
+  top: -65px;
+  height: 600px;
+  overflow-y: scroll;
+}
+.job-modal .modal-header {
+  height: 20px;
+  background: #0033c4;
+  font-size: 15px;
+}
+.job-modal .modal-title {
+  font-size: 15px;
+}
+.job-select input {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.job-select-row {
+  background: #dcdcdc87;
+  border-radius: 5px;
+  padding: 10px 5px;
+}
 /* // Template Modal CSS************************************************************************** */
 
 .modal-dialog .main-modal {
@@ -1437,6 +1563,7 @@ input[switch="warning"]:checked + label:before {
   position: relative;
   top: 0;
   right: 0;
+  height: 68px;
   left: 0;
   width: 100%;
   display: -webkit-box;
@@ -1643,7 +1770,7 @@ input[switch="warning"]:checked + label:before {
     > .nav-item:hover
     > .nav-link
     .menu-title {
-    color: #215bff;
+    color: #ff3b21;
     -webkit-transition: color 1s ease;
     transition: color 1s ease;
   }
@@ -1803,7 +1930,7 @@ input[switch="warning"]:checked + label:before {
   ul
   li
   a:hover {
-  color: #0033c4;
+  color: #c40000;
   -webkit-transition: color 0.1s linear;
   transition: color 0.1s linear;
 }

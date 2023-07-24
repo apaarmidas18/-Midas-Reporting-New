@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { MDBDataTable } from "mdbreact";
 import { HiOutlineDownload } from "react-icons/hi";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
-import GetAllProjects from "../../API/Project/GetAllProjects";
 import { Link, useLocation } from "react-router-dom";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import GetProjectByEmpId from "../../API/Employee/GetProjectByEmpID";
 const ViewProjectid = () => {
   const location = useLocation();
   const { data } = location.state;
   const [loading, setLoading] = useState("");
   const [projectDetails, setProjectDetails] = useState([]);
   var rows = [];
-  console.log(data);
+  const emp_id = data.id;
   useEffect(() => {
-    GetAllProjects({ setProjectDetails, setLoading });
+    GetProjectByEmpId({ setProjectDetails, emp_id, setLoading });
   }, []);
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
   for (let index = 0; index < projectDetails.length; index++) {
