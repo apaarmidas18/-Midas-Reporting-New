@@ -64,22 +64,22 @@ const UploadDoc = () => {
   const formattedDate = moment(expiryDate).format("MM/DD/YYYY");
   //validation******************************************************************
 
-  const GetAllDocuments = () => {
-    const options = { method: "GET" };
+  // const GetAllDocuments = () => {
+  //   const options = { method: "GET" };
 
-    fetch(
-      `${vercelHost}doc/download/getDocuemnts/employeeId=${data.id}`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
-  };
+  //   fetch(
+  //     `${vercelHost}doc/download/getDocuemnts/employeeId=${data.id}`,
+  //     options
+  //   )
+  //     .then((response) => response.json())
+  //     .then((response) => console.log(response))
+  //     .catch((err) => console.error(err));
+  // };
 
-  useEffect(() => {
-    GetDocById(setDocumentDetails, data.id, setLoading);
-    GetAllDocuments();
-  }, []);
+  // useEffect(() => {
+  //   GetDocById(setDocumentDetails, data.id, setLoading);
+  //   GetAllDocuments();
+  // }, []);
 
   // const downloadEmployeeData = () => {
   //   documentData.map((item, index) => {
