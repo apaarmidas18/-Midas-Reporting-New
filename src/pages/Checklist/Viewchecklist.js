@@ -50,44 +50,50 @@ const ViewChecklist = () => {
       {
         label: "S.No",
         field: "id",
-        sort: "des",
+        sort: "asc",
         width: 150,
       },
       {
         label: "Candidate-Name",
         field: "firstname",
-
+        sort: "asc",
+        width: 150,
+      },
+      {
+        label: "Category",
+        field: "categoryname",
+        sort: "asc",
         width: 150,
       },
       {
         label: "Phone-Number",
         field: "phoneno",
-
+        sort: "asc",
         width: 150,
       },
       {
         label: "E-mail",
         field: "email",
-
+        sort: "asc",
         width: 270,
       },
 
       {
         label: "Date Of Birth",
         field: "dob",
-
+        sort: "asc",
         width: 100,
       },
       {
         label: "SSN",
         field: "ssn",
-
+        sort: "asc",
         width: 100,
       },
       {
         label: "Action",
         field: "action",
-
+        sort: "asc",
         width: 100,
       },
     ],

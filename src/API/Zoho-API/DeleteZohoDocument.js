@@ -2,10 +2,11 @@ import axios from "axios";
 import swal from "sweetalert";
 import { dhost } from "../../static";
 
+const token = localStorage.getItem("token");
 const DeleteZohoDocument = (tempID) => {
   let config = {
     method: "patch",
-    url: `${dhost}document/deleteDocument/${tempID}`,
+    url: `${dhost}document/deleteDocument/${tempID}/${token}`,
     headers: {},
   };
 

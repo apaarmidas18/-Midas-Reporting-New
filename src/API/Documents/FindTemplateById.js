@@ -1,4 +1,5 @@
 import { dhost } from "../../static";
+const token = localStorage.getItem("token");
 
 const FindTemplateById = ({
   setTemplateDetails,

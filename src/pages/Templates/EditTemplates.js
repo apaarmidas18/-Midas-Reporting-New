@@ -219,7 +219,7 @@ const EditTemplates = () => {
     "aqua",
   ];
   const getColour = () => colours[Math.floor(Math.random() * colours.length)];
-  console.log(templateDetails.actions);
+  console.log(templateDetails);
   const addReceipt = (index) => {
     setReciept([
       ...reciept,
@@ -237,12 +237,8 @@ const EditTemplates = () => {
       },
     ]);
   };
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles,
-  } = useDropzone();
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone();
 
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
@@ -274,14 +270,14 @@ const EditTemplates = () => {
 
     axios
       .request(options)
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         if (result.baseResponse.status == "success") {
           navigate("/dashboard/view-templates");
         }
       })
 
-      .catch(function(error) {
+      .catch(function (error) {
         swal({
           title: "Submission Error.",
           title: error,
@@ -320,10 +316,15 @@ const EditTemplates = () => {
         <form>
           <div className="container-fluid round-border bg-white p-4 mt-4 rounded-2xl">
             <div className="row">
+              {console.log("state:", state)}
               <div className="col-md-3">
-                {state.document_ids.map((item, index) => (
-                  <img src={`data:image/jpg;base64,${item.image_string}`} />
-                ))}
+                {templateDetails.document_ids.map((item, index) => {
+                  return (
+                    <>
+                      <img src={`data:image/jpg;base64,${item.image_string}`} />
+                    </>
+                  );
+                })}
                 <div className="dropzone" {...getRootProps()}>
                   <input {...getInputProps()} />
                   {isDragActive ? (

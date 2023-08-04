@@ -2,6 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 import { dhost } from "../../static";
 
+const token = localStorage.getItem("token");
+
 const SendTemplate = (request, navigate, tId) => {
   var data = JSON.stringify({
     actions: request.actions,
@@ -10,16 +12,20 @@ const SendTemplate = (request, navigate, tId) => {
 
   var config = {
     method: "post",
-    url: `${dhost}document/sendDocument/${tId}`,
+    url: `${dhost}document/sendDocument/${tId}/${token}`,
     headers: {
       "Content-Type": "application/json",
     },
     data: data,
   };
   axios(config)
-    .then(function(response) {
+    .then(function (response) {
+      console.log(response);
       if (response.data.baseResponse.status == "success") {
-        window.location.href = `https://sign.zoho.in/zs/60020492410#/request/viewer/${response.data.response.request_id}`;
+        navigate(
+          `/template/request-document/${response.data.response.request_id}`
+        );
+        // window.location.href = `https://sign.zoho.in/zs/60020492410#/request/viewer/${response.data.response.request_id}`;
       } else {
         swal({
           title: "Submission Error.",
@@ -28,7 +34,7 @@ const SendTemplate = (request, navigate, tId) => {
         });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 };

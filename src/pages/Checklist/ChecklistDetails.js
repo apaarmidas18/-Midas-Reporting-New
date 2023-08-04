@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router";
-import Pdf from "react-to-pdf";
 import Inputfield from "../../components/Inputfield";
 
 const ChecklistDetails = () => {
@@ -8,6 +7,7 @@ const ChecklistDetails = () => {
 
   const { data } = location.state;
   console.log(data);
+
   const [references, setReferenes] = useState([
     {
       name: "",
@@ -44,10 +44,6 @@ const ChecklistDetails = () => {
 
   return (
     <div className="download-pdf">
-      <Pdf targetRef={ref} filename="code-example.pdf">
-        {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-      </Pdf>
-
       <div ref={ref}>
         <div className="col-md-12 p-5">
           <div className="row">
@@ -110,6 +106,15 @@ const ChecklistDetails = () => {
                   id={"name"}
                   required={true}
                   name={"ssn"}
+                />
+                <Inputfield
+                  label={"Address"}
+                  value={data.address}
+                  type={"text"}
+                  placeholder={"Address"}
+                  id={"address"}
+                  required={true}
+                  name={"address"}
                 />
 
                 {/* ------------------------------------------------------------------------- */}
@@ -196,7 +201,11 @@ const ChecklistDetails = () => {
                   <table className="table checklist-table table-bordered">
                     <thead className="health-table">
                       <tr>
-                        <th className="health-row" colspan="4">
+                        <th
+                          className="health-row"
+                          colspan="4"
+                          style={{ background: "yellow" }}
+                        >
                           {item.title}
                         </th>
                         <th
@@ -204,6 +213,7 @@ const ChecklistDetails = () => {
                           style={{
                             width: "20px",
                             textAlign: "center",
+                            background: "yellow",
                           }}
                           scope="col"
                         >
@@ -214,6 +224,7 @@ const ChecklistDetails = () => {
                           style={{
                             width: "20px",
                             textAlign: "center",
+                            background: "yellow",
                           }}
                           scope="col"
                         >
@@ -224,6 +235,7 @@ const ChecklistDetails = () => {
                           style={{
                             width: "20px",
                             textAlign: "center",
+                            background: "yellow",
                           }}
                           scope="col"
                         >
@@ -234,6 +246,7 @@ const ChecklistDetails = () => {
                           style={{
                             width: "20px",
                             textAlign: "center",
+                            background: "yellow",
                           }}
                           scope="col"
                         >

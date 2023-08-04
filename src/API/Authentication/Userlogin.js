@@ -4,8 +4,6 @@ import swal from "sweetalert";
 import { host } from "../../static";
 
 const Userlogin = async ({ username, password, navigate }) => {
- 
-
   const options = {
     method: "POST",
 
@@ -32,13 +30,11 @@ const Userlogin = async ({ username, password, navigate }) => {
     name: name,
   };
 
-
   if (response.data === "User Not found") {
     swal({
       title: "No User Found!!",
 
-      text:
-        "Look's Like You have Entered Wrong Credentials, Please Check And Try Again.",
+      text: "Look's Like You have Entered Wrong Credentials, Please Check And Try Again.",
 
       icon: "error",
     });

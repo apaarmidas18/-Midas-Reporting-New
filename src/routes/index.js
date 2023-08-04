@@ -77,6 +77,12 @@ import PendingDocument from "../pages/PendingDocument";
 import PortalLayout from "../layout/PortalLayout";
 import PortalHome from "../pages/PortalRoutes/PortalHome";
 import ViewDocument from "../pages/Templates/ViewDocument";
+import ActiveCandidates from "../pages/Job/ActiveCandidates";
+import Booked from "../pages/Job/Booked";
+import ExtensionCandidates from "../pages/Job/ExtensionCandidates";
+import PendingCandidates from "../pages/Job/Pending";
+import AvailabilityLog from "../pages/Job/AvailabilityLog";
+import RequestDocument from "../pages/Templates/RequestDocument";
 
 export const Router = () => {
   return useRoutes([
@@ -115,7 +121,10 @@ export const Router = () => {
     {
       path: "/template",
       element: "",
-      children: [{ path: "view-document", element: <ViewDocument /> }],
+      children: [
+        { path: "view-document/:templateid", element: <ViewDocument /> },
+        { path: "request-document/:requestid", element: <RequestDocument /> },
+      ],
     },
     {
       path: "/dashboard",
@@ -127,7 +136,10 @@ export const Router = () => {
       ),
 
       children: [
-        { path: "", element: <Navigate to="/dashboard/home" replace /> },
+        {
+          path: "",
+          element: <Navigate to="/dashboard/home" replace />,
+        },
 
         { path: "home", element: <Home /> },
 
@@ -210,9 +222,13 @@ export const Router = () => {
       ),
 
       children: [
-        { path: "portal", element: <Navigate to="/portal/home" replace /> },
+        // { path: "portal", element: <Navigate to="/portal/home" replace /> },
 
-        { path: "job-home", element: <PortalHome /> },
+        { path: "active-candidates", element: <ActiveCandidates /> },
+        { path: "booked-candidates", element: <Booked /> },
+        { path: "extension-candidates", element: <ExtensionCandidates /> },
+        { path: "pending-candidates", element: <PendingCandidates /> },
+        { path: "availability-log", element: <AvailabilityLog /> },
       ],
     },
   ]);

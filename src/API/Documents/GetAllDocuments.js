@@ -1,4 +1,5 @@
 import { dhost } from "../../static";
+const token = localStorage.getItem("token");
 
 const GetAllDocuments = ({ setAllDocuments, setLoading }) => {
   var requestOptions = {
@@ -6,7 +7,7 @@ const GetAllDocuments = ({ setAllDocuments, setLoading }) => {
     redirect: "follow",
   };
 
-  fetch(`${dhost}document/getAllDocuments`, requestOptions)
+  fetch(`${dhost}document/getAllDocuments/${token}`, requestOptions)
     .then((response) => response.json())
 
     .then((result) => {

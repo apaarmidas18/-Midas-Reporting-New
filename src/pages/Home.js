@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dashboardcard from "../components/Dashboardcard";
+import AccessToken from "../API/Zoho-API/AccessToken";
 
 const Home = () => {
   const loginData = localStorage.getItem("User");
   const user = JSON.parse(loginData);
+
+  useEffect(() => {
+    AccessToken();
+  }, []);
+
   return (
     <>
       <div className="container dashboard-container">

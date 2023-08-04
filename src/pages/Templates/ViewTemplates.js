@@ -11,6 +11,7 @@ import Modal from "react-bootstrap/Modal";
 import countryCode from "../../utils/countryCode.json";
 import SendTemplate from "../../API/Checklist/SendTemplate";
 import DeleteZohoDocument from "../../API/Zoho-API/DeleteZohoDocument";
+import { token } from "../../static";
 
 const ViewTemplates = () => {
   const navigate = useNavigate();
@@ -41,6 +42,14 @@ const ViewTemplates = () => {
       verification_code: "",
     },
   ]);
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleToggleDiv = () => {
+    setIsVisible(false);
+  };
+  const handleToggleDivClose = () => {
+    setIsVisible(true);
+  };
   const handleClose = () => setShow(false);
   const handleShow = (data) => {
     setShow(true);
@@ -195,12 +204,8 @@ const ViewTemplates = () => {
     '"+98"',
   ];
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles,
-  } = useDropzone();
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone();
 
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
@@ -238,12 +243,13 @@ const ViewTemplates = () => {
   if (loading) {
     return "Wait";
   }
-
+  const redirectFunction = (id) => {
+    navigate(`/template/view-document/${id}`);
+  };
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
 
   for (let index = 0; index < allDocuments.length; index++) {
     const element = allDocuments[index];
-
     rows.push({
       ...element,
       id: index + 1,
@@ -255,10 +261,13 @@ const ViewTemplates = () => {
           style={{ display: "flex", gap: "15px", justifyContent: "center" }}
         >
           <div class="dropdown">
-            <button class="dropbtn">
+            <button class="dropbtn" onClick={handleToggleDiv}>
               <i class="fa fa-ellipsis-h"></i>
             </button>
-            <div class="dropdown-content">
+            <div
+              style={{ display: isVisible ? "none" : "block" }}
+              class="dropdown-content"
+            >
               <div className="area-content">
                 <Link to={"/dashboard/edit-templates"} state={element}>
                   <i
@@ -267,13 +276,16 @@ const ViewTemplates = () => {
                   ></i>
                   Edit
                 </Link>
-                <Link to={"/template/view-document"} state={element}>
+                {/* <button
+                  onClick={() => redirectFunction(element.template_id)}
+                  // to={`/template/view-document/${element.template_id}`}
+                >
                   <i
                     class="fa-solid fa-file"
                     style={{ marginRight: "10px", color: "#000" }}
                   ></i>
                   View Document
-                </Link>
+                </button> */}
                 <Link href="/diversity">
                   <i
                     class="fa-solid fa-link"
@@ -322,6 +334,14 @@ const ViewTemplates = () => {
                 </Link>
               </div>
             </div>
+          </div>
+          <div className="send-btn">
+            <button
+              style={{ border: "none", background: "transparent" }}
+              onClick={() => redirectFunction(element.template_id)}
+            >
+              <i style={{ color: "black" }} class="fa-solid fa-eye"></i>
+            </button>
           </div>
           <div className="send-btn">
             <button
@@ -384,14 +404,17 @@ const ViewTemplates = () => {
   /* ----------------------------API-CALL-ARRAY---------------------------- */
   const request = { actions: reciept, notes: notes };
   const tId = documentDetails.template_id;
-
   const SendDoc = (request, navigate, tId) => {
     SendTemplate(request, navigate, tId);
   };
+
   /* ----------------------------API-CALL-ARRAY---------------------------- */
   return (
     <>
-      <div className="container-fluid">
+      <div
+        className="container-fluid"
+        onMouseMoveCapture={handleToggleDivClose}
+      >
         <div className="heading">
           <HeaderBreadcrumbs
             meta={"Templates"}

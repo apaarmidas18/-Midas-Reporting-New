@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
 import Lottie from "react-lottie";
 import animationData from "../../lottie/signin.json";
-import { useNavigate, useParams } from "react-router";
 
-const ViewDocument = () => {
+const RequestDocument = () => {
   const token = localStorage.getItem("token");
-  let { templateid } = useParams();
   const navigate = useNavigate();
+  let { requestid } = useParams();
+
+  const rid = requestid;
   function func() {
-    var redirect_url = `https://sign.zoho.in/zsi/60020492410?frameorigin=https://midas-reporting-new.vercel.app&redirect_url=https://midas-reporting-new.vercel.app/dashboard/view-templates#/template/viewer/${templateid}`;
+    var redirect_url = `https://sign.zoho.in/zsi/60020492410?frameorigin=https://midas-reporting-new.vercel.app&redirect_url=https://midas-reporting-new.vercel.app/dashboard/view-templates#/request/viewer/${rid}`;
 
     var params = {
       access_token: token,
@@ -47,6 +49,10 @@ const ViewDocument = () => {
 
     //var newWindow = window.open("","theFrame",params);
   }
+
+  // useEffect(() => {
+  //   func();
+  // }, [func]);
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -59,6 +65,7 @@ const ViewDocument = () => {
     <div className="container-fluid signin-container">
       <Lottie options={defaultOptions} height={300} width={300} />
       <h2>Click Here To Proceed</h2>
+
       <button
         className="btn btn-primary"
         onClick={() => navigate("/dashboard/view-templates")}
@@ -72,4 +79,4 @@ const ViewDocument = () => {
   );
 };
 
-export default ViewDocument;
+export default RequestDocument;
