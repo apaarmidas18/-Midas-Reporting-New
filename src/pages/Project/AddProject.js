@@ -33,19 +33,23 @@ const OCCUPATION = [
 const PROJECT = [
   {
     value: 1,
-
     label: "Process",
   },
-
   {
     value: 2,
-
     label: "Joined",
   },
   {
     value: 3,
-
     label: "Completed",
+  },
+  {
+    value: 4,
+    label: "Backout",
+  },
+  {
+    value: 5,
+    label: "Terminated",
   },
 ];
 

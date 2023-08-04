@@ -48,6 +48,16 @@ const PROJECT = [
 
     label: "Completed",
   },
+  {
+    value: 4,
+
+    label: "Backout",
+  },
+  {
+    value: 5,
+
+    label: "Terminated",
+  },
 ];
 
 const EditProject = () => {
@@ -65,7 +75,6 @@ const EditProject = () => {
   const location = useLocation();
   const { data } = location.state;
   //validation******************************************************************
-  console.log("data:", data);
   const formik = useFormik({
     initialValues: {
       employeeCode: data.id,

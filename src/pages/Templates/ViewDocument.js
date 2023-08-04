@@ -71,5 +71,4 @@ const ViewDocument = () => {
     </div>
   );
 };
-
 export default ViewDocument;
