@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import countryCode from "../../utils/countryCode.json";
 import SendTemplate from "../../API/Checklist/SendTemplate";
 import DeleteZohoDocument from "../../API/Zoho-API/DeleteZohoDocument";
+import AccessToken from "../../API/Zoho-API/AccessToken";
 
 const ViewTemplates = () => {
   const navigate = useNavigate();
@@ -235,6 +236,7 @@ const ViewTemplates = () => {
   var rows = [];
 
   useEffect(() => {
+    AccessToken();
     GetAllDocuments({ setAllDocuments, setLoading });
   }, []);
 
