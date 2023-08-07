@@ -3,7 +3,6 @@ import { MDBDataTable } from "mdbreact";
 import { AiOutlinePlus } from "react-icons/ai";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import { useDropzone } from "react-dropzone";
-
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import GetAllDocuments from "../../API/Documents/GetAllDocuments";
@@ -11,7 +10,6 @@ import Modal from "react-bootstrap/Modal";
 import countryCode from "../../utils/countryCode.json";
 import SendTemplate from "../../API/Checklist/SendTemplate";
 import DeleteZohoDocument from "../../API/Zoho-API/DeleteZohoDocument";
-import { token } from "../../static";
 
 const ViewTemplates = () => {
   const navigate = useNavigate();
