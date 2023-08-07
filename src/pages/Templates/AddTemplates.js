@@ -20,6 +20,8 @@ const AddTemplates = () => {
   var incrementState = 1;
   var filesArray = [];
   const [checked, setChecked] = useState(true);
+  const [color, setColor] = useState("");
+  console.log(color);
   const [emailchecked, setEmailchecked] = useState(true);
   const [smschecked, setSmschecked] = useState(false);
   const [number, setNumber] = useState({});
@@ -213,6 +215,7 @@ const AddTemplates = () => {
   ];
   const getColour = () => colours[Math.floor(Math.random() * colours.length)];
   const addReceipt = (index) => {
+    setColor(getColour());
     setReciept([
       ...reciept,
       {
@@ -229,12 +232,8 @@ const AddTemplates = () => {
       },
     ]);
   };
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles,
-  } = useDropzone();
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone();
 
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
@@ -266,7 +265,7 @@ const AddTemplates = () => {
 
     axios
       .request(options)
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         console.log(result);
         if (result.baseResponse.status == "success") {
@@ -274,7 +273,7 @@ const AddTemplates = () => {
         }
       })
 
-      .catch(function(error) {
+      .catch(function (error) {
         swal({
           title: "Submission Error.",
           title: error,
@@ -354,7 +353,7 @@ const AddTemplates = () => {
                 <>
                   <div
                     className="reciept"
-                    style={{ borderLeft: "4px solid " + getColour() }}
+                    style={{ borderLeft: "4px solid " + color }}
                   >
                     <div className="row">
                       <div class="mb-3 col-md-1">

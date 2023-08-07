@@ -9,9 +9,7 @@ const GetAllDocuments = ({ setAllDocuments, setLoading }) => {
 
   fetch(`${dhost}document/getAllDocuments/${token}`, requestOptions)
     .then((response) => response.json())
-
     .then((result) => {
-      console.log("REulst", result);
       if (result) {
         setLoading(false);
         setAllDocuments(result.response);
