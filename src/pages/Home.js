@@ -6,9 +6,9 @@ const Home = () => {
   const loginData = localStorage.getItem("User");
   const user = JSON.parse(loginData);
 
-  useEffect(() => {
-    AccessToken();
-  }, []);
+  // useEffect(() => {
+  //   AccessToken();
+  // }, []);
 
   return (
     <>

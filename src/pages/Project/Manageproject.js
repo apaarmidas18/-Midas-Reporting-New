@@ -8,15 +8,24 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const Manageproject = () => {
   const [projectDetails, setProjectDetails] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState("");
+
   var rows = [];
 
   useEffect(() => {
     GetAllProjects({ setProjectDetails, setLoading });
   }, []);
+
+  const filtered = (filter) => {
+    const data = projectDetails.filter((item, index) => item.status === filter);
+    setFilteredData(data);
+  };
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
-  for (let index = 0; index < projectDetails.length; index++) {
-    const element = projectDetails[index];
+
+  const detail = filteredData.length === 0 ? projectDetails : filteredData;
+  for (let index = 0; index < detail.length; index++) {
+    const element = detail[index];
 
     rows.push({
       ...element,
@@ -112,6 +121,12 @@ const Manageproject = () => {
         width: 200,
       },
       {
+        label: "Status",
+        field: "status",
+        sort: "asc",
+        width: 200,
+      },
+      {
         label: "Details",
         field: "edit",
         sort: "asc",
@@ -157,6 +172,41 @@ const Manageproject = () => {
         </div>
       </div>
       <div className="container-fluid round-border bg-white mt-4 p-2 px-4">
+        <div className="button-group">
+          <button
+            className="btn btn-success"
+            onClick={() => filtered("Completed")}
+          >
+            Completed
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => filtered("Joined")}
+          >
+            Joined
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => filtered("Backout")}
+          >
+            Backout
+          </button>
+          <button className="btn btn-info" onClick={() => filtered("Pending")}>
+            Pending
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={() => filtered("Process")}
+          >
+            Process
+          </button>
+          <button
+            className="btn btn-dark"
+            onClick={() => filtered("Terminated")}
+          >
+            Terminated
+          </button>
+        </div>
         <MDBDataTable
           id="project-list-table"
           striped
