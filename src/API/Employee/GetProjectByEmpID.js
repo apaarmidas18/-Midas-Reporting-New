@@ -2,6 +2,8 @@ import axios from "axios";
 import { host } from "../../static";
 
 const GetProjectByEmpId = ({ setProjectDetails, emp_id, setLoading }) => {
+
+  
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
 

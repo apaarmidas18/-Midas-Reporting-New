@@ -5,11 +5,9 @@ import { Outlet } from "react-router-dom";
 import AccessToken from "../API/Zoho-API/AccessToken";
 
 const DashboardLayout = () => {
-  useEffect(() => {
-    setInterval(() => {
-      AccessToken();
-    }, 36000);
-  }, []);
+  // useEffect(() => {
+  //   AccessToken();
+  // }, []);
   return (
     <div>
       <Sidebar />
