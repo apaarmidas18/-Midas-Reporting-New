@@ -13,6 +13,7 @@ const GetDocById = (setDocumentsDetails, EmpID, setLoading) => {
   )
     .then((response) => response.json())
     .then((result) => {
+      console.log("resultL", result);
       if (result) {
         return setDocumentsDetails(result), setLoading(false);
       } else {

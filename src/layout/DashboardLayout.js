@@ -6,7 +6,9 @@ import AccessToken from "../API/Zoho-API/AccessToken";
 
 const DashboardLayout = () => {
   useEffect(() => {
-    AccessToken();
+    setInterval(() => {
+      AccessToken();
+    }, 36000);
   }, []);
   return (
     <div>

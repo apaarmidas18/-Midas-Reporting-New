@@ -21,7 +21,7 @@ const AddTemplates = () => {
   var filesArray = [];
   const [checked, setChecked] = useState(true);
   const [color, setColor] = useState("");
-  console.log(color);
+
   const [emailchecked, setEmailchecked] = useState(true);
   const [smschecked, setSmschecked] = useState(false);
   const [number, setNumber] = useState({});

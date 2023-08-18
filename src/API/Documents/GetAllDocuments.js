@@ -3,8 +3,6 @@ import { dhost } from "../../static";
 const token = localStorage.getItem("token");
 
 const GetAllDocuments = ({ setAllDocuments, setLoading }) => {
-  console.log(`${dhost}document/getAllDocuments/${token}`);
-  console.log(token);
   var requestOptions = {
     method: "GET",
     redirect: "follow",
