@@ -9,7 +9,7 @@ const SubHorizontal = () => {
   };
   const listItems = [
     { tabname: "Dashboard", tabroute: "" },
-    { tabname: "Active", tabroute: "active-candidates" },
+    { tabname: "Active", tabroute: "/portal/active-candidates" },
     { tabname: "Booked", tabroute: "booked-candidates" },
     { tabname: "Extension", tabroute: "extension-candidates" },
     { tabname: "Pending", tabroute: "pending-candidates" },

@@ -6,6 +6,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useEffect } from "react";
 import TabName from "../../components/TabName";
+import NewHor from "../../components/NewHor";
 
 const AvailabilityLog = () => {
   const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -180,65 +181,68 @@ const AvailabilityLog = () => {
   };
   return (
     <>
-      <div className="container-fluid tab-container">
-        <TabName tabname="Availability Log" />
-        <div className="row" style={{ margin: "10px" }}>
-          <div className="col-md-2 job-select">
-            <label>Profession</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Profession</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <NewHor />
+        <div className="container-fluid tab-container">
+          <TabName tabname="Availability Log" />
+          <div className="row" style={{ margin: "10px" }}>
+            <div className="col-md-2 job-select">
+              <label>Profession</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Profession</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-md-2 job-select">
+              <label>Specialty</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Specialty</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-md-2 job-select">
+              <label>Loc. Preference</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Specialty</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-md-2 job-select">
+              <label>Previously Emp</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Specialty</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-md-2 job-select">
+              <label>Recruiter</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Specialty</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
           </div>
-          <div className="col-md-2 job-select">
-            <label>Specialty</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Specialty</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <div className="container-fluid job-table">
+            <MDBDataTable
+              id="table-to-xls"
+              striped
+              bordered
+              hover
+              sorting={true}
+              small
+              data={data}
+            />
           </div>
-          <div className="col-md-2 job-select">
-            <label>Loc. Preference</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Specialty</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div className="col-md-2 job-select">
-            <label>Previously Emp</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Specialty</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div className="col-md-2 job-select">
-            <label>Recruiter</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Specialty</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-        </div>
-        <div className="container-fluid job-table">
-          <MDBDataTable
-            id="table-to-xls"
-            striped
-            bordered
-            hover
-            sorting={true}
-            small
-            data={data}
-          />
         </div>
       </div>
     </>

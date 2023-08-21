@@ -8,13 +8,9 @@ import NewHor from "../components/NewHor";
 const PortalLayout = () => {
   return (
     <div style={{ display: "flex" }}>
-      {/* <HorizontalMenu />
-      <SubHorizontal /> */}
       <NewSide />
-      <NewHor />
-      <div className="outlet-horizontal">
-        <Outlet />
-      </div>
+
+      <Outlet />
     </div>
   );
 };
