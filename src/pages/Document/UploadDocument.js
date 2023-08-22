@@ -76,10 +76,9 @@ const UploadDoc = () => {
   //     .catch((err) => console.error(err));
   // };
 
-  // useEffect(() => {
-  //   GetDocById(setDocumentDetails, data.id, setLoading);
-  //   GetAllDocuments();
-  // }, []);
+  useEffect(() => {
+    GetDocById(setDocumentDetails, data.id, setLoading);
+  }, []);
 
   // const downloadEmployeeData = () => {
   //   documentData.map((item, index) => {

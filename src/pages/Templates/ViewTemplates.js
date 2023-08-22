@@ -44,7 +44,7 @@ const ViewTemplates = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleToggleDiv = () => {
-    setIsVisible(false);
+    setIsVisible(!isVisible);
   };
   const handleToggleDivClose = () => {
     setIsVisible(true);
@@ -236,7 +236,6 @@ const ViewTemplates = () => {
   var rows = [];
 
   useEffect(() => {
-    AccessToken();
     GetAllDocuments({ setAllDocuments, setLoading });
   }, []);
 

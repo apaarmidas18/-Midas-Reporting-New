@@ -15,6 +15,7 @@ const ViewProjectid = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const options = ["Completed", "Joined", "Pending", "Backout", "Terminated"];
   var rows = [];
+
   const emp_id = data.id;
 
   const toggleDropdown = () => {
@@ -88,7 +89,6 @@ const ViewProjectid = () => {
 
   const Tabledata = {
     columns: [
-      
       {
         label: "Project-ID",
         field: "projectId",

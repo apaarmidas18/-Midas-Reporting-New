@@ -1,13 +1,45 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import NewHor from "./NewHor";
 
 const NewSide = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleToggleSidebar = () => {
+  const handleToggleSidebar = (item) => {
     setIsSidebarExpanded((prevExpanded) => !prevExpanded);
+    setSelectedItem(item);
   };
+
+  const listItems = [
+    {
+      tabname: "Active",
+      tabroute: "active-candidates",
+      fontlogo: "fa-solid fa-chart-line",
+    },
+    {
+      tabname: "Booked",
+      tabroute: "booked-candidates",
+      fontlogo: "fa-solid fa-address-book",
+    },
+    {
+      tabname: "Pending",
+      tabroute: "pending-candidates",
+      fontlogo: "fa-solid fa-star",
+    },
+    {
+      tabname: "Availability",
+      tabroute: "availability-log",
+      fontlogo: "fa-solid fa-list",
+    },
+    {
+      tabname: "Plan My Day",
+      tabroute: "",
+      fontlogo: "fa-solid fa-table",
+    },
+  ];
+  const highlightedItemClass = "light-active";
   return (
     <>
       <div
@@ -31,6 +63,27 @@ const NewSide = () => {
               <span>Jobs</span>
             </div>
             <ul className="new-sidebar-list">
+              {listItems.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => handleToggleSidebar(item.tabname)}
+                  >
+                    <i class={item.fontlogo}></i>
+                    <span
+                      className={
+                        selectedItem === item.tabname
+                          ? highlightedItemClass
+                          : ""
+                      }
+                    >
+                      <Link to={item.tabroute}>{item.tabname}</Link>
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            {/* <ul className="new-sidebar-list">
               <Link href="/active-candidates">
                 <li>
                   <i class="fa-solid fa-chart-line"></i>
@@ -61,7 +114,7 @@ const NewSide = () => {
                   <p>Submittals</p>
                 </li>
               </Link>
-            </ul>
+            </ul> */}
           </div>
         </nav>
       </div>

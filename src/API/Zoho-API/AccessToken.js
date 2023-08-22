@@ -11,7 +11,15 @@ const AccessToken = async () => {
     .then(async (result) => {
       console.log(result.response);
       const access_token = await result.response.access_token;
-      await localStorage.setItem("token", access_token);
+      // await localStorage.setItem("token", access_token);
+      try {
+        const token = await localStorage.setItem("token", access_token);
+        if (!token) {
+          return null;
+        }
+      } catch (error) {
+        return null;
+      }
     })
     .catch((error) => console.log(error));
 };

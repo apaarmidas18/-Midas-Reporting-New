@@ -1215,7 +1215,7 @@ input[switch="warning"]:checked + label:before {
 .collapsed .new-sidebar-list {
   padding: 15px;
 }
-.collapsed .new-sidebar-list p {
+.collapsed .new-sidebar-list a {
   display: none;
   transition: 0.5s all;
 }
@@ -1267,11 +1267,15 @@ input[switch="warning"]:checked + label:before {
   color: #6a6b83;
   font-size: 18px;
 }
-.new-sidebar-list p {
-  color: #141212;
+.new-sidebar-list a {
+  color: #6a6b83;
   display: inline-block;
   font-size: 14px;
+  font-weight: 600;
   transition: 0.5s all;
+}
+.new-sidebar-list a:hover {
+  cursor: pointer;
 }
 .nav-tab-heading {
   margin: 16px 0px;
@@ -1326,47 +1330,97 @@ input[switch="warning"]:checked + label:before {
   height: 100vh;
   text-align: center;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
 .custom-select {
   width: 300px;
 }
 
 .dropdown-menu {
   max-height: 150px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   overflow-y: auto;
 }
 
 .select-container {
   width: 400px;
+<<<<<<< HEAD
   border: 1px solid #ccc;
   border-radius: 5px;
+=======
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   overflow: hidden;
 }
 
 .select {
   width: 100%;
+<<<<<<< HEAD
   padding: 10px;
   background-color: #f9f9f9;
   border: none;
   outline: none;
   cursor: pointer;
+=======
+
+  padding: 10px;
+
+  background-color: #f9f9f9;
+
+  border: none;
+
+  outline: none;
+
+  cursor: pointer;
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   font-weight: 500;
 }
 
 .options {
   max-height: 120px;
+<<<<<<< HEAD
   overflow-y: auto;
   display: block;
   background-color: #fff;
   border: 1px solid #ccc;
+=======
+
+  overflow-y: auto;
+
+  display: block;
+
+  background-color: #fff;
+
+  border: 1px solid #ccc;
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   border-top: none;
 }
 
 .option {
   padding: 8px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   cursor: pointer;
 }
 
 .option.selected {
   background-color: #f2f2f2;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71d6877c2c29784208c89768c20a2a4a0d1b3d17
   font-weight: 500;
 }
