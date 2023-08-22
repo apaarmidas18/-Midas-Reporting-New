@@ -82,12 +82,7 @@ const Employeecontrol = () => {
 
   const data = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+     
       {
         label: "Emp-Id",
         field: "employeeId",

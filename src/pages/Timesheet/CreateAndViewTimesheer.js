@@ -195,12 +195,7 @@ const Timesheet = () => {
 
   const dataT = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+   
       {
         label: "Day",
         field: "day",

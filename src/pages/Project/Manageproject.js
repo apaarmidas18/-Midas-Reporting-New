@@ -10,17 +10,33 @@ const Manageproject = () => {
   const [projectDetails, setProjectDetails] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const options = ["Completed", "Joined", "Pending", "Backout", "Terminated"];
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const filtered = (filters) => {
+    const data = projectDetails.filter((item) => filters.includes(item.status));
+    setFilteredData(data);
+  };
+
+  const handleOptionClick = (option) => {
+    const updatedOptions = selectedOptions.includes(option)
+      ? selectedOptions.filter((item) => item !== option)
+      : [...selectedOptions, option];
+
+    setSelectedOptions(updatedOptions);
+    filtered(updatedOptions);
+  };
   var rows = [];
 
   useEffect(() => {
     GetAllProjects({ setProjectDetails, setLoading });
   }, []);
 
-  const filtered = (filter) => {
-    const data = projectDetails.filter((item, index) => item.status === filter);
-    setFilteredData(data);
-  };
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
 
   const detail = filteredData.length === 0 ? projectDetails : filteredData;
@@ -72,12 +88,7 @@ const Manageproject = () => {
 
   const data = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+     
       {
         label: "Project-ID",
         field: "projectId",
@@ -172,7 +183,7 @@ const Manageproject = () => {
         </div>
       </div>
       <div className="container-fluid round-border bg-white mt-4 p-2 px-4">
-        <div className="button-group">
+        {/* <div className="button-group">
           <button
             className="btn btn-success"
             onClick={() => filtered("Completed")}
@@ -206,6 +217,31 @@ const Manageproject = () => {
           >
             Terminated
           </button>
+        </div> */}
+        <div className="col-md-8 ">
+          <h5 style={{ fontWeight: "600" }}>Filter by status</h5>
+          <div className="select-container">
+            <div className="select" onClick={toggleDropdown}>
+              {selectedOptions.length === 0
+                ? "Select Status"
+                : selectedOptions.join(", ")}
+            </div>
+            {isOpen && (
+              <div className="options">
+                {options.map((option) => (
+                  <div
+                    key={option}
+                    className={`option ${
+                      selectedOptions.includes(option) ? "selected" : ""
+                    }`}
+                    onClick={() => handleOptionClick(option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <MDBDataTable
           id="project-list-table"

@@ -47,12 +47,7 @@ const ViewChecklist = () => {
 
   const data = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+     
       {
         label: "Candidate-Name",
         field: "firstname",

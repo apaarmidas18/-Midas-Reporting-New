@@ -1326,3 +1326,47 @@ input[switch="warning"]:checked + label:before {
   height: 100vh;
   text-align: center;
 }
+.custom-select {
+  width: 300px;
+}
+
+.dropdown-menu {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.select-container {
+  width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.options {
+  max-height: 120px;
+  overflow-y: auto;
+  display: block;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.option {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.option.selected {
+  background-color: #f2f2f2;
+  font-weight: 500;
+}

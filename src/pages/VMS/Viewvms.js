@@ -39,12 +39,6 @@ const Viewvms = () => {
   const data = {
     columns: [
       {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
-      {
         label: "Name",
         field: "name",
         sort: "asc",
