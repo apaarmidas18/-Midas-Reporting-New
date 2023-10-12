@@ -10,6 +10,7 @@ const CreateUser = (values, navigate) => {
     status: values.status,
     rollId: values.rollId,
     type: values.type,
+    teamLeadId: values.teamLeadId,
   };
 
   var config = {
@@ -19,7 +20,8 @@ const CreateUser = (values, navigate) => {
   };
 
   axios(config)
-    .then(function(response) {
+    .then(function (response) {
+      console.log(response);
       if (response.data.status == 200) {
         navigate("/dashboard/view-user");
       } else {
@@ -30,7 +32,7 @@ const CreateUser = (values, navigate) => {
         });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 };

@@ -9,7 +9,6 @@ const PortalLayout = () => {
   return (
     <div style={{ display: "flex" }}>
       <NewSide />
-
       <Outlet />
     </div>
   );

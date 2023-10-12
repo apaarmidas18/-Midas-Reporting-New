@@ -1054,8 +1054,8 @@ input[switch="warning"]:checked + label:before {
 .light-nav-list a {
   color: #fff;
 }
-.light-active {
-  background-color: #0033c4;
+.light-active a {
+  color: #0033c4 !important;
 }
 .tab-name {
   display: inline-block;
@@ -1069,6 +1069,11 @@ input[switch="warning"]:checked + label:before {
 }
 .tab-container {
   padding: 15px;
+  padding-right: 100px;
+  background-color: white;
+}
+.job-table {
+  border: 1px solid #dedede;
 }
 .job-table td {
   font-size: 12px;
@@ -1084,6 +1089,7 @@ input[switch="warning"]:checked + label:before {
 .job-select label {
   font-size: 14px;
   font-weight: 500;
+  margin-top: 20px;
 }
 .modal-dialog .job-modal {
   margin-top: 68px !important;
@@ -1096,7 +1102,7 @@ input[switch="warning"]:checked + label:before {
 }
 .job-modal .modal-header {
   height: 20px;
-  background: #0033c4;
+  background: #dc3545;
   font-size: 15px;
 }
 .job-modal .modal-title {
@@ -1108,9 +1114,8 @@ input[switch="warning"]:checked + label:before {
 }
 
 .job-select-row {
-  background: #dcdcdc87;
   border-radius: 5px;
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 /* // Template Modal CSS************************************************************************** */
 
@@ -1196,7 +1201,6 @@ input[switch="warning"]:checked + label:before {
 .expanded {
   width: 240px;
 }
-
 .collapsed {
   width: 60px;
 }
@@ -1240,6 +1244,7 @@ input[switch="warning"]:checked + label:before {
 .side-button {
   display: flex;
   justify-content: end;
+  height: 54px;
 }
 .sidebar-logo img {
   transition: 0.5s all;
@@ -1389,6 +1394,118 @@ input[switch="warning"]:checked + label:before {
 
 .option.selected {
   background-color: #f2f2f2;
-
   font-weight: 500;
+}
+.jobfilter {
+  background-color: #dc3545 !important;
+}
+
+/* DateRangePicker.css */
+/* .date-range-picker {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+} */
+
+.react-datepicker {
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+}
+
+.react-datepicker__header {
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px 4px 0 0;
+  padding: 8px 0;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range {
+  background-color: #007bff;
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #0056b3;
+}
+
+.react-datepicker__input-container {
+  display: block;
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding: 5px;
+}
+.table-container {
+  padding: 0 !important;
+}
+
+.select-job p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #dc3545;
+  font-family: "circular";
+  margin-right: 10px;
+  margin-top: 2px;
+}
+.assign-modal .modal-header {
+  background: #0033c4;
+  height: 45px;
+}
+.assign-modal .modal-title {
+  font-size: 18px;
+}
+.job-modal .modal-header .btn-close {
+  filter: invert(100%) !important;
+  opacity: 1;
+}
+.assign-modal .modal-header .btn-close {
+  filter: invert(100%) !important;
+  opacity: 1;
+}
+.select-job {
+  font-size: 14px;
+  font-weight: 600;
+  word-spacing: 3px;
+}
+
+.btn-close {
+  filter: invert(1) !important;
+  opacity: 1 !important;
+}
+
+@media screen and (min-width: 992px) {
+  .tab-container {
+    max-width: 1050px !important;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .tab-container {
+    max-width: 1250px !important;
+  }
+}
+
+.fa-filter {
+  color: white;
+  font-size: 16px;
+  margin-right: 2px;
+  margin-top: 2px;
 }

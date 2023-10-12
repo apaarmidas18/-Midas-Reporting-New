@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import CreateUser from "../../API/User/CreateUser";
 import { useNavigate } from "react-router";
+import GetAllTeamLeads from "../../API/User/GetAllTeamLeads";
 
 const ROLLSSUPERADMIN = [
   {
@@ -102,7 +103,8 @@ const USERTYPE = [
 ];
 
 const Adduser = () => {
-  const [formState, setFormState] = useState(true);
+  const [teamLead, setTeamLead] = useState([]);
+
   const userData = localStorage.getItem("User");
   const user = JSON.parse(userData);
   const ROLLS = user.rollId == 1 ? ROLLSSUPERADMIN : ADMINROLLS;
@@ -116,6 +118,7 @@ const Adduser = () => {
       password: "",
       rollId: "",
       type: "",
+      teamLeadId: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is Required"),
@@ -141,6 +144,10 @@ const Adduser = () => {
     },
   });
   //validation**************************************************************************8
+
+  useEffect(() => {
+    GetAllTeamLeads({ setTeamLead });
+  }, []);
 
   return (
     <>
@@ -297,6 +304,28 @@ const Adduser = () => {
                   <div className="text-danger">{formik.errors.type}</div>
                 ) : null}
               </span>
+            </div>
+            <div className="col-md-6">
+              <label
+                className="form-label"
+                for="exampleFormControlSelect2"
+                style={{ marginBottom: "8px" }}
+              >
+                Team-Leads
+              </label>
+
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="teamLeadId"
+              >
+                <option selected>Open this select menu</option>
+                {teamLead.map((item, index) => {
+                  return <option value={item.id}>{item.name}</option>;
+                })}
+              </select>
             </div>
           </div>
           <button

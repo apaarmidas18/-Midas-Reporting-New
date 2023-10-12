@@ -5,10 +5,13 @@ import "mdbreact/dist/css/mdb.css";
 import "react-datalist-input/dist/styles.css";
 import { Router } from "./routes/index";
 import { BrowserRouter } from "react-router-dom";
+import { SidebarContext } from "./components/hooks/UseHooks/UseContext";
 function App() {
   return (
     <BrowserRouter>
-      <Router />
+      <SidebarContext>
+        <Router />
+      </SidebarContext>
     </BrowserRouter>
   );
 }

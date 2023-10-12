@@ -1,18 +1,32 @@
-import React from "react";
+import React, { createContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NewHor from "./NewHor";
+import { useContext } from "react";
+import { Sidebar_Context } from "./hooks/ContextSidebar";
 
 const NewSide = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
+  const { isSidebarExpanded, handleToggleSidebar } =
+    useContext(Sidebar_Context);
+  // const handleToggleSidebar = (item) => {
+  //   setIsSidebarExpanded((prevExpanded) => !prevExpanded);
+  // };
 
-  const handleToggleSidebar = (item) => {
-    setIsSidebarExpanded((prevExpanded) => !prevExpanded);
+  const liColor = (item) => {
     setSelectedItem(item);
   };
-
   const listItems = [
+    {
+      tabname: "Jobs",
+      tabroute: "jobs",
+      fontlogo: "fa-solid fa-square-poll-vertical",
+    },
+    // {
+    //   tabname: "Assigned Job",
+    //   tabroute: "assigned-job",
+    //   fontlogo: "fa-solid fa-star",
+    // },
     {
       tabname: "Active",
       tabroute: "active-candidates",
@@ -40,10 +54,11 @@ const NewSide = () => {
     },
   ];
   const highlightedItemClass = "light-active";
+
   return (
     <>
       <div
-        className={`sidebar ${isSidebarExpanded ? "expanded" : "collapsed"}`}
+        className={`sidebar ${isSidebarExpanded ? "expanded " : "collapsed"}`}
       >
         <div className="side-button">
           <button className="toggle-button" onClick={handleToggleSidebar}>
@@ -65,11 +80,7 @@ const NewSide = () => {
             <ul className="new-sidebar-list">
               {listItems.map((item, index) => {
                 return (
-                  <li
-                    key={index}
-                    onClick={() => handleToggleSidebar(item.tabname)}
-                  >
-                    <i class={item.fontlogo}></i>
+                  <li key={index} onClick={() => liColor(item.tabname)}>
                     <span
                       className={
                         selectedItem === item.tabname
@@ -77,44 +88,14 @@ const NewSide = () => {
                           : ""
                       }
                     >
+                      <i class={item.fontlogo}></i>
+
                       <Link to={item.tabroute}>{item.tabname}</Link>
                     </span>
                   </li>
                 );
               })}
             </ul>
-            {/* <ul className="new-sidebar-list">
-              <Link href="/active-candidates">
-                <li>
-                  <i class="fa-solid fa-chart-line"></i>
-                  <p>Active</p>
-                </li>
-              </Link>
-              <Link href="/booked-candidates">
-                <li>
-                  <i class="fa-solid fa-address-book"></i>
-                  <p>Booked</p>
-                </li>
-              </Link>
-              <Link href="/pending-candidates">
-                <li>
-                  <i class="fa-solid fa-star"></i>
-                  <p>Pending</p>
-                </li>
-              </Link>
-              <Link href="/availability-log">
-                <li>
-                  <i class="fa-solid fa-list"></i>
-                  <p>Availability Log</p>
-                </li>
-              </Link>
-              <Link href="/submittals">
-                <li>
-                  <i class="fa-solid fa-table"></i>
-                  <p>Submittals</p>
-                </li>
-              </Link>
-            </ul> */}
           </div>
         </nav>
       </div>

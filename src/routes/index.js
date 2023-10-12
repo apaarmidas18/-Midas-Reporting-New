@@ -83,6 +83,8 @@ import ExtensionCandidates from "../pages/Job/ExtensionCandidates";
 import PendingCandidates from "../pages/Job/Pending";
 import AvailabilityLog from "../pages/Job/AvailabilityLog";
 import RequestDocument from "../pages/Templates/RequestDocument";
+import AllJobs from "../pages/Job/AllJobs";
+import AssignedJob from "../pages/Job/AssignedJob";
 
 export const Router = () => {
   return useRoutes([
@@ -224,7 +226,9 @@ export const Router = () => {
       children: [
         // { path: "portal", element: <Navigate to="/portal/home" replace /> },
 
+        { path: "jobs", element: <AllJobs /> },
         { path: "active-candidates", element: <ActiveCandidates /> },
+        { path: "assigned-job", element: <AssignedJob /> },
         { path: "booked-candidates", element: <Booked /> },
         { path: "extension-candidates", element: <ExtensionCandidates /> },
         { path: "pending-candidates", element: <PendingCandidates /> },
