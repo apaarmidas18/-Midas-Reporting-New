@@ -88,12 +88,7 @@ const AddProjectExtension = () => {
 
   const dataT = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+      
       {
         label: "Project-ID",
         field: "projectId",

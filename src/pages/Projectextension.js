@@ -25,12 +25,7 @@ const Projectextension = () => {
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
   const data = {
     columns: [
-      {
-        label: "S.No",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
+
       {
         label: "Extension-Id",
         field: "extensionId",

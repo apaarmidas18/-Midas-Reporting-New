@@ -52,6 +52,7 @@ a {
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 7px;
 }
 
 /* Track */
@@ -1335,14 +1336,12 @@ input[switch="warning"]:checked + label:before {
   height: 100vh;
   text-align: center;
 }
-
 .custom-select {
   width: 300px;
 }
 
 .dropdown-menu {
   max-height: 150px;
-
   overflow-y: auto;
 }
 
@@ -1388,12 +1387,12 @@ input[switch="warning"]:checked + label:before {
 
 .option {
   padding: 8px;
-
   cursor: pointer;
 }
 
 .option.selected {
   background-color: #f2f2f2;
+
   font-weight: 500;
 }
 .jobfilter {
