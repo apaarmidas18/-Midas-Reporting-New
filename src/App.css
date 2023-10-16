@@ -1392,7 +1392,6 @@ input[switch="warning"]:checked + label:before {
 
 .option.selected {
   background-color: #f2f2f2;
-
   font-weight: 500;
 }
 .jobfilter {

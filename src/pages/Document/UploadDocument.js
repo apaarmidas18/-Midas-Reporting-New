@@ -51,6 +51,7 @@ const TAGS_OPTION = [
   { id: 35, value: "STATE-DOC" },
 ];
 const UploadDoc = () => {
+  
   const location = useLocation();
   const { data } = location.state;
   const [uploadDocResult, setUploadDocResult] = useState([]);
