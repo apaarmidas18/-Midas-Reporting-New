@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import CreateClient from "../../API/Master/Client/CreateClient";
 import { useState } from "react";
+import Button from "../../components/atoms/Button";
+import InputField from "../../components/atoms/InputField";
 
 const Addclient = () => {
   const [formState, setFormState] = useState(true);
@@ -22,9 +24,7 @@ const Addclient = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
       address: Yup.string().required("Required"),
       phone: Yup.string().required("Required"),
       contactPersonName: Yup.string().required("Required"),
@@ -54,16 +54,16 @@ const Addclient = () => {
               <label for="name" class="form-label">
                 Name
               </label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                controlId="name"
+
+              <InputField
+                inptype="text"
+                inpid="name"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.name}
+                inpcontrol="name"
               />
+
               <span className="text-danger">
                 {formik.touched.name && formik.errors.name ? (
                   <div className="text-danger">{formik.errors.name}</div>
@@ -74,15 +74,13 @@ const Addclient = () => {
               <label for="email" class="form-label">
                 Email address
               </label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                controlId="email"
+              <InputField
+                inptype="email"
+                inpid="email"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.email}
+                inpcontrol="email"
               />
               <span className="text-danger">
                 {formik.touched.email && formik.errors.email ? (
@@ -94,15 +92,13 @@ const Addclient = () => {
               <label for="name" class="form-label">
                 Address
               </label>
-              <input
-                type="text"
-                class="form-control"
-                id="address"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.address}
-                controlId="address"
+              <InputField
+                inptype="text"
+                inpid="address"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.address}
+                inpcontrol="address"
               />
               <span className="text-danger">
                 {formik.touched.address && formik.errors.address ? (
@@ -114,16 +110,15 @@ const Addclient = () => {
               <label for="name" class="form-label">
                 Phone No
               </label>
-              <input
-                type="number"
-                class="form-control"
-                id="phone"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.phone}
-                controlId="phone"
+              <InputField
+                inptype="number"
+                inpid="phone"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.phone}
+                inpcontrol="phone"
               />
+
               <span className="text-danger">
                 {formik.touched.phone && formik.errors.phone ? (
                   <div className="text-danger">{formik.errors.phone}</div>
@@ -134,16 +129,15 @@ const Addclient = () => {
               <label for="name" class="form-label">
                 Contact-Person-Name
               </label>
-              <input
-                type="text"
-                class="form-control"
-                id="contactPersonName"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.contactPersonName}
-                controlId="contactPersonName"
+              <InputField
+                inptype="text"
+                inpid="contactPersonName"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.contactPersonName}
+                inpcontrol="contactPersonName"
               />
+
               <span className="text-danger">
                 {formik.touched.contactPersonName &&
                 formik.errors.contactPersonName ? (
@@ -154,9 +148,11 @@ const Addclient = () => {
               </span>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Create Client
-          </button>
+          <Button
+            btnTitle="Create Client"
+            btntype="submit"
+            btnclass="btn btn-primary"
+          />
         </form>
       </div>
     </>

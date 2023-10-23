@@ -48,6 +48,11 @@ const NewSide = () => {
       fontlogo: "fa-solid fa-list",
     },
     {
+      tabname: "VMS",
+      tabroute: "job-vms",
+      fontlogo: "fa-solid fa-list",
+    },
+    {
       tabname: "Plan My Day",
       tabroute: "",
       fontlogo: "fa-solid fa-table",

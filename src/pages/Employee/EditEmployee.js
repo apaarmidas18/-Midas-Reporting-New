@@ -7,6 +7,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import GetUserByRollId from "../../API/User/GetUserByRollId";
 import { EditEmployeeAPI } from "../../API/Employee/EditEmployee";
+import Button from "../../components/atoms/Button";
+import InputField from "../../components/atoms/InputField";
+import Label from "../../components/atoms/Label";
+import Select from "../../components/atoms/Select";
 
 const COMPANYNAME = [
   {
@@ -51,7 +55,7 @@ const EditEmployee = () => {
       firstName: Yup.string().required("Required"),
       dob: Yup.string().required("Required"),
       ssn: Yup.string()
-        .required("Social Security Number is required") 
+        .required("Social Security Number is required")
         .min(9, "Social Security Number Must be 9 Digits long")
         .max(9, "Social Security Number Must be 9 Digits long"),
       address: Yup.string().required("Required"),
@@ -62,9 +66,7 @@ const EditEmployee = () => {
         .required("Zipcode is required")
         .min(5, "Zipcode should not be long less than 5 digits")
         .max(5, "Zipcode should not be long more than 5 digits"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
       contactDetails: Yup.string()
         .required("Contact-Number is required")
         .min(10, "Contact Number should not be long less than 10 digits")
@@ -102,13 +104,11 @@ const EditEmployee = () => {
           <div className="row">
             {companyName === true ? (
               <div className="col-md-12">
-                <label
-                  className="form-label"
-                  for="exampleFormControlSelect2"
+                <Label
+                  labelName="Company Name"
+                  labelFor="Company Name"
                   style={{ marginBottom: "8px" }}
-                >
-                  Company Name
-                </label>
+                />
                 <input
                   type="text"
                   class="form-control"
@@ -132,13 +132,11 @@ const EditEmployee = () => {
               </div>
             ) : (
               <div className="col-md-12">
-                <label
-                  className="form-label"
-                  for="exampleFormControlSelect2"
+                <Label
+                  labelName="Company Name"
+                  labelFor="Company Name"
                   style={{ marginBottom: "8px" }}
-                >
-                  Company Name
-                </label>
+                />
 
                 <select
                   class="form-select"
@@ -169,19 +167,16 @@ const EditEmployee = () => {
             )}
 
             <div class="mb-3 col-md-6">
-              <label for="firstName" class="form-label">
-                First Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="firstName"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.firstName}
-                controlId="firstName"
+              <Label labelName="First Name" labelFor="First Name" />
+              <InputField
+                inptype="text"
+                inpid="firstName"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.firstName}
+                inpcontrol="firstName"
               />
+
               <span className="text-danger">
                 {formik.touched.firstName && formik.errors.firstName ? (
                   <div className="text-danger">{formik.errors.firstName}</div>
@@ -189,18 +184,14 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Last Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="lastName"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.lastName}
-                controlId="lastName"
+              <Label labelName="Last Name" labelFor="Last Name" />
+              <InputField
+                inptype="text"
+                inpid="lastName"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.lastName}
+                inpcontrol="lastName"
               />
               <span className="text-danger">
                 {formik.touched.lastName && formik.errors.lastName ? (
@@ -210,19 +201,14 @@ const EditEmployee = () => {
             </div>
             {editStartDate === true ? (
               <div class="mb-3 col-md-6">
-                <label for="name" class="form-label">
-                  Date of Birth
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="dob"
-                  aria-describedby="emailHelp"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.dob}
-                  controlId="dob"
-                  onClick={() => setEditStartDate(false)}
+                <Label labelName="Date of Birth" labelFor="Date of Birth" />
+                <InputField
+                  inptype="date"
+                  inpid="dob"
+                  inpchange={formik.handleChange}
+                  inpblur={formik.handleBlur}
+                  inpvalue={formik.values.dob}
+                  inpcontrol="dob"
                 />
                 <span className="text-danger">
                   {formik.touched.dob && formik.errors.dob ? (
@@ -232,18 +218,14 @@ const EditEmployee = () => {
               </div>
             ) : (
               <div class="mb-3 col-md-6">
-                <label for="name" class="form-label">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="dob"
-                  aria-describedby="emailHelp"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.dob}
-                  controlId="dob"
+                <Label labelName="Date of Birth" labelFor="Date of Birth" />
+                <InputField
+                  inptype="date"
+                  inpid="dob"
+                  inpchange={formik.handleChange}
+                  inpblur={formik.handleBlur}
+                  inpvalue={formik.values.dob}
+                  inpcontrol="dob"
                 />
                 <span className="text-danger">
                   {formik.touched.dob && formik.errors.dob ? (
@@ -254,18 +236,17 @@ const EditEmployee = () => {
             )}
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Social Security Number
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="ssn"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.ssn}
-                controlId="ssn"
+              <Label
+                labelName="Social Security Number"
+                labelFor="Social Security Number"
+              />
+              <InputField
+                inptype="text"
+                inpid="ssn"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.ssn}
+                inpcontrol="ssn"
               />
               <span className="text-danger">
                 {formik.touched.ssn && formik.errors.ssn ? (
@@ -274,19 +255,16 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-12">
-              <label for="name" class="form-label">
-                Address
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="address"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.address}
-                controlId="address"
+              <Label labelName="Address" labelFor="Address" />
+              <InputField
+                inptype="text"
+                inpid="address"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.address}
+                inpcontrol="address"
               />
+
               <span className="text-danger">
                 {formik.touched.address && formik.errors.address ? (
                   <div className="text-danger">{formik.errors.address}</div>
@@ -294,18 +272,14 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-4">
-              <label for="name" class="form-label">
-                City
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="city"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.city}
-                controlId="city"
+              <Label labelName="City" labelFor="City" />
+              <InputField
+                inptype="text"
+                inpid="city"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.city}
+                inpcontrol="city"
               />
               <span className="text-danger">
                 {formik.touched.city && formik.errors.city ? (
@@ -314,18 +288,14 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-4">
-              <label for="name" class="form-label">
-                State
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="state"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.state}
-                controlId="state"
+              <Label labelName="State" labelFor="State" />
+              <InputField
+                inptype="text"
+                inpid="state"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.state}
+                inpcontrol="state"
               />
               <span className="text-danger">
                 {formik.touched.state && formik.errors.state ? (
@@ -334,18 +304,14 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-4">
-              <label for="name" class="form-label">
-                Zipcode
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="zipCode"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.zipCode}
-                controlId="zipCode"
+              <Label labelName="Zipcode" labelFor="Zipcode" />
+              <InputField
+                inptype="text"
+                inpid="zipCode"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.zipCode}
+                inpcontrol="zipCode"
               />
               <span className="text-danger">
                 {formik.touched.zipCode && formik.errors.zipCode ? (
@@ -354,19 +320,16 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="email" class="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                controlId="email"
+              <Label labelName="Email address" labelFor="Email address" />
+              <InputField
+                inptype="email"
+                inpid="email"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.email}
+                inpcontrol="email"
               />
+
               <span className="text-danger">
                 {formik.touched.email && formik.errors.email ? (
                   <div className="text-danger">{formik.errors.email}</div>
@@ -374,19 +337,16 @@ const EditEmployee = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Contact-Number
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="contactDetails"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.contactDetails}
-                controlId="contactDetails"
+              <Label labelName="Contact-number" labelFor="Contact-number" />
+              <InputField
+                inptype="text"
+                inpid="contactDetails"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.contactDetails}
+                inpcontrol="contactDetails"
               />
+
               <span className="text-danger">
                 {formik.touched.contactDetails &&
                 formik.errors.contactDetails ? (
@@ -403,34 +363,21 @@ const EditEmployee = () => {
                   "No OnBaording User Exists"
                 ) : (
                   <div className="col-md-12">
-                    <label
-                      className="form-label"
-                      for="exampleFormControlSelect2"
+                    <Label
+                      labelName="User-Name"
+                      labelFor="User-Name"
                       style={{ marginBottom: "8px" }}
-                    >
-                      User-Name
-                    </label>
-
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      // value={formik.values.type}
-                      onChange={(e) => {
+                    />
+                    <Select
+                      selectChange={(e) => {
                         const userValue = JSON.parse(e.target.value);
                         formik.setFieldValue("userName", userValue.name);
                         formik.setFieldValue("userId", userValue.id);
                       }}
-                      name="userValues"
-                    >
-                      <option selected>Open this select menu</option>
-                      {onBoardingData.map((item, index) => {
-                        return (
-                          <option value={JSON.stringify(item)}>
-                            {item.name}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      selectBlur={formik.handleBlur}
+                      array={onBoardingData}
+                      selectName="userValues"
+                    />
                   </div>
                 )}
               </>
@@ -438,16 +385,15 @@ const EditEmployee = () => {
               ""
             )}
             <div class="form-group">
-              <label
-                for="exampleFormControlTextarea1"
+              <Label
+                labelName="Add Remarks"
+                labelFor="Add Remarks"
                 style={{
                   marginTop: "10px",
                   fontWeight: "500",
                   fontSize: "14px",
                 }}
-              >
-                Add Remarks
-              </label>
+              />
               <textarea
                 class="form-control"
                 id="editRemarks"
@@ -465,9 +411,11 @@ const EditEmployee = () => {
               </span>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Submit
-          </button>
+          <Button
+            btnTitle="Submit"
+            btntype="submit"
+            btnclass="btn btn-primary"
+          />
         </form>
       </div>
     </>

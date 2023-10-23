@@ -11,6 +11,7 @@ import GetAllProjects from "../../API/Project/GetAllProjects";
 import { Link } from "react-router-dom";
 
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Button from "../../components/atoms/Button";
 
 const Manageproject = () => {
   const [projectDetails, setProjectDetails] = useState([]);
@@ -228,18 +229,20 @@ const Manageproject = () => {
           />
 
           <div className="button-group">
-            <button className="export-btn" style={{ width: "120px" }}>
-              <HiOutlineDownload size={22} />
-
-              <ReactHTMLTableToExcel
-                id="test-table-xls-button"
-                className="export-list"
-                table="project-list-table"
-                filename="Project List"
-                sheet="Project List"
-                buttonText=" Export List"
-              />
-            </button>
+            <Button
+              btnlogo={<HiOutlineDownload size={22} />}
+              btnclass="export-btn"
+              btnPdf={
+                <ReactHTMLTableToExcel
+                  id="test-table-xls-button"
+                  className="export-list"
+                  table="table-to-xls"
+                  filename="Employee List"
+                  sheet="Employee List"
+                  buttonText=" Export List"
+                />
+              }
+            />
           </div>
         </div>
       </div>

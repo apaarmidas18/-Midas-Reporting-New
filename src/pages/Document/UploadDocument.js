@@ -12,6 +12,7 @@ import DeleteDocument from "../../API/Documents/DeleteDocument";
 import axios from "axios";
 import { vercelHost } from "../../static";
 import moment from "moment/moment";
+import Button from "../../components/atoms/Button";
 
 const TAGS_OPTION = [
   { id: 1, value: "Driving-License" },
@@ -51,7 +52,6 @@ const TAGS_OPTION = [
   { id: 35, value: "STATE-DOC" },
 ];
 const UploadDoc = () => {
-  
   const location = useLocation();
   const { data } = location.state;
   const [uploadDocResult, setUploadDocResult] = useState([]);
@@ -292,10 +292,10 @@ const UploadDoc = () => {
           </div>
 
           <div class="mb-3 col-md-6">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onClick={() =>
+            <Button
+              btntype="submit"
+              btnclass="btn btn-primary"
+              btnOnClick={() =>
                 UploadDocsAPI({
                   data,
                   filename,
@@ -306,9 +306,8 @@ const UploadDoc = () => {
                   renewal,
                 })
               }
-            >
-              Upload Document
-            </button>
+              btnTitle=" Upload Document"
+            />
           </div>
         </div>
       </div>

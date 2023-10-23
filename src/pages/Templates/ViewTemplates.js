@@ -11,6 +11,7 @@ import countryCode from "../../utils/countryCode.json";
 import SendTemplate from "../../API/Checklist/SendTemplate";
 import DeleteZohoDocument from "../../API/Zoho-API/DeleteZohoDocument";
 import AccessToken from "../../API/Zoho-API/AccessToken";
+import Button from "../../components/atoms/Button";
 
 const ViewTemplates = () => {
   const navigate = useNavigate();
@@ -359,7 +360,6 @@ const ViewTemplates = () => {
 
   const data = {
     columns: [
-     
       {
         label: "Template Name",
         field: "template_name",
@@ -417,9 +417,11 @@ const ViewTemplates = () => {
           />
           <div className="button-group">
             <Link to="/dashboard/add-templates">
-              <button className="export-btn" style={{ width: "140px" }}>
-                <AiOutlinePlus size={20} /> Create Template
-              </button>
+              <Button
+                btnlogo={<AiOutlinePlus size={20} />}
+                btnclass="export-btn"
+                btnTitle="Create Template"
+              />
             </Link>
           </div>
 

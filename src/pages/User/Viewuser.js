@@ -6,6 +6,7 @@ import GetAllUsers from "../../API/User/GetAllUsers";
 
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import Button from "../../components/atoms/Button";
 
 const Viewuser = () => {
   const [userdata, setUserData] = useState([]);
@@ -130,13 +131,12 @@ const Viewuser = () => {
             heading={"User List"}
           />
           <div className="button-group">
-            <button
-              className="export-btn"
-              style={{ width: "110px" }}
-              onClick={() => navigate("/dashboard/add-user")}
-            >
-              <AiOutlinePlus size={20} /> New User
-            </button>
+            <Button
+              btnlogo={<AiOutlinePlus size={20} />}
+              btnclass="export-btn"
+              btnOnClick={() => navigate("/dashboard/add-user")}
+              btnTitle="New User"
+            />
           </div>
         </div>
       </div>

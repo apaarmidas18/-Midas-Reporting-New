@@ -4,6 +4,10 @@ import * as Yup from "yup";
 import { useLocation, useNavigate } from "react-router";
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import { EditUserAPI } from "../../API/User/EditUser";
+import Button from "../../components/atoms/Button";
+import Select from "../../components/atoms/Select";
+import InputField from "../../components/atoms/InputField";
+import Label from "../../components/atoms/Label";
 
 const ROLLSSUPERADMIN = [
   {
@@ -121,9 +125,7 @@ const EditUser = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -155,18 +157,13 @@ const EditUser = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="row">
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                controlId="name"
+              <Label labelName="Name" labelFor="name" />
+              <InputField
+                inptype="text"
+                inpid="name"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.name}
               />
               <span className="text-danger">
                 {formik.touched.name && formik.errors.name ? (
@@ -175,18 +172,13 @@ const EditUser = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="email" class="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                controlId="email"
+              <Label labelName="Email address" labelFor="email" />
+              <InputField
+                inptype="email"
+                inpid="email"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.email}
               />
               <span className="text-danger">
                 {formik.touched.email && formik.errors.email ? (
@@ -195,16 +187,13 @@ const EditUser = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="password" class="form-label">
-                Password
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
+              <Label labelName="Password" labelFor="Password" />
+              <InputField
+                inptype="password"
+                inpid="password"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.password}
               />
               <span className="text-danger">
                 {formik.touched.password && formik.errors.password ? (
@@ -213,27 +202,18 @@ const EditUser = () => {
               </span>
             </div>
             <div className="col-md-6">
-              <label
-                className="form-label"
-                for="exampleFormControlSelect2"
+              <Label
+                labelName="Status"
+                labelFor="Status"
                 style={{ marginBottom: "8px" }}
-              >
-                Status
-              </label>
+              />
 
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                name="status"
-                value={formik.values.status}
-              >
-                <option selected>Open this select menu</option>
-                {STATUS.map((item, index) => {
-                  return <option value={item.value}>{item.label}</option>;
-                })}
-              </select>
+              <Select
+                selectChange={formik.handleChange}
+                selectBlur={formik.handleBlur}
+                array={STATUS}
+                selectName="status"
+              />
               <span className="text-danger">
                 {formik.touched.status && formik.errors.status ? (
                   <div className="text-danger">{formik.errors.status}</div>
@@ -241,27 +221,18 @@ const EditUser = () => {
               </span>
             </div>
             <div className="col-md-6">
-              <label
-                className="form-label"
-                for="exampleFormControlSelect2"
+              <Label
+                labelName="Role"
+                labelFor="Role"
                 style={{ marginBottom: "8px" }}
-              >
-                Roll
-              </label>
+              />
 
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.rollId}
-                name="rollId"
-              >
-                <option selected>Open this select menu</option>
-                {ROLLS.map((item, index) => {
-                  return <option value={item.value}>{item.label}</option>;
-                })}
-              </select>
+              <Select
+                selectChange={formik.handleChange}
+                selectBlur={formik.handleBlur}
+                array={ROLLS}
+                selectName="rollId"
+              />
               <span className="text-danger">
                 {formik.touched.rollId && formik.errors.rollId ? (
                   <div className="text-danger">{formik.errors.rollId}</div>
@@ -269,27 +240,18 @@ const EditUser = () => {
               </span>
             </div>
             <div className="col-md-6">
-              <label
-                className="form-label"
-                for="exampleFormControlSelect2"
+              <Label
+                labelName="User-Type"
+                labelFor="User-Type"
                 style={{ marginBottom: "8px" }}
-              >
-                User-Type
-              </label>
+              />
 
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.type}
-                name="type"
-              >
-                <option selected>Open this select menu</option>
-                {USERTYPE.map((item, index) => {
-                  return <option value={item.value}>{item.label}</option>;
-                })}
-              </select>
+              <Select
+                selectChange={formik.handleChange}
+                selectBlur={formik.handleBlur}
+                array={USERTYPE}
+                selectName="type"
+              />
               <span className="text-danger">
                 {formik.touched.type && formik.errors.type ? (
                   <div className="text-danger">{formik.errors.type}</div>
@@ -297,13 +259,11 @@ const EditUser = () => {
               </span>
             </div>
           </div>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            // onClick={(values) => setFormState(values)}
-          >
-            Submit
-          </button>
+          <Button
+            btnTitle="Submit"
+            btntype="submit"
+            btnclass="btn btn-primary"
+          />
         </form>
       </div>
     </>

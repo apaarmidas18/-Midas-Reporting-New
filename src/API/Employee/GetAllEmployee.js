@@ -7,17 +7,32 @@ const GetAllEmployee = ({ setEmployeeDetails, setLoading }) => {
     method: "GET",
     redirect: "follow",
   };
-  fetch(
-    `${host}auth/employee/get-all?page=0&userId=${UserData.id}`,
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      if (result) {
-        setEmployeeDetails(result.items);
-        setLoading(false);
-      }
-    })
-    .catch((error) => console.log("error", error));
+
+  try {
+    fetch(
+      `${host}auth/employee/get-all?page=0&userId=${UserData.id}`,
+      requestOptions
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+        if (result) {
+          setEmployeeDetails(result.items);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle the error or log it as needed
+      });
+  } catch (error) {
+    console.error("Try-Catch Error:", error);
+    // Handle the error or log it as needed
+  }
 };
 export default GetAllEmployee;

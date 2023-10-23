@@ -7,6 +7,9 @@ import CreateFacitlity from "../../API/Master/Facitlity/CreateFacitlity";
 import DatalistInput from "react-datalist-input";
 import { useEffect } from "react";
 import GetAllClients from "../../API/Master/Client/GetAllClients";
+import Button from "../../components/atoms/Button";
+import InputField from "../../components/atoms/InputField";
+import Label from "../../components/atoms/Label";
 
 const CLIENT = [
   {
@@ -105,19 +108,16 @@ const Addfacility = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="row">
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                controlId="name"
+              <Label labelName="Name" labelFor="Name" />
+              <InputField
+                inptype="text"
+                inpid="name"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.name}
+                inpcontrol="name"
               />
+
               <span className="text-danger">
                 {formik.touched.name && formik.errors.name ? (
                   <div className="text-danger">{formik.errors.name}</div>
@@ -125,18 +125,14 @@ const Addfacility = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Address
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="address"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.address}
-                controlId="address"
+              <Label labelName="Address" labelFor="Address" />
+              <InputField
+                inptype="text"
+                inpid="address"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.address}
+                inpcontrol="address"
               />
               <span className="text-danger">
                 {formik.touched.address && formik.errors.address ? (
@@ -157,9 +153,11 @@ const Addfacility = () => {
               />
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Create Facitlity
-          </button>
+          <Button
+            btnTitle="Create Facility"
+            btntype="submit"
+            btnclass="btn btn-primary"
+          />
         </form>
       </div>
     </>

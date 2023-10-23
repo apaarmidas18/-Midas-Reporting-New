@@ -5,10 +5,13 @@ import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import GetAllVMSs from "../../API/Master/VMS/GetAllVMSs";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import Button from "../../components/atoms/Button";
 
 const Viewvms = () => {
   const [VMSdetails, setVMSDetails] = useState([]);
   const [loading, setLoading] = useState("");
+  const navigate = useNavigate();
   var rows = [];
 
   useEffect(() => {
@@ -72,9 +75,12 @@ const Viewvms = () => {
         <div className="heading">
           <HeaderBreadcrumbs meta={"VMS"} main={"List"} heading={"VMS List"} />
           <div className="button-group">
-            <button className="export-btn" style={{ width: "110px" }}>
-              <AiOutlinePlus size={20} /> New VMS
-            </button>
+            <Button
+              btnlogo={<AiOutlinePlus size={20} />}
+              btnclass="export-btn"
+              btnOnClick={() => navigate("/dashboard/add-vms")}
+              btnTitle="New VMS"
+            />
           </div>
         </div>
       </div>

@@ -11,6 +11,8 @@ import CreateExtension from "../../API/Extension/CreateExtension";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import GetAllExtensions from "../../API/Extension/GetAllExtensions";
+import Label from "../../components/atoms/Label";
+import InputField from "../../components/atoms/InputField";
 
 const AddProjectExtension = () => {
   const userData = localStorage.getItem("User");
@@ -88,7 +90,6 @@ const AddProjectExtension = () => {
 
   const dataT = {
     columns: [
-      
       {
         label: "Project-ID",
         field: "projectId",
@@ -157,20 +158,17 @@ const AddProjectExtension = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="row">
             <div class="mb-3 col-md-6">
-              <label for="firstName" class="form-label">
-                Project-ID
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="projectId"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.projectId}
-                controlId="projectId"
+              <Label labelName="Project-ID" labelFor="Project-ID" />
+              <InputField
+                inptype="text"
+                inpid="projectId"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.projectId}
+                inpcontrol="projectId"
                 disabled
               />
+
               <span className="text-danger">
                 {formik.touched.projectId && formik.errors.projectId ? (
                   <div className="text-danger">{formik.errors.projectId}</div>
@@ -178,20 +176,17 @@ const AddProjectExtension = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="firstName" class="form-label">
-                Project-Code
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="projectCode"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.projectCode}
-                controlId="projectCode"
+              <Label labelName=" Project-Code" labelFor=" Project-Code" />
+              <InputField
+                inptype="text"
+                inpid="projectCode"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.projectCode}
+                inpcontrol="projectCode"
                 disabled
               />
+
               <span className="text-danger">
                 {formik.touched.projectCode && formik.errors.projectCode ? (
                   <div className="text-danger">{formik.errors.projectCode}</div>
@@ -200,20 +195,17 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="firstName" class="form-label">
-                Employee-Id
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="employeeId"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.employeeId}
-                controlId="employeeId"
+              <Label labelName=" Employee-Id" labelFor=" Employee-Id" />
+              <InputField
+                inptype="text"
+                inpid="employeeId"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.employeeId}
+                inpcontrol="employeeId"
                 disabled
               />
+
               <span className="text-danger">
                 {formik.touched.employeeId && formik.errors.employeeId ? (
                   <div className="text-danger">{formik.errors.employeeId}</div>
@@ -222,18 +214,14 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Designation
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="designation"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.designation}
-                controlId="designation"
+              <Label labelName=" Designation" labelFor=" Designation" />
+              <InputField
+                inptype="text"
+                inpid="designation"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.designation}
+                inpcontrol="designation"
               />
               <span className="text-danger">
                 {formik.touched.designation && formik.errors.designation ? (
@@ -243,19 +231,16 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Start Date
-              </label>
-              <input
-                type="date"
-                class="form-control"
-                id="startDate"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.startDate}
-                controlId="startDate"
+              <Label labelName=" Start Date" labelFor=" Start Date" />
+              <InputField
+                inptype="date"
+                inpid="startDate"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.startDate}
+                inpcontrol="startDate"
               />
+
               <span className="text-danger">
                 {formik.touched.startDate && formik.errors.startDate ? (
                   <div className="text-danger">{formik.errors.startDate}</div>
@@ -264,19 +249,16 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                End Date
-              </label>
-              <input
-                type="date"
-                class="form-control"
-                id="endDate"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.endDate}
-                controlId="endDate"
+              <Label labelName=" End Date" labelFor=" End Date" />
+              <InputField
+                inptype="date"
+                inpid="endDate"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.endDate}
+                inpcontrol="endDate"
               />
+
               <span className="text-danger">
                 {formik.touched.endDate && formik.errors.endDate ? (
                   <div className="text-danger">{formik.errors.endDate}</div>
@@ -285,18 +267,14 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Bill Rates
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="billRates"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.billRates}
-                controlId="billRates"
+              <Label labelName=" Bill Rates" labelFor=" Bill Rates" />
+              <InputField
+                inptype="text"
+                inpid="billRates"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.billRates}
+                inpcontrol="billRates"
               />
               <span className="text-danger">
                 {formik.touched.billRates && formik.errors.billRates ? (
@@ -306,18 +284,14 @@ const AddProjectExtension = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Over Time rates
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="overTimeRates"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.overTimeRates}
-                controlId="overTimeRates"
+              <Label labelName=" Over Time rates" labelFor=" Over Time rates" />
+              <InputField
+                inptype="text"
+                inpid="overTimeRates"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.overTimeRates}
+                inpcontrol="overTimeRates"
               />
               <span className="text-danger">
                 {formik.touched.overTimeRates && formik.errors.overTimeRates ? (
@@ -328,18 +302,17 @@ const AddProjectExtension = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Guaranteed Hours
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="guaranteedHours"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.guaranteedHours}
-                controlId="guaranteedHours"
+              <Label
+                labelName="  Guaranteed Hours"
+                labelFor="  Guaranteed Hours"
+              />
+              <InputField
+                inptype="text"
+                inpid="guaranteedHours"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.guaranteedHours}
+                inpcontrol="guaranteedHours"
               />
               <span className="text-danger">
                 {formik.touched.guaranteedHours &&
@@ -351,19 +324,16 @@ const AddProjectExtension = () => {
               </span>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Travel Allowance
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="travelAllowance"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.travelAllowance}
-                controlId="travelAllowance"
+              <Label labelName="Travel Allowance" labelFor="Travel Allowance" />
+              <InputField
+                inptype="text"
+                inpid="travelAllowance"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.travelAllowance}
+                inpcontrol="travelAllowance"
               />
+
               <span className="text-danger">
                 {formik.touched.travelAllowance &&
                 formik.errors.travelAllowance ? (

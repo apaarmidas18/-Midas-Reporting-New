@@ -20,6 +20,8 @@ import CustomModal from "../../components/JobModal";
 import { filter } from "lodash";
 import profession from "../../utils/profession";
 import speciality from "../../utils/speciality";
+import BoldLabel from "../../components/atoms/BoldLabel";
+import InputField from "../../components/atoms/InputField";
 
 const States = [
   "AL",
@@ -85,236 +87,11 @@ const States = [
 
 const ModalContent = (props) => {
   const { finalClickInfo, setFinalClickInfo } = props;
-  console.log(finalClickInfo);
+
   return (
     <div>
       <div className="row">
-        <div className="col-md-12">
-          <div className="row job-select-row">
-            <div className="col-md-4 job-select">
-              <label>Job Title</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.jobtitle
-                  .replaceAll("![CDATA[", "")
-                  .replaceAll("]]", "")
-                  .replaceAll("!", "")
-                  .replaceAll(finalClickInfo.license, "")
-                  .replaceAll("IN", "")
-                  .replaceAll(finalClickInfo.city.toUpperCase(), "")
-                  .replaceAll(finalClickInfo.state, "")}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Type</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={
-                  finalClickInfo.WorkType == 1
-                    ? "Travel"
-                    : finalClickInfo.WorkType == "2"
-                    ? "Perm"
-                    : finalClickInfo.WorkType == 3
-                    ? "Per Diem"
-                    : finalClickInfo.WorkType
-                }
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Status</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.StatusString}
-                disabled
-              />
-            </div>
-
-            <div className="col-md-4 job-select">
-              <label>Job Profession</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.license}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Speciality</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.specialty}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Facility</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.facility}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.city}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job State</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.state}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Bill Rate</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo["bill-rate"]}`}
-                disabled
-              />
-            </div>
-
-            <div className="col-md-4 job-select">
-              <label>VMS Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.ExternalVMSName}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Start Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo["startdate"]).format("MM/DD/YYYY")}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job End Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo.EndDate).format("MM/DD/YYYY")}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Posted On</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo["created-at"]).format(
-                  "MM/DD/YYYY"
-                )}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Guaranteed Hours</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo["guaranteed-hours"]}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Bonus</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo.Bonus}`}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Block Scheduling</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo["block-scheduling"]}`}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Shift Note</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`${finalClickInfo["shift-note"]}`}
-                disabled
-              />
-            </div>
-
-            <div className="col-md-4 job-select">
-              <label>Notable Requirement</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`${finalClickInfo["notable-requirements"]}`}
-                disabled
-              />
-            </div>
-            <div className="row">
-              <div className="col-md-6 job-select">
-                <label>Unit Note</label>
-                <textarea
-                  class="form-control"
-                  value={`${finalClickInfo["unit-details"]}`}
-                  rows="4"
-                ></textarea>
-              </div>
-              <div className="col-md-6 job-select">
-                <label>Description</label>
-                <textarea
-                  class="form-control"
-                  value={`${finalClickInfo.description
-                    .replaceAll("![CDATA[", "")
-                    .replaceAll("]]", "")
-                    .replaceAll("!", "")}`}
-                  id="exampleFormControlTextarea1"
-                  rows="4"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="col-md-12"></div>
       </div>
     </div>
   );
@@ -1015,8 +792,6 @@ const AllJobs = () => {
     filters
   );
 
-  console.log("filters", filters);
-
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
@@ -1028,7 +803,8 @@ const AllJobs = () => {
     recruiterId: assignedJobs.id,
     assignedJobs: selectedRow,
   };
-  console.log("appliedL", applied);
+
+  console.log("teamLead:", teamLead);
   // var rows = [];
   // var dawin =
   //   allJobs.length === 0
@@ -1062,6 +838,7 @@ const AllJobs = () => {
   return (
     <>
       {/* FILTER TABS */}
+
       <div className="job-filter">
         <Offcanvas
           show={showCanvas}
@@ -1074,43 +851,61 @@ const AllJobs = () => {
           <Offcanvas.Body>
             <div className="row">
               <div className="col-md-4 job-select">
-                <label>Job Id</label>
-                <input
+                <BoldLabel boldName="Job Id" boldFor="Job Id" />
+                <InputField
+                  inptype="text"
+                  inpid="client"
+                  inpchange={(e) => handleFilterChange(e, "clientName")}
+                  style={{ fontSize: "13px", fontWeight: "500" }}
+                />
+                {/* <input
                   type="text"
                   class="form-control"
                   id="client"
                   aria-describedby="clientHelp"
                   onChange={(e) => handleFilterChange(e, "clientName")}
-                />
+                /> */}
               </div>
               <div className="col-md-4 job-select">
-                <label>Facility Name</label>
-                <input
+                <BoldLabel boldName="Facility Name" boldFor="Facility Name" />
+                <InputField
+                  inptype="text"
+                  inpid="facility"
+                  inpchange={(e) => handleFilterChange(e, "clientName")}
+                  style={{ fontSize: "13px", fontWeight: "500" }}
+                />
+                {/* <input
                   type="text"
                   class="form-control"
                   id="client"
                   aria-describedby="clientHelp"
                   onChange={(e) => handleFilterChange(e, "clientName")}
-                />
+                /> */}
               </div>
               <div className="col-md-4 job-select">
-                <label>City</label>
-                <input
+                <BoldLabel boldName="City" boldFor="City" />
+                <InputField
+                  inptype="text"
+                  inpid="city"
+                  inpchange={(e) => handleFilterChange(e, "city")}
+                  style={{ fontSize: "13px", fontWeight: "500" }}
+                />
+                {/* <input
                   type="text"
                   class="form-control"
                   id="city"
                   aria-describedby="clientHelp"
                   onChange={(e) => handleFilterChange(e, "city")}
-                />
+                /> */}
               </div>
               <div className="col-md-4 job-select">
-                <label>States</label>
+                <BoldLabel boldName="States" boldFor="States" />
                 <select
                   class="form-select"
                   aria-label="Default select example"
                   onChange={(e) => handleFilterChange(e, "States")}
                 >
-                  <option selected>Select Recruiter</option>
+                  <option selected>Select States</option>
                   {States.map((item) => {
                     return <option value={item}>{item}</option>;
                   })}
@@ -1118,7 +913,7 @@ const AllJobs = () => {
                 </select>
               </div>
               <div className="col-md-4 job-select">
-                <label>Profession</label>
+                <BoldLabel boldName="Profession" boldFor="Profession" />
                 <select
                   class="form-select"
                   aria-label="Default select example"
@@ -1131,7 +926,7 @@ const AllJobs = () => {
                 </select>
               </div>
               <div className="col-md-4 job-select">
-                <label>Specialty</label>
+                <BoldLabel boldName="Speciality" boldFor="Speciality" />
                 <select
                   class="form-select"
                   aria-label="Default select example"
@@ -1144,7 +939,7 @@ const AllJobs = () => {
                 </select>
               </div>
               <div className="col-md-4 job-select">
-                <label>VMS</label>
+                <BoldLabel boldName="VMS" boldFor="VMS" />
                 <select
                   class="form-select"
                   aria-label="Default select example"
@@ -1185,6 +980,7 @@ const AllJobs = () => {
           </Offcanvas.Body>
         </Offcanvas>
       </div>
+
       {/* FILTER TABS */}
       <div
         class={"container-fluid table-container"}
@@ -1198,42 +994,47 @@ const AllJobs = () => {
         >
           <div class="d-flex mt-2 mb-2">
             <TabName tabname="Jobs" />
-            <Button
-              variant="primary"
-              onClick={handleShow1}
-              style={{
-                padding: "12px",
-                whiteSpace: "nowrap",
-                fontSize: "11px",
-              }}
-            >
-              Assign Job
-            </Button>
-            <button
-              className="export-btn"
-              style={{
-                width: "126px",
-                whiteSpace: "nowrap",
-                height: "40px",
-                marginTop: "6px",
-              }}
-              onClick={() => handleExcelExport()}
-            >
-              <HiOutlineDownload size={22} />
-              <span>Export List</span>
-            </button>
-            <Button
-              variant="primary"
-              onClick={handleShowCanvas}
-              style={{
-                padding: "12px",
-                whiteSpace: "nowrap",
-                fontSize: "11px",
-              }}
-            >
-              <i class="fa-solid fa-filter fa-lg"></i>
-              Apply Filters
-            </Button>
+            <div className="right-data d-flex align-items-center">
+              <span className="sync-data">
+                Data sync: <br /> 5-mins ago
+              </span>
+              <Button
+                variant="primary"
+                onClick={handleShow1}
+                style={{
+                  padding: "12px",
+                  whiteSpace: "nowrap",
+                  fontSize: "11px",
+                }}
+              >
+                Assign Job
+              </Button>
+
+              <button
+                className="export-btn"
+                style={{
+                  width: "126px",
+                  whiteSpace: "nowrap",
+                  height: "40px",
+                }}
+                onClick={() => handleExcelExport()}
+              >
+                <HiOutlineDownload size={22} />
+                <span>Export List</span>
+              </button>
+              <Button
+                variant="primary"
+                onClick={handleShowCanvas}
+                style={{
+                  padding: "12px",
+                  whiteSpace: "nowrap",
+                  fontSize: "11px",
+                }}
+              >
+                <i class="fa-solid fa-filter fa-lg"></i>
+                Apply Filters
+              </Button>
+            </div>
           </div>
 
           <CustomModal
@@ -1246,6 +1047,14 @@ const AllJobs = () => {
               />
             }
             jobid={finalClickInfo.SourceID}
+            className={"job-modal"}
+          />
+          <CustomModal
+            open={show1}
+            handleClose={handleClose1}
+            children={<ModalContent />}
+            jobid={0}
+            className={"row "}
           />
           <div className="job-table">
             {filterArray.length !== 0 ? (

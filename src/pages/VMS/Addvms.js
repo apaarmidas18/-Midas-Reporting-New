@@ -6,6 +6,9 @@ import { useNavigate } from "react-router";
 import CreateClient from "../../API/Master/Client/CreateClient";
 import { useState } from "react";
 import CreateVMS from "../../API/Master/VMS/CreateVMS";
+import Button from "../../components/atoms/Button";
+import InputField from "../../components/atoms/InputField";
+import Label from "../../components/atoms/Label";
 
 const Addvms = () => {
   const [formState, setFormState] = useState(true);
@@ -44,18 +47,14 @@ const Addvms = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="row">
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                controlId="name"
+              <Label labelName="Name" labelFor="Name" />
+              <InputField
+                inptype="text"
+                inpid="name"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.name}
+                inpcontrol="name"
               />
               <span className="text-danger">
                 {formik.touched.name && formik.errors.name ? (
@@ -65,19 +64,16 @@ const Addvms = () => {
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="name" class="form-label">
-                URL
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="url"
-                aria-describedby="emailHelp"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.url}
-                controlId="url"
+              <Label labelName="URL" labelFor="URL" />
+              <InputField
+                inptype="text"
+                inpid="url"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.url}
+                inpcontrol="url"
               />
+
               <span className="text-danger">
                 {formik.touched.url && formik.errors.url ? (
                   <div className="text-danger">{formik.errors.url}</div>
@@ -85,9 +81,11 @@ const Addvms = () => {
               </span>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Create VMS
-          </button>
+          <Button
+            btnTitle="Add VMS"
+            btntype="submit"
+            btnclass="btn btn-primary"
+          />
         </form>
       </div>
     </>

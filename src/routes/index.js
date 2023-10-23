@@ -85,6 +85,7 @@ import AvailabilityLog from "../pages/Job/AvailabilityLog";
 import RequestDocument from "../pages/Templates/RequestDocument";
 import AllJobs from "../pages/Job/AllJobs";
 import AssignedJob from "../pages/Job/AssignedJob";
+import ActiveVMS from "../pages/Job/ActiveVMS";
 
 export const Router = () => {
   return useRoutes([
@@ -233,6 +234,7 @@ export const Router = () => {
         { path: "extension-candidates", element: <ExtensionCandidates /> },
         { path: "pending-candidates", element: <PendingCandidates /> },
         { path: "availability-log", element: <AvailabilityLog /> },
+        { path: "job-vms", element: <ActiveVMS /> },
       ],
     },
   ]);

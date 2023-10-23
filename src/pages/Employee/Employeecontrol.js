@@ -7,6 +7,7 @@ import GetAllEmployee from "../../API/Employee/GetAllEmployee";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Button from "../../components/atoms/Button";
 
 const Employeecontrol = () => {
   const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -82,7 +83,6 @@ const Employeecontrol = () => {
 
   const data = {
     columns: [
-     
       {
         label: "Emp-Id",
         field: "employeeId",
@@ -145,27 +145,26 @@ const Employeecontrol = () => {
           />
           <div className="button-group">
             <Link to="/dashboard/add-employee">
-              <button
-                className="export-btn"
-                style={{
-                  marginRight: "18px",
-                  width: "140px",
-                }}
-              >
-                <AiOutlinePlus size={22} /> New Employee
-              </button>
-            </Link>
-            <button className="export-btn" style={{ width: "120px" }}>
-              <HiOutlineDownload size={22} />
-              <ReactHTMLTableToExcel
-                id="test-table-xls-button"
-                className="export-list"
-                table="table-to-xls"
-                filename="Employee List"
-                sheet="Employee List"
-                buttonText=" Export List"
+              <Button
+                btnlogo={<AiOutlinePlus size={22} />}
+                btnclass="export-btn"
+                btnTitle="New Employee"
               />
-            </button>
+            </Link>
+            <Button
+              btnlogo={<HiOutlineDownload size={22} />}
+              btnclass="export-btn"
+              btnPdf={
+                <ReactHTMLTableToExcel
+                  id="test-table-xls-button"
+                  className="export-list"
+                  table="table-to-xls"
+                  filename="Employee List"
+                  sheet="Employee List"
+                  buttonText=" Export List"
+                />
+              }
+            />
           </div>
         </div>
       </div>

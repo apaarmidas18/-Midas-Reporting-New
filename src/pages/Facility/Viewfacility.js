@@ -5,10 +5,13 @@ import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import GetAllFacility from "../../API/Master/Facitlity/GetAllFacility";
 import moment from "moment";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router";
+import Button from "../../components/atoms/Button";
 const Viewfacility = () => {
   const [facilityData, setFacilityData] = useState([]);
   const [loading, setLoading] = useState("");
+
+  const navigate = useNavigate();
   var rows = [];
 
   useEffect(() => {
@@ -88,9 +91,12 @@ const Viewfacility = () => {
             heading={"Facility List"}
           />
           <div className="button-group">
-            <button className="export-btn" style={{ width: "120px" }}>
-              <AiOutlinePlus size={20} /> New Facility
-            </button>
+            <Button
+              btnlogo={<AiOutlinePlus size={20} />}
+              btnclass="export-btn"
+              btnOnClick={() => navigate("/dashboard/add-facility")}
+              btnTitle="New Client"
+            />
           </div>
         </div>
       </div>

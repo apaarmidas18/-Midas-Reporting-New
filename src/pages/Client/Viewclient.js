@@ -5,10 +5,14 @@ import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import GetAllClients from "../../API/Master/Client/GetAllClients";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import Button from "../../components/atoms/Button";
 
 const Viewclient = () => {
   const [clientDetails, setClientDetails] = useState([]);
   const [loading, setLoading] = useState("");
+
+  const navigate = useNavigate();
   var rows = [];
 
   useEffect(() => {
@@ -38,7 +42,6 @@ const Viewclient = () => {
 
   const data = {
     columns: [
-     
       {
         label: "Client Name",
         field: "name",
@@ -94,9 +97,12 @@ const Viewclient = () => {
             heading={"Client List"}
           />
           <div className="button-group">
-            <button className="export-btn" style={{ width: "110px" }}>
-              <AiOutlinePlus size={20} /> New Client
-            </button>
+            <Button
+              btnlogo={<AiOutlinePlus size={20} />}
+              btnclass="export-btn"
+              btnOnClick={() => navigate("/dashboard/add-client")}
+              btnTitle="New Client"
+            />
           </div>
         </div>
       </div>
