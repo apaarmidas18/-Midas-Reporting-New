@@ -9,6 +9,7 @@ import ModeratorRoutes from "../utils/Sidebar/ModeratorRoutes";
 import OnboardingRoutes from "../utils/Sidebar/OnboardingRoutes";
 import RecruiterRoutes from "../utils/Sidebar/RecruiterRoutes";
 import TeamLeadRoutes from "../utils/Sidebar/TeamLeadRoutes";
+import AccountManagerRoutes from "../utils/Sidebar/AccountManagerRoutes";
 
 const Sidebar = () => {
   const userData = localStorage.getItem("User");
@@ -26,6 +27,8 @@ const Sidebar = () => {
       ? RecruiterRoutes
       : user.rollId == 6
       ? TeamLeadRoutes
+      : user.rollId == 7
+      ? AccountManagerRoutes
       : "";
 
   return (
@@ -64,7 +67,7 @@ const Sidebar = () => {
         <div className="home-btn">
           <i class="fa fa-home"></i>
           <Link to="/portal">
-            <span>Dashboard</span>
+            <span>Jobs Portal</span>
           </Link>
         </div>
       </div>

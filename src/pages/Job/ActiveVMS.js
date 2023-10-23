@@ -31,8 +31,6 @@ const ActiveVMS = () => {
     (item, index) => item.rollId === 7
   );
 
-  const navigate = useNavigate();
-
   const CustomButton = ({ onClick, text }) => (
     <button className="table-btn" onClick={onClick}>
       {text}
@@ -94,7 +92,6 @@ const ActiveVMS = () => {
       url: Yup.string().required("URL is required"),
     }),
     onSubmit: (values) => {
-      // CreateVMS(values, navigate);
       ActiveVMSAPI(values);
     },
   });
@@ -103,6 +100,7 @@ const ActiveVMS = () => {
     GetActiveVMSAPI({ setVMSDetails, setLoading });
     GetAllUsers({ setUserData, setLoading });
   }, []);
+
   return (
     <>
       <div

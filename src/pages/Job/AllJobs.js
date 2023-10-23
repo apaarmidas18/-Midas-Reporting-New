@@ -22,7 +22,7 @@ import profession from "../../utils/profession";
 import speciality from "../../utils/speciality";
 import BoldLabel from "../../components/atoms/BoldLabel";
 import InputField from "../../components/atoms/InputField";
-
+import AllVms from "../../utils/jobsampledata/samplevms.json";
 const States = [
   "AL",
   "AK",
@@ -767,15 +767,25 @@ const AllJobs = () => {
             _jobs.FormattedEndDate <= query.startDate !== -1
         );
       }
-    } else {
+    } else if (query.VMS !== "") {
       if (query) {
         return filter(
           array,
           (_jobs) =>
-            _jobs.Facility.toLowerCase().indexOf(
-              query.clientName.toLowerCase()
-            ) !== -1
+            _jobs.SourceName.toLowerCase().indexOf(query.VMS.toLowerCase()) !==
+            -1
         );
+      }
+      {
+        if (query) {
+          return filter(
+            array,
+            (_jobs) =>
+              _jobs.Facility.toLowerCase().indexOf(
+                query.clientName.toLowerCase()
+              ) !== -1
+          );
+        }
       }
     }
   }
@@ -804,7 +814,6 @@ const AllJobs = () => {
     assignedJobs: selectedRow,
   };
 
-  console.log("teamLead:", teamLead);
   // var rows = [];
   // var dawin =
   //   allJobs.length === 0
@@ -946,9 +955,9 @@ const AllJobs = () => {
                   onChange={(e) => handleFilterChange(e, "VMS")}
                 >
                   <option selected>Select VMS</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  {AllVms.map((item, index) => (
+                    <option value={item}>{item}</option>
+                  ))}
                 </select>
               </div>
               <DateRangePicker
