@@ -1,21 +1,23 @@
 import React from "react";
 // import { chost, host } from "../../static";
 
-const GetAllJobs = (setAllJobs, setIsloading) => {
+const GetAllJobs = (setAllJobs, setIsloading, vms) => {
+  console.log("first");
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "User-Agent": "insomnia/2023.5.8",
     },
-    body: '{"vmsId":"AHSA"}',
+    body: `{"vmsId":"${vms}"}`,
   };
-
+  setIsloading(true);
   fetch("http://192.168.1.95:9292/getAllOpenByVMSId", options)
     .then((response) => response.json())
-    .then((response) =>
-      console.log(Object.keys(response).map((item, index) => console.log(item)))
-    )
+    .then((response) => {
+      setIsloading(false);
+      setAllJobs(Object.keys(response).map((item, index) => response[item]));
+    })
     .catch((err) => console.error(err));
 };
 

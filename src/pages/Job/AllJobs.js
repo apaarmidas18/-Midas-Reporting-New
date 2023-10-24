@@ -98,12 +98,32 @@ const ModalContent = (props) => {
 };
 const RobotixModalContent = (props) => {
   const { finalClickInfo, setFinalClickInfo } = props;
-  console.log(finalClickInfo);
+
   return (
     <div>
       <div className="row">
         <div className="col-md-12">
           <div className="row job-select-row">
+            <div className="col-md-4 job-select">
+              <label>Job-ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                value={finalClickInfo.ProviderJobID}
+                disabled
+              />
+            </div>
+            <div className="col-md-4 job-select">
+              <label>Job-Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                value={finalClickInfo.Title}
+                disabled
+              />
+            </div>
             <div className="col-md-4 job-select">
               <label>Job Type</label>
               <input
@@ -182,16 +202,7 @@ const RobotixModalContent = (props) => {
                 disabled
               />
             </div>
-            <div className="col-md-4 job-select">
-              <label>Job Bill Rate</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.BRate}
-                disabled
-              />
-            </div>
+
             <div className="col-md-4 job-select">
               <label>Job On Call Rate</label>
               <input
@@ -205,7 +216,7 @@ const RobotixModalContent = (props) => {
             <div className="col-md-4 job-select">
               <label>Job Bill Rate</label>
               <input
-                type="text"
+                type="number"
                 class="form-control"
                 id="exampleFormControlInput1"
                 value={`$ ${finalClickInfo.BillRate}`}
@@ -282,6 +293,8 @@ const RobotixModalContent = (props) => {
 };
 
 const AllJobs = () => {
+  const [errorState, setErrorState] = useState("");
+
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [finalClickInfo, setFinalClickInfo] = useState([]);
@@ -318,6 +331,8 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
+    GetAllJobs(setAllJobs, setIsloading, e.target.value);
+
     const formatDate = moment(e).format("MM/DD/YYYY");
 
     name === "startDate" || name === "endDate"
@@ -494,7 +509,7 @@ const AllJobs = () => {
   const columns = [
     {
       id: 1,
-      selector: (row) => row.SourceID,
+      selector: (row) => row.ProviderJobID,
       name: "Job-ID",
       sortable: true,
       reorder: true,
@@ -801,11 +816,11 @@ const AllJobs = () => {
     getComparator(order, orderBy),
     filters
   );
+  const vms = filters.VMS;
 
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading);
   }, []);
 
   const values = {
@@ -813,6 +828,8 @@ const AllJobs = () => {
     recruiterId: assignedJobs.id,
     assignedJobs: selectedRow,
   };
+
+  console.log("allJobs:", allJobs);
 
   // var rows = [];
   // var dawin =
@@ -952,7 +969,10 @@ const AllJobs = () => {
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  onChange={(e) => handleFilterChange(e, "VMS")}
+                  onChange={(e) => {
+                    handleFilterChange(e, "VMS");
+                    handleCloseCanvas();
+                  }}
                 >
                   <option selected>Select VMS</option>
                   {AllVms.map((item, index) => (
@@ -996,6 +1016,7 @@ const AllJobs = () => {
         style={{ display: "flex", flexDirection: "column" }}
       >
         <NewHor />
+
         <div
           className={
             isSidebarExpanded ? "container " : "container tab-container"
@@ -1055,7 +1076,7 @@ const AllJobs = () => {
                 setFinalClickInfo={setFinalClickInfo}
               />
             }
-            jobid={finalClickInfo.SourceID}
+            jobid={finalClickInfo.ProviderJobID}
             className={"job-modal"}
           />
           <CustomModal
@@ -1079,17 +1100,38 @@ const AllJobs = () => {
             ) : (
               ""
             )}
-
-            <DataTable
-              columns={columns}
-              data={filterArray.length !== 0 ? filterArray : sampledata}
-              pagination
-              selectableRows
-              customStyles={customStyles}
-              onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
-              onRowClicked={(row) => handleOnCellClick(row)}
-              dense
-            />
+            {isloading ? (
+              <>
+                {errorState ? (
+                  errorState
+                ) : (
+                  <div class="text-center p-5">
+                    Please Select VMS to get data by Clicking on apply filters
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {allJobs.length === 0 ? (
+                  <div class="text-center p-5">
+                    Please Select VMS to get data by Clicking on apply filters
+                  </div>
+                ) : (
+                  <DataTable
+                    columns={columns}
+                    data={allJobs}
+                    pagination
+                    selectableRows
+                    customStyles={customStyles}
+                    onSelectedRowsChange={(row) =>
+                      setSelectedRow(row.selectedRows)
+                    }
+                    onRowClicked={(row) => handleOnCellClick(row)}
+                    dense
+                  />
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
