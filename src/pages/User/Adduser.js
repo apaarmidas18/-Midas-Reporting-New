@@ -149,6 +149,8 @@ const Adduser = () => {
 
       password: "",
 
+      number: "",
+
       rollId: "",
 
       type: "",
@@ -180,6 +182,8 @@ const Adduser = () => {
       rollId: Yup.string().required("Required"),
 
       type: Yup.string().required("Required"),
+
+      number: Yup.string().required("Required"),
     }),
 
     onSubmit: (values) => {
@@ -260,6 +264,23 @@ const Adduser = () => {
                 inpchange={formik.handleChange}
                 inpblur={formik.handleBlur}
                 inpvalue={formik.values.password}
+              />
+
+              <span className="text-danger">
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="text-danger">{formik.errors.password}</div>
+                ) : null}
+              </span>
+            </div>
+
+            <div class="mb-3 col-md-6">
+              <Label labelName="Phone Number" labelFor="Phone Number" />
+              <InputField
+                inptype="number"
+                inpid="number"
+                inpchange={formik.handleChange}
+                inpblur={formik.handleBlur}
+                inpvalue={formik.values.number}
               />
 
               <span className="text-danger">

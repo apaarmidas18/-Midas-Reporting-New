@@ -1,5 +1,3 @@
-import React from "react";
-
 export default [
   {
     iconleft: "fa-solid fa-user",

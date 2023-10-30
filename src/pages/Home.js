@@ -36,7 +36,7 @@ const Home = () => {
         <div className="welcome-banner">
           <div className="welcome-text">
             <h3>Welcome back,</h3>
-            <h3>{user.name} !</h3>
+            {/* <h3>{user.name} !</h3> */}
             <span>
               Welcome to <strong>Midas Consulting.</strong>
             </span>

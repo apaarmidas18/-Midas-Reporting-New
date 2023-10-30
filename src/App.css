@@ -155,7 +155,7 @@ form.example::after {
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
-  top: 75px;
+  top: 74px;
   width: 220px;
   height: 100%;
   overflow-y: auto;
@@ -1071,7 +1071,7 @@ input[switch="warning"]:checked + label:before {
   font-weight: 600;
 }
 .tab-container {
-  padding: 15px;
+  /* padding: 15px; */
   padding-right: 100px;
   background-color: white;
 }
@@ -1534,4 +1534,9 @@ input[switch="warning"]:checked + label:before {
 .table-btn:hover {
   background: #2a6ad3;
   cursor: pointer;
+}
+
+.react-datalist-input__listbox {
+  height: 300px;
+  overflow: scroll;
 }

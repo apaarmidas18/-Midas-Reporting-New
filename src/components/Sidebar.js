@@ -48,7 +48,6 @@ const Sidebar = () => {
                 <i class={item.iconleft}></i>,
                 <span className="trig-span">{item.subheader}</span>,
                 <i class={item.icon}></i>,
-                ,
               ]}
             >
               {item.items.map((children, index) => {

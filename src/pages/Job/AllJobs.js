@@ -374,7 +374,7 @@ const AllJobs = () => {
       },
     },
   };
-
+  console.log(allJobs);
   // const columnDavin = [
   //   {
   //     id: 1,

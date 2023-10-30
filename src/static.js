@@ -1,4 +1,7 @@
-export const host = "http://192.168.1.172:8090/";
+// export const host = "http://192.168.1.95:8080/api/v1/"; //Dheeraj Sir
+// export const host = "http://192.168.1.172:8080/api/v1/"; //Mayank Sir
+export const host = "http://192.168.1.172:8090/"; //Mayank Sir
+export const jobshost = "http://192.168.1.172:9291/"; //Mayank Sir
 // export const host = "https://api.midastech.org/";
 // export const vercelHost = "http://192.168.1.250:9000/";
 export const vercelHost = "https://api-midas-legal-com.vercel.app/";
