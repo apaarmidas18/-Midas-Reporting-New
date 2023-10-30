@@ -4,10 +4,10 @@ import { host } from "../../static";
 const GetManagerById = ({ setManager, setLoading }) => {
   var requestOptions = {
     method: "GET",
-    params: { rollId: "7" },
+    redirect: "follow",
   };
 
-  fetch(`${host}get-user-role`, requestOptions)
+  fetch(`${host}get-user-roll?rollId=7`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {
