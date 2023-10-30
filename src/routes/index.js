@@ -86,6 +86,7 @@ import RequestDocument from "../pages/Templates/RequestDocument";
 import AllJobs from "../pages/Job/AllJobs";
 import AssignedJob from "../pages/Job/AssignedJob";
 import ActiveVMS from "../pages/Job/ActiveVMS";
+import VMSConfig from "../pages/Job/VMSConfig";
 
 export const Router = () => {
   return useRoutes([
@@ -235,6 +236,7 @@ export const Router = () => {
         { path: "pending-candidates", element: <PendingCandidates /> },
         { path: "availability-log", element: <AvailabilityLog /> },
         { path: "job-vms", element: <ActiveVMS /> },
+        { path: "vms-config", element: <VMSConfig /> },
       ],
     },
   ]);

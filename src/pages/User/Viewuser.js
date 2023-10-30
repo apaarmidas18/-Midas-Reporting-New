@@ -7,10 +7,12 @@ import GetAllUsers from "../../API/User/GetAllUsers";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
+import GetManagerById from "../../API/Jobs/GetManagerById";
 
 const Viewuser = () => {
   const [userdata, setUserData] = useState([]);
   const [loading, setLoading] = useState("");
+  const [manager, setManager] = useState();
   const navigate = useNavigate();
   var rows = [];
 
@@ -21,6 +23,7 @@ const Viewuser = () => {
   console.log(userdata);
   useEffect(() => {
     GetAllUsers({ setUserData, setLoading });
+    GetManagerById({ setManager, setLoading });
   }, []);
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
   for (let index = 0; index < userdata.length; index++) {
@@ -104,6 +107,12 @@ const Viewuser = () => {
         field: "rollId",
         sort: "asc",
         width: 200,
+      },
+      {
+        label: "Manager Id",
+        field: "managerId",
+        sort: "asc",
+        width: 100,
       },
       {
         label: "Type",

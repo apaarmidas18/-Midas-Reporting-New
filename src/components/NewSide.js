@@ -53,8 +53,8 @@ const NewSide = () => {
       fontlogo: "fa-solid fa-list",
     },
     {
-      tabname: "Plan My Day",
-      tabroute: "",
+      tabname: "configuration",
+      tabroute: "vms-config",
       fontlogo: "fa-solid fa-table",
     },
   ];
