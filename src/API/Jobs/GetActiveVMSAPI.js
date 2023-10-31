@@ -1,5 +1,5 @@
 import React from "react";
-import { host } from "../../static";
+import { host, jobshost } from "../../static";
 
 const GetActiveVMSAPI = ({ setVMSDetails, setLoading }) => {
   var requestOptions = {
@@ -7,11 +7,11 @@ const GetActiveVMSAPI = ({ setVMSDetails, setLoading }) => {
     redirect: "follow",
   };
 
-  fetch(`${host}jobs/get-current-vms`, requestOptions)
+  fetch(`${jobshost}jobAssignment/getAllVmsConfig`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {
-        return setVMSDetails(result), setLoading(false);
+        return setVMSDetails(result.payload), setLoading(false);
       }
     })
     .catch((error) => console.log("error", error));

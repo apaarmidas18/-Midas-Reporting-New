@@ -4,9 +4,14 @@ import { Link } from "react-router-dom";
 import NewHor from "./NewHor";
 import { useContext } from "react";
 import { Sidebar_Context } from "./hooks/ContextSidebar";
+import AdminRoutes from "../utils/PortalRoutes/AdminRoutes";
+import TeamLeadRoutes from "../utils/PortalRoutes/TeamLeadRoutes";
+import AccountManagerRoutes from "../utils/PortalRoutes/AccountManagerRoutes";
+import RecruiterRoutes from "../utils/PortalRoutes/RecruiterRoutes";
 
 const PortalSidebar = () => {
   const [selectedItem, setSelectedItem] = useState(null);
+  const user = JSON.parse(localStorage.getItem("User"));
   const { isSidebarExpanded, handleToggleSidebar } =
     useContext(Sidebar_Context);
   // const handleToggleSidebar = (item) => {
@@ -16,49 +21,19 @@ const PortalSidebar = () => {
   const liColor = (item) => {
     setSelectedItem(item);
   };
-  const listItems = [
-    {
-      tabname: "Jobs",
-      tabroute: "jobs",
-      fontlogo: "fa-solid fa-square-poll-vertical",
-    },
-    // {
-    //   tabname: "Assigned Job",
-    //   tabroute: "assigned-job",
-    //   fontlogo: "fa-solid fa-star",
-    // },
-    {
-      tabname: "Active",
-      tabroute: "active-candidates",
-      fontlogo: "fa-solid fa-chart-line",
-    },
-    {
-      tabname: "Booked",
-      tabroute: "booked-candidates",
-      fontlogo: "fa-solid fa-address-book",
-    },
-    {
-      tabname: "Pending",
-      tabroute: "pending-candidates",
-      fontlogo: "fa-solid fa-star",
-    },
-    {
-      tabname: "Availability",
-      tabroute: "availability-log",
-      fontlogo: "fa-solid fa-list",
-    },
-    {
-      tabname: "VMS",
-      tabroute: "job-vms",
-      fontlogo: "fa-solid fa-list",
-    },
-    {
-      tabname: "configuration",
-      tabroute: "vms-config",
-      fontlogo: "fa-solid fa-table",
-    },
-  ];
+
   const highlightedItemClass = "light-active";
+
+  const Routes =
+    user.rollId == 1 || user.rollId == 2
+      ? AdminRoutes
+      : user.rollId == 6
+      ? TeamLeadRoutes
+      : user.rollId == 7
+      ? AccountManagerRoutes
+      : user.rollId == 5
+      ? RecruiterRoutes
+      : null;
 
   return (
     <>
@@ -67,13 +42,25 @@ const PortalSidebar = () => {
       >
         <div className="side-button">
           <button className="toggle-button" onClick={handleToggleSidebar}>
-            <i style={{ color: "#fff" }} class="fa-solid fa-chevron-left"></i>
+            <i
+              style={{ color: "#fff" }}
+              className="fa-solid fa-chevron-left"
+            ></i>
           </button>
         </div>
         <nav className="menu">
           <div className="avatar-menu text-center">
             <img src="/images/avatar.svg" />
-            <p>Archit Mishra</p>
+            <p>
+              {user.name}
+              {user.rollId == 7
+                ? "Account Manager"
+                : user.rollId == 6
+                ? "Team Lead"
+                : user.rollId == 5
+                ? "Recruiter"
+                : null}
+            </p>
           </div>
           <div className="sidebar-logo text-center">
             <img src="/images/logob.png" />
@@ -83,7 +70,7 @@ const PortalSidebar = () => {
               <span>Jobs</span>
             </div>
             <ul className="new-sidebar-list">
-              {listItems.map((item, index) => {
+              {Routes.map((item, index) => {
                 return (
                   <li key={index} onClick={() => liColor(item.tabname)}>
                     <span
@@ -93,7 +80,7 @@ const PortalSidebar = () => {
                           : ""
                       }
                     >
-                      <i class={item.fontlogo}></i>
+                      <i className={item.fontlogo}></i>
 
                       <Link to={item.tabroute}>{item.tabname}</Link>
                     </span>

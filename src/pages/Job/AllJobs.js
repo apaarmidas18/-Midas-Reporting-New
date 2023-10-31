@@ -12,7 +12,6 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import DateRangePicker from "../../components/DateRangePicker";
 import GetAllTeamLeads from "../../API/User/GetAllTeamLeads";
 import GetRecruiterById from "../../API/User/GetRecruiterById";
-import AssignJobs from "../../API/Jobs/AssignJobs";
 import { useContext } from "react";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import GetAllJobs from "../../API/Jobs/GetAllJobs";
@@ -22,9 +21,9 @@ import profession from "../../utils/profession";
 import speciality from "../../utils/speciality";
 import BoldLabel from "../../components/atoms/BoldLabel";
 import InputField from "../../components/atoms/InputField";
-import AllVms from "../../utils/jobsampledata/samplevms.json";
 import Select from "../../components/atoms/Select";
 import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
+import active_vms from "../../utils/active_vms";
 const States = [
   "AL",
   "AK",
@@ -840,7 +839,7 @@ const AllJobs = () => {
                   }}
                 >
                   <option selected>Select VMS</option>
-                  {AllVms.map((item, index) => (
+                  {active_vms.map((item, index) => (
                     <option value={item}>{item}</option>
                   ))}
                 </select>

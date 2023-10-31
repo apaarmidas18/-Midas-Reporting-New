@@ -14,23 +14,17 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import AssignedVMS from "../../API/Jobs/VMS/AssignedVMS";
 import GetAllAssignedVMS from "../../API/Jobs/VMS/GetAllAssignedVMS";
+import GetUserByIdforVmsConfig from "../../API/Jobs/VMS/GetUserByIdforVmsConfig";
+import active_vms from "../../utils/active_vms";
 
 const VMSConfig = () => {
   const [loading, setLoading] = useState("");
   const [manager, setManager] = useState([]);
-  const [vmsDetails, setVMSDetails] = useState([]);
   const [assignedVMS, setAssignedVMS] = useState([]);
-  // const user = JSON.parse(getState("User"));
-  const user = getState("User");
-
+  const [managerName, setManagerName] = useState("");
   const { isSidebarExpanded } = useContext(Sidebar_Context);
-
   const Manager_Name = manager.map((item, index) => {
     return { id: item.id, value: item.name };
-  });
-
-  const VMS_Name = vmsDetails.map((item, index) => {
-    return { id: item.id, value: item.vmsName };
   });
 
   //Validation
@@ -49,17 +43,20 @@ const VMSConfig = () => {
   });
   //Row Styling ********************************************************************
   var rows = [];
+  for (let index = 0; index < assignedVMS.length; index++) {
+    const element = assignedVMS[index];
+    var name = "";
+    manager
+      .filter((item, index) => item.id === element.accountManager)
+      .map((ite, index) => {
+        return (name = ite.name);
+      });
 
-  // for (let index = 0; index < assignedVMS.length; index++) {
-  //   const element = assignedVMS[index];
-  //   const mid = manager.filter(
-  //     (item, index) => item.id == element.accountManager && item.name
-  //   );
-  //   rows.push({
-  //     ...element,
-  //     accountManager: mid[0].name,
-  //   });
-  // }
+    rows.push({
+      ...element,
+      accountManager: name,
+    });
+  }
   const columns = [
     {
       id: 1,
@@ -81,10 +78,8 @@ const VMSConfig = () => {
 
   useEffect(() => {
     GetManagerById({ setManager, setLoading });
-    // GetActiveVMSAPI({ setVMSDetails, setLoading });
     GetAllAssignedVMS({ setAssignedVMS, setLoading });
   }, []);
-
   return (
     <>
       <div
@@ -137,7 +132,7 @@ const VMSConfig = () => {
                     label="VMS"
                     name="vmsName"
                     // onSelect={(item) => setFileName(item.value)}
-                    items={VMS_Name}
+                    items={active_vms}
                     onSelect={(item) => {
                       formik.setFieldValue("vmsName", item.value);
                     }}
@@ -162,9 +157,15 @@ const VMSConfig = () => {
               </div>
             </form>
           </div>
-          {/* <div className="job-table">
-            <DataTable columns={[]} data={[]} pagination selectableRows dense />
-          </div> */}
+          <div className="job-table">
+            <DataTable
+              columns={columns}
+              data={rows}
+              pagination
+              selectableRows
+              dense
+            />
+          </div>
         </div>
       </div>
     </>

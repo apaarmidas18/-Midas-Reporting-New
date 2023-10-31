@@ -9,7 +9,6 @@ const GetAllAssignedVMS = ({ setAssignedVMS, setLoading }) => {
   fetch(`${jobshost}jobAssignment/getAllVmsConfig`, options)
     .then((response) => response.json())
     .then((response) => {
-      console.log("response:", response);
       if (response) {
         setAssignedVMS(response);
         setLoading(false);
