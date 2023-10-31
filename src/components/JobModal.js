@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 
 const JobModal = (props) => {
   const { open, handleClose, children, jobid, className } = props;
-  console.log(jobid);
+
   return (
     <>
       <div className="job-modal-container">
