@@ -1113,6 +1113,9 @@ input[switch="warning"]:checked + label:before {
 .job-modal .modal-title {
   font-size: 15px;
 }
+.job-select {
+  padding: 10px 10px 10px 10px;
+}
 .job-select input {
   font-size: 13px;
   font-weight: 500;
@@ -1120,7 +1123,7 @@ input[switch="warning"]:checked + label:before {
 
 .job-select-row {
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
 .sync-data {
   width: 97px;

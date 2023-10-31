@@ -738,6 +738,7 @@ const AllJobs = () => {
     getComparator(order, orderBy),
     filters
   );
+  const vms = filters.VMS;
 
   console.log(dataByRole, "dataRole");
   useEffect(() => {
@@ -746,36 +747,6 @@ const AllJobs = () => {
     GetAllJobs(setAllJobs, setIsloading);
     userRoles();
   }, []);
-
-  // var rows = [];
-  // var dawin =
-  //   allJobs.length === 0
-  //     ? []
-  //     : allJobs.map((item, index) => {
-  //         return {
-  //           SourceID: item.jobid,
-  //           WorkType: "1",
-  //           StatusString: "-",
-  //           Priority: "-",
-  //           Degree: item.specialty,
-  //           Facility: item.facility,
-  //           State: item.state,
-  //           City: item.city,
-  //           Shift: item.shift,
-  //           DurationWeeks: item["duration-weeks"],
-  //           BillRate: item["bill-rate"],
-  //           ExternalVMSName: "Dawin",
-  //           PostDate: item["created-at"],
-  //         };
-  //       });
-  // for (let index = 0; index < sampledata.length; index++) {
-  //   const element = sampledata[index];
-  //   rows.push({
-  //     element,
-  //     dawin,
-  //   });
-  // }
-  // console.log("rows:", rows);
 
   return (
     <>
@@ -800,13 +771,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="client"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "clientName")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="Facility Name" boldFor="Facility Name" />
@@ -816,13 +781,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="client"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "clientName")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="City" boldFor="City" />
@@ -832,13 +791,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "city")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="city"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "city")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="States" boldFor="States" />

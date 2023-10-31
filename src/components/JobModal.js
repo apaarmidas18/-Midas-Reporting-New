@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 
 const JobModal = (props) => {
   const { open, handleClose, children, jobid, className } = props;
+  console.log(jobid);
   return (
     <>
       <div className="job-modal-container">
@@ -14,7 +15,7 @@ const JobModal = (props) => {
         >
           <Modal.Header closeButton>
             <Modal.Title>
-              {jobid === 0
+              {jobid == 0
                 ? "Assign a job"
                 : typeof jobid == "string"
                 ? jobid
