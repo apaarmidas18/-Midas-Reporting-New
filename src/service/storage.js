@@ -6,14 +6,14 @@ export const loadState = (key, value, navigate) => {
   }
 };
 
-export const getState = async (key) => {
-  try {
-    if (!key) {
-      console.log("key is not present");
-    } else {
-      localStorage.getItem(key);
-    }
-  } catch (error) {
-    console.log(error);
+export const getState = (key) => {
+  // try {
+  if (!key) {
+    console.log("key is not present");
+  } else {
+    localStorage.getItem(key);
   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };

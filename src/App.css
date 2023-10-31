@@ -1542,3 +1542,10 @@ input[switch="warning"]:checked + label:before {
   color: white !important;
   font-weight: 500 !important;
 }
+
+.job-id-span {
+  background: #0033c43d !important;
+  padding: 6px 13px;
+  font-size: 15px !important;
+  border-radius: 10px;
+}
