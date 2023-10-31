@@ -91,7 +91,29 @@ const ModalContent = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-12"></div>
+        <div className="col-md-4 ">
+          <BoldLabel boldName="Assignee" boldFor="Assignee" />
+          <InputField
+            inptype="text"
+            inpid="Assignee"
+            inpvalue={"Gaurav Singh"}
+            style={{ fontSize: "15px !important", fontWeight: "500" }}
+            disabled
+          />
+        </div>
+
+        <div className="col-md-4 ">
+          <BoldLabel boldName="Assigner" boldFor="Assigner" />
+          <InputField
+            inptype="text"
+            inpid="Assigner"
+            inpvalue={"Nitesh Yadav"}
+            style={{ fontSize: "15px", fontWeight: "500" }}
+            disabled
+          />
+        </div>
+        <span>Job ID-</span>
+        <button className="btn job-common-btn">Submit</button>
       </div>
     </div>
   );
@@ -331,7 +353,7 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
-    GetAllJobs(setAllJobs, setIsloading, e.target.value);
+    // GetAllJobs(setAllJobs, setIsloading, e.target.value);
 
     const formatDate = moment(e).format("MM/DD/YYYY");
 
@@ -823,44 +845,6 @@ const AllJobs = () => {
     GetRecruiterById({ setRecuiterData });
   }, []);
 
-  const values = {
-    recruiterName: assignedJobs.name,
-    recruiterId: assignedJobs.id,
-    assignedJobs: selectedRow,
-  };
-
-  console.log("allJobs:", allJobs);
-
-  // var rows = [];
-  // var dawin =
-  //   allJobs.length === 0
-  //     ? []
-  //     : allJobs.map((item, index) => {
-  //         return {
-  //           SourceID: item.jobid,
-  //           WorkType: "1",
-  //           StatusString: "-",
-  //           Priority: "-",
-  //           Degree: item.specialty,
-  //           Facility: item.facility,
-  //           State: item.state,
-  //           City: item.city,
-  //           Shift: item.shift,
-  //           DurationWeeks: item["duration-weeks"],
-  //           BillRate: item["bill-rate"],
-  //           ExternalVMSName: "Dawin",
-  //           PostDate: item["created-at"],
-  //         };
-  //       });
-  // for (let index = 0; index < sampledata.length; index++) {
-  //   const element = sampledata[index];
-  //   rows.push({
-  //     element,
-  //     dawin,
-  //   });
-  // }
-  // console.log("rows:", rows);
-
   return (
     <>
       {/* FILTER TABS */}
@@ -884,13 +868,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="client"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "clientName")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="Facility Name" boldFor="Facility Name" />
@@ -900,13 +878,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="client"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "clientName")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="City" boldFor="City" />
@@ -916,13 +888,7 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "city")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                {/* <input
-                  type="text"
-                  class="form-control"
-                  id="city"
-                  aria-describedby="clientHelp"
-                  onChange={(e) => handleFilterChange(e, "city")}
-                /> */}
+                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="States" boldFor="States" />
@@ -1084,7 +1050,7 @@ const AllJobs = () => {
             handleClose={handleClose1}
             children={<ModalContent />}
             jobid={0}
-            className={"row "}
+            className={"assign-modal"}
           />
           <div className="job-table">
             {filterArray.length !== 0 ? (

@@ -1537,6 +1537,11 @@ input[switch="warning"]:checked + label:before {
 }
 
 .react-datalist-input__listbox {
-  height: 300px;
+  max-height: 300px;
   overflow: scroll;
+}
+.job-common-btn {
+  background: #0033c4 !important;
+  color: white !important;
+  font-weight: 500 !important;
 }

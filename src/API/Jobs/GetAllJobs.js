@@ -10,9 +10,10 @@ const GetAllJobs = (setAllJobs, setIsloading, vms) => {
     body: `{"vmsId":"${vms}"}`,
   };
   setIsloading(true);
-  fetch("http://192.168.1.172:9291/allvms/getAllOpenByVMSId", options)
+  fetch("http://192.168.1.172:9291/api/allvms/getAllOpenByVMSId", options)
     .then((response) => response.json())
     .then((response) => {
+      console.log(response);
       setIsloading(false);
       setAllJobs(Object.keys(response).map((item, index) => response[item]));
     })

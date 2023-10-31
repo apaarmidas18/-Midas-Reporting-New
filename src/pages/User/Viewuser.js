@@ -7,12 +7,10 @@ import GetAllUsers from "../../API/User/GetAllUsers";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
-import GetManagerById from "../../API/Jobs/GetManagerById";
 
 const Viewuser = () => {
   const [userdata, setUserData] = useState([]);
   const [loading, setLoading] = useState("");
-  const [manager, setManager] = useState([]);
   const navigate = useNavigate();
   var rows = [];
 
@@ -20,16 +18,13 @@ const Viewuser = () => {
   //   GetAllUsers({ setUserData, setLoading });
   //   conditionalRowData({ rows, userdata });
   // }, [userdata]);
-
+  console.log(userdata);
   useEffect(() => {
     GetAllUsers({ setUserData, setLoading });
-    GetManagerById({ setManager, setLoading });
   }, []);
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
-
   for (let index = 0; index < userdata.length; index++) {
     const element = userdata[index];
-
     rows.push({
       ...element,
       status:
@@ -68,14 +63,6 @@ const Viewuser = () => {
           <i class="fa fa-pencil"></i>
         </Link>
       ),
-      managerId:
-        element.managerId === undefined ||
-        element.managerId === null ||
-        element.managerId === ""
-          ? "No Manager Assigned"
-          : manager.filter((item, index) =>
-              item.id == element.managerId ? item.name : ""
-            ),
     });
   }
   /* ------------------------------------------Adding Elements To Array-------------------------------- */
@@ -117,12 +104,6 @@ const Viewuser = () => {
         field: "rollId",
         sort: "asc",
         width: 200,
-      },
-      {
-        label: "Manager Id",
-        field: "managerId",
-        sort: "asc",
-        width: 100,
       },
       {
         label: "Type",
