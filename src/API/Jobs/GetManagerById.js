@@ -7,7 +7,7 @@ const GetManagerById = ({ setManager, setLoading }) => {
     redirect: "follow",
   };
 
-  fetch(`${host}get-user-roll?rollId=7`, requestOptions)
+  fetch(`${host}auth/users/all-users?rollId=7`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {

@@ -25,10 +25,7 @@ const Login = () => {
     if (username && password == "") {
       swal({
         title: "Please enter all fields!",
-
-        text:
-          "Look's Like You have Entered Wrong Credentials, Please Check And Try Again.",
-
+        text: "Look's Like You have Entered Wrong Credentials, Please Check And Try Again.",
         icon: "error",
       });
     } else {

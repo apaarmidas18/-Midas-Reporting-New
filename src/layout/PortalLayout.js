@@ -1,14 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-// import HorizontalMenu from "../components/HorizontalMenu";
-// import SubHorizontal from "../components/SubHorizontal";
-import NewSide from "../components/NewSide";
-import NewHor from "../components/NewHor";
+import PortalSidebar from "../components/PortalSidebar";
 
 const PortalLayout = () => {
   return (
     <div style={{ display: "flex" }}>
-      <NewSide />
+      <PortalSidebar />
       <Outlet />
     </div>
   );

@@ -5,7 +5,7 @@ import NewHor from "./NewHor";
 import { useContext } from "react";
 import { Sidebar_Context } from "./hooks/ContextSidebar";
 
-const NewSide = () => {
+const PortalSidebar = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const { isSidebarExpanded, handleToggleSidebar } =
     useContext(Sidebar_Context);
@@ -108,4 +108,4 @@ const NewSide = () => {
   );
 };
 
-export default NewSide;
+export default PortalSidebar;

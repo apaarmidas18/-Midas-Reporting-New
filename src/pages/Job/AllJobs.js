@@ -396,137 +396,6 @@ const AllJobs = () => {
       },
     },
   };
-  console.log(allJobs);
-  // const columnDavin = [
-  //   {
-  //     id: 1,
-  //     selector: (row) => row.jobid,
-  //     name: "Job-ID",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 2,
-  //     selector: (row) =>
-  //       row.WorkType == "1"
-  //         ? "Travel"
-  //         : row.WorkType == "2"
-  //         ? "Perm"
-  //         : row.WorkType == "3"
-  //         ? "Per Diem"
-  //         : row.WorkType,
-  //     name: "Job-Type",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 5,
-  //   },
-  //   {
-  //     id: 3,
-  //     selector: (row) => row.StatusString,
-  //     name: "Status",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 4,
-  //     selector: (row) => row.Priority,
-  //     name: "Priority",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 5,
-  //     selector: (row) => row.license,
-  //     name: "Prof",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 6,
-  //     selector: (row) => row.specialty,
-  //     name: "Speciality",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 7,
-  //     selector: (row) => row.facility,
-  //     name: "Facility",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 50,
-  //   },
-  //   {
-  //     id: 8,
-  //     selector: (row) => row.city,
-  //     name: "City",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 9,
-  //     selector: (row) => row.state,
-  //     name: "State",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-
-  //   {
-  //     id: 10,
-  //     selector: (row) => row.shift,
-  //     name: "Shift",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 11,
-  //     selector: (row) => row["duration-weeks"],
-  //     name: "DurationWeeks",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 12,
-  //     selector: (row) => row["total-openings"],
-  //     name: "Positions",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 13,
-  //     selector: (row) => `$ ${row["bill-rate"]}`,
-  //     name: "BillRate",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 14,
-  //     selector: (row) => row.SourceName,
-  //     name: "VMS ",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 10,
-  //   },
-  //   {
-  //     id: 15,
-  //     selector: (row) => moment(row["created-at"]).format("MM/DD/YYYY"),
-  //     name: "PostDate",
-  //     sortable: true,
-  //     reorder: true,
-  //     width: 50,
-  //   },
-  // ];
 
   const columns = [
     {
@@ -838,7 +707,6 @@ const AllJobs = () => {
     getComparator(order, orderBy),
     filters
   );
-  const vms = filters.VMS;
 
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
@@ -868,7 +736,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="Facility Name" boldFor="Facility Name" />
@@ -878,7 +745,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="City" boldFor="City" />
@@ -888,7 +754,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "city")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="States" boldFor="States" />

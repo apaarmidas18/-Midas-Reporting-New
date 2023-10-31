@@ -20,6 +20,8 @@ const VMSConfig = () => {
   const [manager, setManager] = useState([]);
   const [vmsDetails, setVMSDetails] = useState([]);
   const [assignedVMS, setAssignedVMS] = useState([]);
+  // const user = JSON.parse(getState("User"));
+  const user = getState("User");
 
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
@@ -35,38 +37,29 @@ const VMSConfig = () => {
   const formik = useFormik({
     initialValues: {
       managerName: "",
-
       vmsName: "",
     },
-
     validationSchema: Yup.object({
       managerName: Yup.string().required("Account Manager is Required"),
-
       vmsName: Yup.string().required("VMS Name is Required"),
     }),
-
     onSubmit: (values) => {
       AssignedVMS(values);
-
-      // alert(JSON.stringify(values, null, 2));
-
-      // setFormState(values);
     },
   });
   //Row Styling ********************************************************************
   var rows = [];
 
-  for (let index = 0; index < assignedVMS.length; index++) {
-    const element = assignedVMS[index];
-    const mid = manager.filter(
-      (item, index) => item.id == element.accountManager && item.name
-    );
-    console.log(mid[0].name);
-    rows.push({
-      ...element,
-      accountManager: mid[0].name,
-    });
-  }
+  // for (let index = 0; index < assignedVMS.length; index++) {
+  //   const element = assignedVMS[index];
+  //   const mid = manager.filter(
+  //     (item, index) => item.id == element.accountManager && item.name
+  //   );
+  //   rows.push({
+  //     ...element,
+  //     accountManager: mid[0].name,
+  //   });
+  // }
   const columns = [
     {
       id: 1,
@@ -79,18 +72,16 @@ const VMSConfig = () => {
     {
       id: 2,
       selector: (row) => row.accountManager,
-
       name: "Account Manager",
       sortable: true,
       reorder: true,
       width: 10,
     },
   ];
-  console.log("rows", rows);
 
   useEffect(() => {
     GetManagerById({ setManager, setLoading });
-    GetActiveVMSAPI({ setVMSDetails, setLoading });
+    // GetActiveVMSAPI({ setVMSDetails, setLoading });
     GetAllAssignedVMS({ setAssignedVMS, setLoading });
   }, []);
 
@@ -162,7 +153,7 @@ const VMSConfig = () => {
                 <div className="col-md-2 mt-3">
                   <button
                     type="submit"
-                    onClick={() => assignedVMS}
+                    onClick={() => assignedVMS()}
                     className="btn job-common-btn "
                   >
                     Assign
@@ -171,16 +162,9 @@ const VMSConfig = () => {
               </div>
             </form>
           </div>
-          <div className="job-table">
-            <DataTable
-              columns={columns}
-              data={rows}
-              pagination
-              selectableRows
-              //   onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
-              dense
-            />
-          </div>
+          {/* <div className="job-table">
+            <DataTable columns={[]} data={[]} pagination selectableRows dense />
+          </div> */}
         </div>
       </div>
     </>
