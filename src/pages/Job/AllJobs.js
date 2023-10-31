@@ -23,6 +23,8 @@ import speciality from "../../utils/speciality";
 import BoldLabel from "../../components/atoms/BoldLabel";
 import InputField from "../../components/atoms/InputField";
 import AllVms from "../../utils/jobsampledata/samplevms.json";
+import Select from "../../components/atoms/Select";
+import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 const States = [
   "AL",
   "AK",
@@ -84,22 +86,30 @@ const States = [
   "WI",
   "WY",
 ];
+const STATUS = [
+  {
+    value: 1,
+
+    label: "Active",
+  },
+
+  {
+    value: 2,
+
+    label: "Deactive",
+  },
+];
 
 const ModalContent = (props) => {
-  const { finalClickInfo, setFinalClickInfo } = props;
+  const { finalClickInfo, setFinalClickInfo, dataByRole } = props;
+  console.log(finalClickInfo);
 
   return (
     <div>
-      <div className="row">
+      <div className="row ">
         <div className="col-md-4 ">
           <BoldLabel boldName="Assignee" boldFor="Assignee" />
-          <InputField
-            inptype="text"
-            inpid="Assignee"
-            inpvalue={"Gaurav Singh"}
-            style={{ fontSize: "15px !important", fontWeight: "500" }}
-            disabled
-          />
+          <Select array={dataByRole} selectName="Assignee" />
         </div>
 
         <div className="col-md-4 ">
@@ -112,12 +122,20 @@ const ModalContent = (props) => {
             disabled
           />
         </div>
-        <span>Job ID-</span>
-        <button className="btn job-common-btn">Submit</button>
+        <div className="col-md-4">
+          <button className="btn job-common-btn" style={{ marginTop: "35px" }}>
+            Submit
+          </button>
+        </div>
+        <span className="job-id-span mt-3">
+          <strong>Job ID -</strong>{" "}
+          {finalClickInfo.map((item, index) => `${item.ProviderJobID}, `)}
+        </span>
       </div>
     </div>
   );
 };
+
 const RobotixModalContent = (props) => {
   const { finalClickInfo, setFinalClickInfo } = props;
 
@@ -315,6 +333,18 @@ const RobotixModalContent = (props) => {
 };
 
 const AllJobs = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  // console.log(user);
+
+  const userRoles = () => {
+    return user.RollId <= 2
+      ? GetRolesAssignment(setDataByRole, 7)
+      : user.RollId === 7
+      ? GetRolesAssignment(setDataByRole, 6)
+      : user.RollId === 6
+      ? GetRolesAssignment(setDataByRole, 5)
+      : null;
+  };
   const [errorState, setErrorState] = useState("");
 
   const [show, setShow] = useState(false);
@@ -340,6 +370,7 @@ const AllJobs = () => {
   const [selectedRow, setSelectedRow] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
+  const [dataByRole, setDataByRole] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
@@ -353,7 +384,7 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
-    // GetAllJobs(setAllJobs, setIsloading, e.target.value);
+    GetAllJobs(setAllJobs, setIsloading, e.target.value);
 
     const formatDate = moment(e).format("MM/DD/YYYY");
 
@@ -708,9 +739,12 @@ const AllJobs = () => {
     filters
   );
 
+  console.log(dataByRole, "dataRole");
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
+    GetAllJobs(setAllJobs, setIsloading);
+    userRoles();
   }, []);
 
   return (
@@ -913,7 +947,13 @@ const AllJobs = () => {
           <CustomModal
             open={show1}
             handleClose={handleClose1}
-            children={<ModalContent />}
+            children={
+              <ModalContent
+                dataByRole={dataByRole}
+                finalClickInfo={finalClickInfo}
+                setFinalClickInfo={setFinalClickInfo}
+              />
+            }
             jobid={0}
             className={"assign-modal"}
           />
@@ -954,9 +994,10 @@ const AllJobs = () => {
                     pagination
                     selectableRows
                     customStyles={customStyles}
-                    onSelectedRowsChange={(row) =>
-                      setSelectedRow(row.selectedRows)
-                    }
+                    onSelectedRowsChange={(row) => {
+                      setSelectedRow(row.selectedRows);
+                      setFinalClickInfo(row.selectedRows);
+                    }}
                     onRowClicked={(row) => handleOnCellClick(row)}
                     dense
                   />
