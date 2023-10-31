@@ -9,256 +9,89 @@ import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DatalistInput from "react-datalist-input";
 import GetManagerById from "../../API/Jobs/GetManagerById";
 import { getState } from "../../service/storage";
-
-const TAGS_OPTION = [
-  { id: 1, value: "Driving-License" },
-  { id: 2, value: "SSN-Card" },
-  { id: 3, value: "Resume" },
-  { id: 4, value: "HR-sheet" },
-  { id: 5, value: "Skill-Checklist" },
-  { id: 6, value: "Reference-1" },
-  { id: 7, value: "Reference-2" },
-  { id: 8, value: "BLS" },
-  { id: 9, value: "ACLS" },
-  { id: 10, value: "PALS" },
-  { id: 11, value: "NBRC" },
-  { id: 12, value: "NRP" },
-  { id: 13, value: "TNCC" },
-  { id: 14, value: "CPI" },
-  { id: 15, value: "Nursing-License" },
-  { id: 16, value: "State-License" },
-  { id: 17, value: "COVID-Card" },
-  { id: 18, value: "TB-Record" },
-  { id: 19, value: "Physical" },
-  { id: 20, value: "Flu-record" },
-  { id: 21, value: "OSHA" },
-  { id: 22, value: "Fit-Test" },
-  { id: 23, value: "MMR" },
-  { id: 24, value: "Hep-B" },
-  { id: 25, value: "Varicella" },
-  { id: 26, value: "TDap" },
-  { id: 27, value: "Drug-Screening" },
-  { id: 28, value: "Core-Competency" },
-  { id: 29, value: "Speciality-Exam" },
-  { id: 30, value: "Training" },
-  { id: 31, value: "COA" },
-  { id: 32, value: "Background-Check" },
-  { id: 33, value: "Degree-Transcript" },
-  { id: 34, value: "Fingerprinting" },
-  { id: 35, value: "STATE-DOC" },
-];
+import GetActiveVMSAPI from "../../API/Jobs/GetActiveVMSAPI";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import AssignedVMS from "../../API/Jobs/VMS/AssignedVMS";
+import GetAllAssignedVMS from "../../API/Jobs/VMS/GetAllAssignedVMS";
 
 const VMSConfig = () => {
-  const [loading, setLoading] = useState();
-  const [manager, setManager] = useState();
-
-  console.log(manager);
-
-  // const ManagerFilterId = getState("User");
-  // console.log("loggedInData:", ManagerFilterId);
-
-  //Modal  Bootstrap ******************************************
+  const [loading, setLoading] = useState("");
+  const [manager, setManager] = useState([]);
+  const [vmsDetails, setVMSDetails] = useState([]);
+  const [assignedVMS, setAssignedVMS] = useState([]);
 
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
+  const Manager_Name = manager.map((item, index) => {
+    return { id: item.id, value: item.name };
+  });
+
+  const VMS_Name = vmsDetails.map((item, index) => {
+    return { id: item.id, value: item.vmsName };
+  });
+
+  //Validation
+  const formik = useFormik({
+    initialValues: {
+      managerName: "",
+
+      vmsName: "",
+    },
+
+    validationSchema: Yup.object({
+      managerName: Yup.string().required("Account Manager is Required"),
+
+      vmsName: Yup.string().required("VMS Name is Required"),
+    }),
+
+    onSubmit: (values) => {
+      AssignedVMS(values);
+
+      // alert(JSON.stringify(values, null, 2));
+
+      // setFormState(values);
+    },
+  });
   //Row Styling ********************************************************************
+  var rows = [];
 
-  const customStyles = {
-    rows: {
-      style: {
-        width: "100px",
-        fontSize: "13px",
-      },
-    },
-    headCells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-      },
-    },
-    cells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-        borderBottom: "1px solid #dedede",
-      },
-    },
-  };
-
+  for (let index = 0; index < assignedVMS.length; index++) {
+    const element = assignedVMS[index];
+    const mid = manager.filter(
+      (item, index) => item.id == element.accountManager && item.name
+    );
+    console.log(mid[0].name);
+    rows.push({
+      ...element,
+      accountManager: mid[0].name,
+    });
+  }
   const columns = [
     {
       id: 1,
-      selector: (row) => row.ProviderJobID,
-      name: "Job-ID",
+      selector: (row) => row.vmsName,
+      name: "VMS Name",
       sortable: true,
       reorder: true,
       width: 10,
     },
     {
       id: 2,
-      selector: (row) =>
-        row.WorkType == "1"
-          ? "Travel"
-          : row.WorkType == "2"
-          ? "Perm"
-          : row.WorkType == "3"
-          ? "Per Diem"
-          : row.WorkType,
-      name: "Job-Type",
-      sortable: true,
-      reorder: true,
-      width: 5,
-    },
-    {
-      id: 3,
-      selector: (row) => row.StatusString,
-      name: "Status",
-      conditionalCellStyles: [
-        {
-          when: (row) => row.StatusString === "Open",
-          style: {
-            backgroundColor: "#ccffb2bd",
-            color: "black",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Cancelled",
-          style: {
-            backgroundColor: "#ff7c7c",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Manually Frozen",
-          style: {
-            backgroundColor: "rgb(253 189 111)",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Closed",
-          style: {
-            backgroundColor: "#dc3545",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-      ],
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 4,
-      selector: (row) => row.Priority,
-      name: "Priority",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 5,
-      selector: (row) => row.Degree,
-      name: "Prof",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 6,
-      selector: (row) => row.JobSpecialty,
-      name: "Speciality",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 7,
-      selector: (row) => row.Facility,
-      name: "Facility",
-      sortable: true,
-      reorder: true,
-      width: 50,
-    },
-    {
-      id: 8,
-      selector: (row) => row.City,
-      name: "City",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 9,
-      selector: (row) => row.State,
-      name: "State",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
+      selector: (row) => row.accountManager,
 
-    {
-      id: 10,
-      selector: (row) => row.FormattedStartDate,
-      name: "Start Date",
-      sortable: true,
-      reorder: true,
-    },
-    {
-      id: 11,
-      selector: (row) => row.FormattedEndDate,
-      name: "End Date",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 12,
-      selector: (row) => row.Shift,
-      name: "Shift",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 13,
-      selector: (row) => row.DurationWeeks,
-      name: "DurationWeeks",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 14,
-      selector: (row) => `$ ${row.BillRate}`,
-      name: "BillRate",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 15,
-      selector: (row) => row.SourceName,
-      name: "ExternalVMSName",
+      name: "Account Manager",
       sortable: true,
       reorder: true,
       width: 10,
     },
   ];
+  console.log("rows", rows);
 
   useEffect(() => {
-    GetManagerById(setManager, setLoading);
+    GetManagerById({ setManager, setLoading });
+    GetActiveVMSAPI({ setVMSDetails, setLoading });
+    GetAllAssignedVMS({ setAssignedVMS, setLoading });
   }, []);
 
   return (
@@ -284,33 +117,66 @@ const VMSConfig = () => {
           </div>
 
           <div className="container tab-container mb-5 mt-3">
-            <div className="row">
-              <div className="col-md-6">
-                <DatalistInput
-                  placeholder="Please Choose Manager"
-                  label="Account Manager"
-                  name="fileName"
-                  items={TAGS_OPTION}
-                />
+            <form onSubmit={formik.handleSubmit}>
+              <div className="row align-items-center">
+                <div className="col-md-5">
+                  <DatalistInput
+                    placeholder="Please Choose Manager"
+                    label="Account Manager"
+                    name="managerName"
+                    items={Manager_Name}
+                    onSelect={(item) => {
+                      formik.setFieldValue("accountManager", item.id);
+                      formik.setFieldValue("managerName", item.value);
+                    }}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.managerName}
+                  />
+                  <span className="text-danger">
+                    {formik.touched.managerName && formik.errors.managerName ? (
+                      <div className="text-danger">
+                        {formik.errors.managerName}
+                      </div>
+                    ) : null}
+                  </span>
+                </div>
+                <div className="col-md-5">
+                  <DatalistInput
+                    placeholder="Please Choose VMS"
+                    label="VMS"
+                    name="vmsName"
+                    // onSelect={(item) => setFileName(item.value)}
+                    items={VMS_Name}
+                    onSelect={(item) => {
+                      formik.setFieldValue("vmsName", item.value);
+                    }}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.vmsName}
+                  />
+                  <span className="text-danger">
+                    {formik.touched.vmsName && formik.errors.vmsName ? (
+                      <div className="text-danger">{formik.errors.vmsName}</div>
+                    ) : null}
+                  </span>
+                </div>
+                <div className="col-md-2 mt-3">
+                  <button
+                    type="submit"
+                    onClick={() => assignedVMS}
+                    className="btn job-common-btn "
+                  >
+                    Assign
+                  </button>
+                </div>
               </div>
-              <div className="col-md-6">
-                <DatalistInput
-                  placeholder="Please Choose VMS"
-                  label="VMS"
-                  name="fileName"
-                  //   onSelect={(item) => setFileName(item.value)}
-                  items={TAGS_OPTION}
-                />
-              </div>
-            </div>
+            </form>
           </div>
           <div className="job-table">
             <DataTable
               columns={columns}
-              //   data={allJobs}
+              data={rows}
               pagination
               selectableRows
-              customStyles={customStyles}
               //   onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
               dense
             />
