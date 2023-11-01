@@ -1229,6 +1229,9 @@ input[switch="warning"]:checked + label:before {
 .collapsed .avatar-menu p {
   display: none;
 }
+.collapsed .avatar-menu h6 {
+  display: none;
+}
 .collapsed .sidebar-logo {
   display: none;
   transition: 0.5s all;
@@ -1276,6 +1279,11 @@ input[switch="warning"]:checked + label:before {
 .avatar-menu p {
   font-weight: 600;
   margin-top: 5px;
+  margin-bottom: 0px;
+}
+.avatar-menu h6 {
+  font-weight: 500;
+  font-size: 13px;
 }
 .new-sidebar-list li {
   list-style-type: none;

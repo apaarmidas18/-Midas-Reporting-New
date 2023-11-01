@@ -1,5 +1,10 @@
 export default [
   {
+    tabname: "Dashboard",
+    tabroute: "dashboard",
+    fontlogo: "fa-solid fa-house",
+  },
+  {
     tabname: "Jobs",
     tabroute: "jobs",
     fontlogo: "fa-solid fa-square-poll-vertical",

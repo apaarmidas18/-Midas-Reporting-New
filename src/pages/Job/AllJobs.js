@@ -25,6 +25,7 @@ import Select from "../../components/atoms/Select";
 import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 import active_vms from "../../utils/active_vms";
 import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
+import GetVmsById from "../../API/Jobs/VMS/GetVmsById";
 const States = [
   "AL",
   "AK",
@@ -310,6 +311,7 @@ const AllJobs = () => {
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [selectedRow, setSelectedRow] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
+  const [vms, setVMS] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
   const [isloading, setIsloading] = useState(false);
@@ -694,15 +696,15 @@ const AllJobs = () => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     GetAllJobs(setAllJobs, setIsloading);
+    GetVmsById({ setVMS });
   }, []);
 
+  console.log(vms, "vms");
   useEffect(() => {
     userRoles();
   }, []);
   return (
     <>
-      {/* FILTER TABS */}
-
       <div className="job-filter">
         <Offcanvas
           show={showCanvas}
@@ -793,7 +795,6 @@ const AllJobs = () => {
                 >
                   <option selected>Select VMS</option>
                   {active_vms.map((item, index) => (
-                    
                     <option value={item.value}>{item.value}</option>
                   ))}
                 </select>
@@ -843,12 +844,17 @@ const AllJobs = () => {
           <div class="d-flex mt-2 mb-2">
             <TabName tabname="Jobs" />
             <div className="right-data d-flex align-items-center">
-              <span className="sync-data">
+              {/* <span className="sync-data">
                 Data sync: <br /> 5-mins ago
-              </span>
+              </span> */}
+
               <Button
-                variant="primary"
+                variant={user.rollId === 5 ? "light" : "primary"}
                 onClick={handleShow1}
+                disabled={user.rollId === 5 && true}
+                data-toggle={"tooltip"}
+                data-placement="top"
+                title="Assign a Job"
                 style={{
                   padding: "12px",
                   whiteSpace: "nowrap",
@@ -860,6 +866,9 @@ const AllJobs = () => {
 
               <button
                 className="export-btn"
+                data-toggle={"tooltip"}
+                data-placement="top"
+                title="Export List in CSV"
                 style={{
                   width: "126px",
                   whiteSpace: "nowrap",
@@ -872,6 +881,9 @@ const AllJobs = () => {
               </button>
               <Button
                 variant="primary"
+                data-toggle={"tooltip"}
+                data-placement="top"
+                title="Apply Filters On Jobs"
                 onClick={handleShowCanvas}
                 style={{
                   padding: "12px",
