@@ -65,10 +65,7 @@ const PortalSidebar = () => {
           <div className="sidebar-logo text-center">
             <img src="/images/logob.png" />
           </div>
-          <div className="nav-tabs" style={{ borderBottom: "none" }}>
-            <div className="nav-tab-heading">
-              <span>Jobs</span>
-            </div>
+          <div className="nav-tabs mt-3" style={{ borderBottom: "none" }}>
             <ul className="new-sidebar-list">
               {Routes.map((item, index) => {
                 return (
