@@ -1560,3 +1560,22 @@ input[switch="warning"]:checked + label:before {
   font-size: 15px !important;
   border-radius: 10px;
 }
+
+.portal-logout {
+  float: right;
+}
+
+#portal-login {
+  background: none !important;
+  box-shadow: none;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 17px;
+}
+
+#portal-login .dropdown-menu .show {
+  position: absolute;
+  inset: -11px -7px auto auto !important;
+  transform: translate3d(-6px, 58.5px, 0px);
+}
