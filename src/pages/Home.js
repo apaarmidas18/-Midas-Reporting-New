@@ -2,14 +2,11 @@ import React, { useEffect } from "react";
 import Dashboardcard from "../components/Dashboardcard";
 import AccessToken from "../API/Zoho-API/AccessToken";
 import Example from "../components/Canvas.";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   const loginData = localStorage.getItem("User");
   const user = JSON.parse(loginData);
-
-  // useEffect(() => {
-  //   AccessToken();
-  // }, []);
 
   return (
     <>

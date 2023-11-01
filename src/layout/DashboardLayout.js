@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
-import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { Outlet } from "react-router-dom";
-import AccessToken from "../API/Zoho-API/AccessToken";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const DashboardLayout = () => {
-  // useEffect(() => {
-  //   AccessToken();
-  // }, []);
+  const user = localStorage.getItem("User");
+  const parsedJson = JSON.parse(user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    return parsedJson.rollId === 7
+      ? navigate("/portal")
+      : parsedJson.rollId === 6
+      ? navigate("/portal")
+      : parsedJson.rollId === 5
+      ? navigate("/portal")
+      : null;
+  }, []);
   return (
     <div>
       <Sidebar />
