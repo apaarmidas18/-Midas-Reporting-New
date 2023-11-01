@@ -793,7 +793,8 @@ const AllJobs = () => {
                 >
                   <option selected>Select VMS</option>
                   {active_vms.map((item, index) => (
-                    <option value={item}>{item}</option>
+                    
+                    <option value={item.value}>{item.value}</option>
                   ))}
                 </select>
               </div>

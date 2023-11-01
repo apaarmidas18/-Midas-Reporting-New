@@ -28,7 +28,8 @@ const GetAllJobs = (setAllJobs, setIsloading, vms) => {
   fetch("http://192.168.1.172:9000/alldata", options)
     .then((response) => response.json())
     .then((response) =>
-      setAllJobs(Object.keys(response).map((item, index) => response[item]))
+      // setAllJobs(Object.keys(response).map((item, index) => response[item]))
+      setAllJobs(response)
     )
     .catch((err) => console.error(err));
 };

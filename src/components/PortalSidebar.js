@@ -51,8 +51,8 @@ const PortalSidebar = () => {
         <nav className="menu">
           <div className="avatar-menu text-center">
             <img src="/images/avatar.svg" />
-            <p>
-              {user.name}
+            <p>{user.name}</p>
+            <h6>
               {user.rollId == 7
                 ? "Account Manager"
                 : user.rollId == 6
@@ -60,7 +60,7 @@ const PortalSidebar = () => {
                 : user.rollId == 5
                 ? "Recruiter"
                 : null}
-            </p>
+            </h6>
           </div>
           <div className="sidebar-logo text-center">
             <img src="/images/logob.png" />
