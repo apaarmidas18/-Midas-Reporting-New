@@ -25,6 +25,7 @@ import InputField from "../../components/atoms/InputField";
 import AllVms from "../../utils/jobsampledata/samplevms.json";
 import Select from "../../components/atoms/Select";
 import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
+import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
 const States = [
   "AL",
   "AK",
@@ -86,55 +87,6 @@ const States = [
   "WI",
   "WY",
 ];
-const STATUS = [
-  {
-    value: 1,
-
-    label: "Active",
-  },
-
-  {
-    value: 2,
-
-    label: "Deactive",
-  },
-];
-
-const ModalContent = (props) => {
-  const { finalClickInfo, setFinalClickInfo, dataByRole } = props;
-  console.log(finalClickInfo);
-
-  return (
-    <div>
-      <div className="row ">
-        <div className="col-md-4 ">
-          <BoldLabel boldName="Assignee" boldFor="Assignee" />
-          <Select array={dataByRole} selectName="Assignee" />
-        </div>
-
-        <div className="col-md-4 ">
-          <BoldLabel boldName="Assigner" boldFor="Assigner" />
-          <InputField
-            inptype="text"
-            inpid="Assigner"
-            inpvalue={"Nitesh Yadav"}
-            style={{ fontSize: "15px", fontWeight: "500" }}
-            disabled
-          />
-        </div>
-        <div className="col-md-4">
-          <button className="btn job-common-btn" style={{ marginTop: "35px" }}>
-            Submit
-          </button>
-        </div>
-        <span className="job-id-span mt-3">
-          <strong>Job ID -</strong>{" "}
-          {finalClickInfo.map((item, index) => `${item.ProviderJobID}, `)}
-        </span>
-      </div>
-    </div>
-  );
-};
 
 const RobotixModalContent = (props) => {
   const { finalClickInfo, setFinalClickInfo } = props;
@@ -336,17 +288,7 @@ const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   // console.log(user);
 
-  const userRoles = () => {
-    return user.RollId <= 2
-      ? GetRolesAssignment(setDataByRole, 7)
-      : user.RollId === 7
-      ? GetRolesAssignment(setDataByRole, 6)
-      : user.RollId === 6
-      ? GetRolesAssignment(setDataByRole, 5)
-      : null;
-  };
   const [errorState, setErrorState] = useState("");
-
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [finalClickInfo, setFinalClickInfo] = useState([]);
@@ -366,7 +308,7 @@ const AllJobs = () => {
     startDate: "",
     endDate: "",
   });
-  const [teamLeadID, setTeamLeadID] = useState("");
+  const [teamLeadID, setTeamLeadID] = useState([]);
   const [selectedRow, setSelectedRow] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
@@ -738,16 +680,26 @@ const AllJobs = () => {
     getComparator(order, orderBy),
     filters
   );
-  const vms = filters.VMS;
 
-  console.log(dataByRole, "dataRole");
+  const userRoles = async () => {
+    if (user.rollId === 7) {
+      await GetRolesAssignment(setTeamLeadID, 6);
+      await GetRolesAssignment(setDataByRole, 5);
+    } else if (user.rollId === 6) {
+      await GetRolesAssignment(setDataByRole, 5);
+    } else {
+      return null;
+    }
+  };
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     GetAllJobs(setAllJobs, setIsloading);
-    userRoles();
   }, []);
 
+  useEffect(() => {
+    userRoles();
+  }, []);
   return (
     <>
       {/* FILTER TABS */}
@@ -771,7 +723,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="Facility Name" boldFor="Facility Name" />
@@ -781,7 +732,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "clientName")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="City" boldFor="City" />
@@ -791,7 +741,6 @@ const AllJobs = () => {
                   inpchange={(e) => handleFilterChange(e, "city")}
                   style={{ fontSize: "13px", fontWeight: "500" }}
                 />
-                
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="States" boldFor="States" />
@@ -952,8 +901,9 @@ const AllJobs = () => {
             open={show1}
             handleClose={handleClose1}
             children={
-              <ModalContent
+              <JobAssignmentRole
                 dataByRole={dataByRole}
+                teamLeadID={teamLeadID}
                 finalClickInfo={finalClickInfo}
                 setFinalClickInfo={setFinalClickInfo}
               />
