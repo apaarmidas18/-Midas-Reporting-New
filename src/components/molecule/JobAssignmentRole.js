@@ -10,10 +10,10 @@ const JobAssignmentRole = (props) => {
   const { finalClickInfo, setFinalClickInfo, dataByRole, teamLeadID } = props;
   const user = JSON.parse(localStorage.getItem("User"));
   const [assigned, setAssigned] = useState({
-    assigneeUserId: user.id,
-    assignerUserId: 0,
+    assigneeUserId: 0,
+    assignerUserId: user.id,
     jobIds: finalClickInfo.map((item, index) => item.ProviderJobID),
-    assigneeType: "",
+    assignType: "",
   });
 
   const handleSubmit = async (e) => {
@@ -22,10 +22,12 @@ const JobAssignmentRole = (props) => {
   };
 
   const handleChange = (name, value) => {
-    if (name === "assignerUserId" || name === "assigneeUserId")
+    if (name == "assignerUserId" || name == "assigneeUserId") {
       setAssigned({ ...assigned, [name]: JSON.parse(value) });
+    } else {
+      setAssigned({ ...assigned, [name]: value });
+    }
   };
-  console.log(assigned);
 
   return (
     <>
@@ -52,7 +54,7 @@ const JobAssignmentRole = (props) => {
                 required
                 selectChange={(e) => {
                   const selValue = JSON.parse(e.target.value);
-                  handleChange("assigneeType", selValue.value);
+                  handleChange("assignType", selValue.value);
                 }}
               />
             </div>
@@ -66,12 +68,12 @@ const JobAssignmentRole = (props) => {
                 required
                 name="Teamlead"
                 disabled={
-                  (assigned.assigneeType === "TL_ASSIGNED_FINAL_ASSIGNEE" &&
+                  (assigned.assignType === "TL_ASSIGNED_FINAL_ASSIGNEE" &&
                     true) ||
                   (user.rollId === 6 && true)
                 }
                 onChange={(e) =>
-                  handleChange("assignerUserId", JSON.parse(e.target.value))
+                  handleChange("assigneeUserId", JSON.parse(e.target.value))
                 }
               >
                 <option selected>Open this select menu</option>
@@ -88,11 +90,11 @@ const JobAssignmentRole = (props) => {
                 name="finalassigner"
                 required
                 disabled={
-                  (assigned.assigneeType === "AM_ASSIGNED_TL" && true) ||
-                  (assigned.assigneeType === "" && true)
+                  (assigned.assignType === "AM_ASSIGNED_TL" && true) ||
+                  (assigned.assignType === "" && true)
                 }
                 onChange={(e) =>
-                  handleChange("assignerUserId", JSON.parse(e.target.value))
+                  handleChange("assigneeUserId", JSON.parse(e.target.value))
                 }
               >
                 <option selected>Please Select Recruiter</option>
@@ -108,6 +110,7 @@ const JobAssignmentRole = (props) => {
             </span>
             <div className="col-md-12 text-center">
               <button
+                type="submit"
                 className="btn job-common-btn"
                 style={{ marginTop: "35px" }}
               >
