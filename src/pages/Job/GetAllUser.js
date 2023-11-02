@@ -1,18 +1,10 @@
-import React from "react";
-import { host } from "../../static";
+import React from 'react'
 
-const GetManagerById = (
-  setManager,
-  setLoading,
-  id,
-  setRecruiterData,
-  setTeamlData
-) => {
-  const user = JSON.parse(localStorage.getItem("User"));
+const GetAllUser = () => {
   var requestOptions = {
-    method: "POST",
+    method: "GET",
     redirect: "follow",
-    body: "{}",
+
   };
 
   fetch(`${host}auth/users/all-users?rollId=${id}`, requestOptions)
@@ -28,6 +20,6 @@ const GetManagerById = (
       }
     })
     .catch((error) => console.log("error", error));
-};
+}
 
-export default GetManagerById;
+export default GetAllUser

@@ -233,6 +233,7 @@ export const Router = () => {
         },
         { path: "dashboard", element: <PortalDash /> },
         { path: "jobs", element: <AllJobs /> },
+
         { path: "active-candidates", element: <ActiveCandidates /> },
         { path: "assigned-job", element: <AssignedJob /> },
         { path: "booked-candidates", element: <Booked /> },

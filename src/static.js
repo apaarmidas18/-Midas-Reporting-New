@@ -10,3 +10,6 @@ export const nodeHost = "https://checklist.midascrm.tech/";
 export const dhost = "https://zoho.midascrm.tech/";
 export const token =
   "1000.d4c20c616f6b2fd10a473c6436177db9.28ee1cee3798e18c8a27bfae911ce18f";
+export const managerId = 7;
+export const teamlead = 6;
+export const recruiter = 5;

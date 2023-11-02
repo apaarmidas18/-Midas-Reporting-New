@@ -10,10 +10,15 @@ export default [
     fontlogo: "fa-solid fa-square-poll-vertical",
   },
   {
-    tabname: "Active",
-    tabroute: "active-candidates",
-    fontlogo: "fa-solid fa-chart-line",
+    tabname: "Assigned Job",
+    tabroute: "assigned-job",
+    fontlogo: "fa-solid fa-star",
   },
+  // {
+  //   tabname: "Active",
+  //   tabroute: "active-candidates",
+  //   fontlogo: "fa-solid fa-chart-line",
+  // },
   {
     tabname: "Booked",
     tabroute: "booked-candidates",

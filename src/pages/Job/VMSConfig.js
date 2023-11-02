@@ -77,7 +77,7 @@ const VMSConfig = () => {
   ];
 
   useEffect(() => {
-    GetManagerById({ setManager, setLoading });
+    GetManagerById(setManager, setLoading , 7);
     GetAllAssignedVMS({ setAssignedVMS, setLoading });
   }, []);
   return (
