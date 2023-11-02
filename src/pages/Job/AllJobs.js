@@ -696,7 +696,6 @@ const AllJobs = () => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     GetAllJobs(setAllJobs, setIsloading);
-    GetVmsById({ setVMS });
   }, []);
 
   console.log(vms, "vms");

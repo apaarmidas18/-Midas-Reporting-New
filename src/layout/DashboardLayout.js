@@ -7,13 +7,13 @@ const DashboardLayout = () => {
   const parsedJson = JSON.parse(user);
   const navigate = useNavigate();
   useEffect(() => {
-    return parsedJson.rollId === 7
-      ? navigate("/portal")
-      : parsedJson.rollId === 6
-      ? navigate("/portal")
-      : parsedJson.rollId === 5
-      ? navigate("/portal")
-      : null;
+    if (
+      parsedJson.rollId === 7 ||
+      parsedJson.rollId === 6 ||
+      parsedJson.rollId === 5
+    ) {
+      return navigate("/portal");
+    }
   }, []);
   return (
     <div>

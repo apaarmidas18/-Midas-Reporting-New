@@ -10,6 +10,7 @@ const InputField = (props) => {
     inpcontrol,
     disabled,
     inpstyle,
+    inpname,
   } = props;
 
   return (
@@ -19,6 +20,7 @@ const InputField = (props) => {
         class="form-control"
         id={inpid}
         aria-describedby="emailHelp"
+        name={inpname}
         onChange={inpchange}
         onBlur={inpblur}
         value={inpvalue}

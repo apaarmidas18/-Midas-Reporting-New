@@ -10,19 +10,19 @@ const AssignedVMS = (values) => {
 
   var config = {
     method: "post",
-    url: `${jobshost}api/jobAssignment/assignVMS`,
+    url: `${jobshost}jobAssignment/assignVMS`,
     data: data,
   };
 
   axios(config)
     .then(function (response) {
-      console.log(response);
       if (response.status == 201) {
         swal({
           title: "Assigned Successfully",
           text: response.message,
           icon: "success",
         });
+        window.location.reload();
       } else {
         swal({
           title: "Submission Error.",

@@ -60,16 +60,16 @@ const VMSConfig = () => {
   const columns = [
     {
       id: 1,
-      selector: (row) => row.vmsName,
-      name: "VMS Name",
+      selector: (row) => row.accountManager,
+      name: "Account Manager",
       sortable: true,
       reorder: true,
       width: 10,
     },
     {
       id: 2,
-      selector: (row) => row.accountManager,
-      name: "Account Manager",
+      selector: (row) => row.vmsName,
+      name: "VMS Name",
       sortable: true,
       reorder: true,
       width: 10,
