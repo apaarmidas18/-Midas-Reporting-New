@@ -7,7 +7,6 @@ const NewHor = () => {
 
   const loginData = localStorage.getItem("User");
   const user = JSON.parse(loginData);
-  console.log(user);
   const userLogout = () => {
     localStorage.clear();
     navigate("/dashboard");

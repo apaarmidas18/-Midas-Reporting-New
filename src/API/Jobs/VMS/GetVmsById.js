@@ -1,16 +1,21 @@
-import React from "react";
-// import { jobshost } from "../../../static";
+import { jobshost } from "../../../static";
+import axios from "axios";
 
-const GetVmsById = ({ setVMS }) => {
-  const options = { method: "GET" };
+const getAllVmsConfig = async (setVMS) => {
+  const user = localStorage.getItem("User");
+  const parsedData = JSON.parse(user);
+  const options = {
+    method: "GET",
+    url: `${jobshost}jobAssignment/getAllVmsConfig`,
+  };
 
-  fetch(
-    "http://192.168.1.172:9291/api/jobAssignment/getByVmsId/65402060a2e1d8551ef35a48",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => setVMS(response))
-    .catch((err) => console.error(err));
+  const apiFetch = await axios.request(options);
+
+  const response = await apiFetch.data;
+  var resp = response.filter(
+    (item, index) => item.accountManager === parsedData.id
+  );
+  setVMS(resp);
 };
 
-export default GetVmsById;
+export default getAllVmsConfig;
