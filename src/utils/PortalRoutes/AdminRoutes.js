@@ -34,13 +34,13 @@ export default [
     tabroute: "availability-log",
     fontlogo: "fa-solid fa-list",
   },
+  // {
+  //   tabname: "VMS",
+  //   tabroute: "job-vms",
+  //   fontlogo: "fa-solid fa-list",
+  // },
   {
-    tabname: "VMS",
-    tabroute: "job-vms",
-    fontlogo: "fa-solid fa-list",
-  },
-  {
-    tabname: "configuration",
+    tabname: "Assign VMS",
     tabroute: "vms-config",
     fontlogo: "fa-solid fa-table",
   },

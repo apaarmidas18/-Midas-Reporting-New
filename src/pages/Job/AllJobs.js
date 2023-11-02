@@ -331,6 +331,7 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
+    GetAllJobs(setAllJobs, setIsloading, e.target.value);
     const formatDate = moment(e).format("MM/DD/YYYY");
 
     name === "startDate" || name === "endDate"
@@ -340,7 +341,7 @@ const AllJobs = () => {
   };
   const handleOnCellClick = (params) => {
     setFinalClickInfo(params);
-    console.log(params);
+
     handleShow();
   };
 
@@ -612,7 +613,6 @@ const AllJobs = () => {
   useEffect(() => {
     userRoles();
   }, []);
-  console.log("vms", vms);
 
   return (
     <>
@@ -871,6 +871,15 @@ const AllJobs = () => {
                       setFinalClickInfo(row.selectedRows);
                     }}
                     onRowClicked={(row) => handleOnCellClick(row)}
+                    selectableRowDisabled={(row) =>
+                      user.rollId == 7 && row.amId >= 0
+                        ? true
+                        : user.rollId == 6 && row.tlId >= 0
+                        ? true
+                        : user.rollId == 5 && row.amId >= 0
+                        ? true
+                        : false
+                    }
                     dense
                   />
                 )}
