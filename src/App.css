@@ -1579,3 +1579,13 @@ input[switch="warning"]:checked + label:before {
   inset: -11px -7px auto auto !important;
   transform: translate3d(-6px, 58.5px, 0px);
 }
+
+
+.delete-job{
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.delete-job .fa-trash{
+  color: #000!important;
+}
