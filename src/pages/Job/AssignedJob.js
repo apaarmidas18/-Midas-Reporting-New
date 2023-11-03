@@ -28,41 +28,201 @@ const AssignedJob = () => {
   const customStyles = {
     rows: {
       style: {
+        width: "100px",
         fontSize: "13px",
       },
     },
     headCells: {
       style: {
+        width: "1px",
         fontSize: "13px",
       },
     },
     cells: {
       style: {
+        width: "1px",
         fontSize: "13px",
+        borderBottom: "1px solid #dedede",
       },
     },
   };
   const columns = [
     {
       id: 1,
-      selector: (row) => row.assigner,
-      name: "Assigner",
+      selector: (row) => row.ProviderJobID,
+      name: "Job-ID",
       sortable: true,
       reorder: true,
+      width: 10,
     },
     {
       id: 2,
-      selector: (row) => row.assignee,
-      name: "Assigner",
+      selector: (row) =>
+        row.WorkType == "1"
+          ? "Travel"
+          : row.WorkType == "2"
+          ? "Perm"
+          : row.WorkType == "3"
+          ? "Per Diem"
+          : row.WorkType,
+      name: "Job-Type",
+      sortable: true,
+      reorder: true,
+      width: 5,
+    },
+    {
+      id: 3,
+      selector: (row) => row.StatusString,
+      name: "Status",
+      conditionalCellStyles: [
+        {
+          when: (row) => row.StatusString === "Open",
+          style: {
+            backgroundColor: "#ccffb2bd",
+            color: "black",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          },
+        },
+        {
+          when: (row) => row.StatusString === "Cancelled",
+          style: {
+            backgroundColor: "#ff7c7c",
+            color: "white",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          },
+        },
+        {
+          when: (row) => row.StatusString === "Manually Frozen",
+          style: {
+            backgroundColor: "rgb(253 189 111)",
+            color: "white",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          },
+        },
+        {
+          when: (row) => row.StatusString === "Closed",
+          style: {
+            backgroundColor: "#dc3545",
+            color: "white",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          },
+        },
+      ],
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 4,
+      selector: (row) => row.Priority,
+      name: "Priority",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 5,
+      selector: (row) => row.Degree,
+      name: "Prof",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 6,
+      selector: (row) => row.JobSpecialty,
+      name: "Speciality",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 7,
+      selector: (row) => row.Facility,
+      name: "Facility",
+      sortable: true,
+      reorder: true,
+      width: 50,
+    },
+    {
+      id: 8,
+      selector: (row) => row.City,
+      name: "City",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 9,
+      selector: (row) => row.State,
+      name: "State",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+
+    {
+      id: 10,
+      selector: (row) => row.FormattedStartDate,
+      name: "Start Date",
       sortable: true,
       reorder: true,
     },
     {
-      id: 3,
-      selector: (row) => row.assignType,
-      name: "Assign type",
+      id: 11,
+      selector: (row) => row.FormattedEndDate,
+      name: "End Date",
       sortable: true,
       reorder: true,
+      width: 10,
+    },
+    {
+      id: 12,
+      selector: (row) => row.Shift,
+      name: "Shift",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 13,
+      selector: (row) => row.DurationWeeks,
+      name: "DurationWeeks",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 14,
+      selector: (row) => `$ ${row.BillRate}`,
+      name: "BillRate",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 15,
+      selector: (row) => row.SourceName,
+      name: "VMS-Name",
+      sortable: true,
+      reorder: true,
+      width: 10,
+    },
+    {
+      id: 16,
+      selector: (row) => moment(row.PostDate).format("MM/DD/YYYY"),
+      name: "PostDate",
+      sortable: true,
+      reorder: true,
+      width: 50,
     },
   ];
 
@@ -106,6 +266,7 @@ const AssignedJob = () => {
   }, []);
 
   var rows = [];
+  var jobsfeeds = [];
   for (let index = 0; index < assignedJobs.length; index++) {
     const element = assignedJobs[index];
     var name1 = "";
@@ -131,12 +292,14 @@ const AssignedJob = () => {
 
     rows.push({
       ...element,
-      assignee: name1,
-      assigner: name2,
+      assignee: name2,
+      assigner: name1,
       assignType: type,
     });
+
+    jobsfeeds.push(...element.jobsFeedsSet);
   }
-  console.log(data);
+
   return (
     <>
       <div
@@ -165,14 +328,15 @@ const AssignedJob = () => {
               <span>Export List</span>
             </button>
           </div>
-          <div className="job-table">
+          <div className="job-table mt-3">
             <DataTable
               columns={columns}
-              data={rows}
+              data={jobsfeeds}
               pagination
               selectableRows
               customStyles={customStyles}
               // onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
+              dense
             />
           </div>
         </div>

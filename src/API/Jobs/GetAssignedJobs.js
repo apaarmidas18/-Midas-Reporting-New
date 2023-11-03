@@ -11,7 +11,6 @@ const GetAssignedJobs = (setAssignedJobs, setIsloading) => {
   fetch(`${jobshost}jobAssignment/allAssignedToMe/${user.id}`, options)
     .then((response) => response.json())
     .then((response) => {
-      console.log("response:", response);
       if (response) {
         setAssignedJobs(response);
         setIsloading(false);

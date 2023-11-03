@@ -9,6 +9,7 @@ import AssignJobs from "../../API/Jobs/AssignJobs";
 const JobAssignmentRole = (props) => {
   const { finalClickInfo, setFinalClickInfo, dataByRole, teamLeadID } = props;
   const user = JSON.parse(localStorage.getItem("User"));
+  const [isValidate, setIsValidate] = useState(false);
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
@@ -32,7 +33,11 @@ const JobAssignmentRole = (props) => {
   return (
     <>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form
+          className="g-3 needs-validation"
+          noValidate
+          onSubmit={handleSubmit}
+        >
           <div className="row">
             <div className="col-md-6 ">
               <BoldLabel boldName="Assigner" boldFor="Assigner" />
@@ -51,7 +56,7 @@ const JobAssignmentRole = (props) => {
               <Select
                 array={user.rollId == 6 ? tl_assignee_stat : assignee_stat}
                 selectName="Assignee"
-                required
+                required={true}
                 selectChange={(e) => {
                   const selValue = JSON.parse(e.target.value);
                   handleChange("assignType", selValue.value);
@@ -65,16 +70,17 @@ const JobAssignmentRole = (props) => {
                 class="form-select"
                 aria-label="Default select example"
                 aria-describedby="validationServer04Feedback"
-                required
+                required={true}
                 name="Teamlead"
                 disabled={
                   (assigned.assignType === "TL_ASSIGNED_FINAL_ASSIGNEE" &&
                     true) ||
                   (user.rollId === 6 && true)
                 }
-                onChange={(e) =>
-                  handleChange("assigneeUserId", JSON.parse(e.target.value))
-                }
+                onChange={(e) => {
+                  handleChange("assigneeUserId", JSON.parse(e.target.value));
+                  setIsValidate(false);
+                }}
               >
                 <option selected>Open this select menu</option>
                 {teamLeadID.map((item, index) => {
@@ -88,7 +94,7 @@ const JobAssignmentRole = (props) => {
                 class="form-select"
                 aria-label="Default select example"
                 name="finalassigner"
-                required
+                required={true}
                 disabled={
                   (assigned.assignType === "AM_ASSIGNED_TL" && true) ||
                   (assigned.assignType === "" && true)
@@ -113,6 +119,7 @@ const JobAssignmentRole = (props) => {
                 type="submit"
                 className="btn job-common-btn"
                 style={{ marginTop: "35px" }}
+                disabled={isValidate}
               >
                 Submit
               </button>

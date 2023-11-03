@@ -8,8 +8,7 @@ const GetAllJobs = (setAllJobs, setIsloading, vms) => {
     headers: {
       "Content-Type": "application/json",
     },
-    // body: `{"vmsId":"${vms}"}`,
-    body: `{"vmsId":"${"MedicalSolutions"}"}`,
+    body: `{"vmsId":"${vms}"}`,
   };
   setIsloading(true);
   fetch(`${jobshost}allvms/getAllOpenByVMSId`, options)

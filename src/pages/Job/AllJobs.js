@@ -31,6 +31,8 @@ import {
   getComparator,
 } from "../../components/molecule/jobs_functions/sort_filter";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
+import search from "../../lottie/search.json";
+import Lottie from "react-lottie";
 const States = [
   "AL",
   "AK",
@@ -291,7 +293,7 @@ const RobotixModalContent = (props) => {
 
 const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
-
+  const [robotixModal, setRobotixModal] = useState([]);
   const [errorState, setErrorState] = useState("");
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
@@ -340,8 +342,7 @@ const AllJobs = () => {
     setApplied(filters);
   };
   const handleOnCellClick = (params) => {
-    setFinalClickInfo(params);
-
+    setRobotixModal(params);
     handleShow();
   };
 
@@ -607,8 +608,17 @@ const AllJobs = () => {
     getAllVmsConfig(setVMS);
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading);
+    // GetAllJobs(setAllJobs, setIsloading);
   }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: search,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   useEffect(() => {
     userRoles();
@@ -701,6 +711,7 @@ const AllJobs = () => {
                   aria-label="Default select example"
                   onChange={(e) => {
                     handleFilterChange(e, "VMS");
+                    handleCloseCanvas();
                   }}
                 >
                   <option selected>Select VMS</option>
@@ -808,27 +819,29 @@ const AllJobs = () => {
             handleClose={handleClose}
             children={
               <RobotixModalContent
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
+                finalClickInfo={robotixModal}
+                setFinalClickInfo={setRobotixModal}
               />
             }
-            jobid={finalClickInfo.ProviderJobID}
+            jobid={robotixModal.ProviderJobID}
             className={"job-modal"}
           />
-          <CustomModal
-            open={show1}
-            handleClose={handleClose1}
-            children={
-              <JobAssignmentRole
-                dataByRole={dataByRole}
-                teamLeadID={teamLeadID}
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
-              />
-            }
-            jobid={0}
-            className={"assign-modal"}
-          />
+          {finalClickInfo.length === 0 ? null : (
+            <CustomModal
+              open={show1}
+              handleClose={handleClose1}
+              children={
+                <JobAssignmentRole
+                  dataByRole={dataByRole}
+                  teamLeadID={teamLeadID}
+                  finalClickInfo={finalClickInfo}
+                  setFinalClickInfo={setFinalClickInfo}
+                />
+              }
+              jobid={0}
+              className={"assign-modal"}
+            />
+          )}
           <div className="job-table">
             {filterArray.length !== 0 ? (
               <div className="applied-filers ">
@@ -843,15 +856,10 @@ const AllJobs = () => {
             ) : (
               ""
             )}
-            {isloading ? (
+            {isloading == true ? (
               <>
-                {errorState ? (
-                  errorState
-                ) : (
-                  <div class="text-center p-5">
-                    Please Select VMS to get data by Clicking on apply filters
-                  </div>
-                )}
+                <Lottie options={defaultOptions} height={200} width={200} />
+                <span></span>
               </>
             ) : (
               <>
@@ -869,6 +877,7 @@ const AllJobs = () => {
                     onSelectedRowsChange={(row) => {
                       setSelectedRow(row.selectedRows);
                       setFinalClickInfo(row.selectedRows);
+                      setRobotixModal(row.selectedRows);
                     }}
                     onRowClicked={(row) => handleOnCellClick(row)}
                     selectableRowDisabled={(row) =>
