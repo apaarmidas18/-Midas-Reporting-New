@@ -18,7 +18,7 @@ const PortalDash = () => {
             isSidebarExpanded ? "container " : "container tab-container"
           }
         >
-          <h1 className="text-center mt-5">Welcome To Midas HRMS</h1>
+          <h1 className="text-center mt-5">Welcome To Midas Job Portal</h1>
         </div>
       </div>
     </>

@@ -16,6 +16,7 @@ import AssignedVMS from "../../API/Jobs/VMS/AssignedVMS";
 import GetAllAssignedVMS from "../../API/Jobs/VMS/GetAllAssignedVMS";
 import GetUserByIdforVmsConfig from "../../API/Jobs/VMS/GetUserByIdforVmsConfig";
 import active_vms from "../../utils/active_vms";
+import DeleteVMS from "../../API/Jobs/VMS/DeleteVMS";
 
 const VMSConfig = () => {
   const [loading, setLoading] = useState("");
@@ -74,7 +75,21 @@ const VMSConfig = () => {
       reorder: true,
       width: 10,
     },
+    {
+      id: 3,
+      // selector: (row) => row.vmsName,
+      name: "Delete VMS",
+      sortable: true,
+      reorder: true,
+      width: 10,
+      cell: (row) => <button className="delete-job" onClick={() => handleButtonDelete(row)}><i class="fa-solid fa-trash"></i></button>,
+    },
   ];
+
+  const handleButtonDelete = (row) => {
+    DeleteVMS(row.id)
+    console.log('Button clicked for row:', row);
+  };
 
   useEffect(() => {
     GetManagerById({ setManager, setLoading });
