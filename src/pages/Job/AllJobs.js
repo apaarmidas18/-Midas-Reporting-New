@@ -31,6 +31,7 @@ import {
   getComparator,
 } from "../../components/molecule/jobs_functions/sort_filter";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
+import GetActiveVMSAPI from "../../API/Jobs/GetActiveVMSAPI";
 const States = [
   "AL",
   "AK",
@@ -293,6 +294,7 @@ const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
 
   const [errorState, setErrorState] = useState("");
+  const [field, setField] = useState([]);
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [finalClickInfo, setFinalClickInfo] = useState([]);
@@ -318,6 +320,8 @@ const AllJobs = () => {
   const [vms, setVMS] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
+  const [vmsDetails, setVMSDetails] = useState([]);
+  const [loading, setLoading]= useState([]);
   const [isloading, setIsloading] = useState(false);
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
@@ -331,7 +335,15 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
-    GetAllJobs(setAllJobs, setIsloading, e.target.value);
+
+    // if(name=="VMS"){
+    //   console.log(e,"DheerajArr");
+    //   GetAllJobs(setAllJobs, setIsloading, e);
+    // }else if(name!=""){
+    //   GetAllJobs(setAllJobs, setIsloading, e.target.value);
+    // }
+
+    GetAllJobs(setAllJobs, setIsloading, currentVMS);
     const formatDate = moment(e).format("MM/DD/YYYY");
 
     name === "startDate" || name === "endDate"
@@ -603,17 +615,26 @@ const AllJobs = () => {
       return null;
     }
   };
+
+
+
   useEffect(() => {
     getAllVmsConfig(setVMS);
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading);
+    GetAllJobs(setAllJobs, setIsloading, currentVMS);
+    GetActiveVMSAPI({ setVMSDetails , setLoading})
   }, []);
+
+
 
   useEffect(() => {
     userRoles();
   }, []);
 
+  const currentVMS = vmsDetails.filter((item, index)=>
+  item.accountManager === user.id && item.vmsName).map((item )=> item.vmsName)
+  console.log(currentVMS)
   return (
     <>
       <div className="job-filter">
@@ -696,19 +717,26 @@ const AllJobs = () => {
               </div>
               <div className="col-md-4 job-select">
                 <BoldLabel boldName="VMS" boldFor="VMS" />
+
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  onChange={(e) => {
-                    handleFilterChange(e, "VMS");
-                  }}
+                  multiple
+       
+                  onChange={(e) =>{
+                    handleFilterChange(field, "VMS")
+                    }
+                  }
+                 
                 >
+                  
                   <option selected>Select VMS</option>
                   {vms.map((item, index) => (
                     <option value={item.vmsName}>{item.vmsName}</option>
                   ))}
                 </select>
               </div>
+
               <DateRangePicker
                 startDate={startDate}
                 setStartDate={setStartDate}
