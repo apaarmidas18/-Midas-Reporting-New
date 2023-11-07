@@ -2,22 +2,47 @@ import React from "react";
 import { host, jobshost } from "../../static";
 // import { chost, host } from "../../static";
 
-const GetAllJobs = (setAllJobs, setIsloading, vms) => {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: `{"vmsId":"${vms}"}`,
-  };
-  setIsloading(true);
-  fetch(`${jobshost}allvms/getAllOpenByVMSId`, options)
-    .then((response) => response.json())
-    .then((response) => {
-      setIsloading(false);
-      setAllJobs(Object.keys(response).map((item, index) => response[item]));
-    })
-    .catch((err) => console.error(err));
+const GetAllJobs = (setAllJobs, setIsloading, vmsDetails) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  var vmArr = [];
+  const vms = vmsDetails.filter((item, index) =>
+    item.accountManager === user.id ? vmArr.push(item.vmsName) : []
+  );
+  if (vms.length === 0) {
+    return "wait";
+  } else {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: `{"vmsIds":${JSON.stringify(vmArr)}}`,
+      // body: `{"vmsIds":[${vms}]}`,
+      // body: `{"vmsIds":['MedicalSolutions']}`,
+      // body: `{"vmsId":"${"MedicalSolutions"}"}`,
+    };
+    setIsloading(true);
+    // const options = {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/8.3.0'},
+    //   body: '{"vmsIds":["MedicalSolutions","Kruse","Medefis5","WorkforceSG","StafferLink"]}'
+    // };
+
+    // fetch('http://192.168.1.99:9291/api/allvms/getAllOpenByVMSIdFlux', options)
+    //   .then(response => response.json())
+    //   .then(response => console.log(response))
+    //   .catch(err => console.error(err));
+
+    fetch(`${jobshost}allvms/getAllOpenByVMSIdFlux`, options)
+      .then((response) => response.json())
+
+      .then((response) => {
+        setIsloading(false);
+
+        setAllJobs(Object.keys(response).map((item, index) => response[item]));
+      })
+      .catch((err) => console.error(err));
+  }
 
   //   const options = {
   //     method: "GET",

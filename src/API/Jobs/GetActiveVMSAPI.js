@@ -11,7 +11,8 @@ const GetActiveVMSAPI = ({ setVMSDetails, setLoading }) => {
     .then((response) => response.json())
     .then((result) => {
       if (result) {
-        return setVMSDetails(result.payload), setLoading(false);
+   
+        return setVMSDetails(result), setLoading(false);
       }
     })
     .catch((error) => console.log("error", error));
