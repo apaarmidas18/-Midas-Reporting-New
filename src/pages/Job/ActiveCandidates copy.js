@@ -1,4 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  StrictMode,
+} from 'react';
+import { AgGridReact } from 'ag-grid-react';
+// import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import sampledata from "../../utils/jobsampledata/sampleJobs.json";
 import NewHor from "../../components/NewHor";
 import TabName from "../../components/TabName";
@@ -26,14 +37,13 @@ import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 import active_vms from "../../utils/active_vms";
 import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
 import GetVmsById from "../../API/Jobs/VMS/GetVmsById";
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
 import {
   applySortFilter,
   getComparator,
 } from "../../components/molecule/jobs_functions/sort_filter";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
 import GetActiveVMSAPI from "../../API/Jobs/GetActiveVMSAPI";
+import { all } from 'axios';
 const States = [
   "AL",
   "AK",
@@ -329,30 +339,203 @@ const AllJobs = () => {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState("name");
   const [applied, setApplied] = useState([]);
-
   //Modal  Bootstrap ******************************************
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
   const { isSidebarExpanded } = useContext(Sidebar_Context);
+  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
+  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
+  const [rowData, setRowData] = useState([]);
+  const [columnDefs, setColumnDefs] = useState(
+   [] 
+  //   [
+  //   {
+  //     id: 1,
+  //     selector: (row) => row.ProviderJobID,
+  //     field: "Job-ID",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 2,
+  //     selector: (row) =>
+  //       row.WorkType == "1"
+  //         ? "Travel"
+  //         : row.WorkType == "2"
+  //         ? "Perm"
+  //         : row.WorkType == "3"
+  //         ? "Per Diem"
+  //         : row.WorkType,
+  //     field: "Job-Type",
+  //     filter: 'agSetColumnFilter',
+  //     reorder: true,
+  //     width: 5,
+  //   },
+  //   {
+  //     id: 3,
+  //     selector: (row) => row.StatusString,
+  //     field: "Status",
+  //     conditionalCellStyles: [
+  //       {
+  //         when: (row) => row.StatusString === "Open",
+  //         style: {
+  //           backgroundColor: "#ccffb2bd",
+  //           color: "black",
+  //           "&:hover": {
+  //             cursor: "pointer",
+  //           },
+  //         },
+  //       },
+  //       {
+  //         when: (row) => row.StatusString === "Cancelled",
+  //         style: {
+  //           backgroundColor: "#ff7c7c",
+  //           color: "white",
+  //           "&:hover": {
+  //             cursor: "pointer",
+  //           },
+  //         },
+  //       },
+  //       {
+  //         when: (row) => row.StatusString === "Manually Frozen",
+  //         style: {
+  //           backgroundColor: "rgb(253 189 111)",
+  //           color: "white",
+  //           "&:hover": {
+  //             cursor: "pointer",
+  //           },
+  //         },
+  //       },
+  //       {
+  //         when: (row) => row.StatusString === "Closed",
+  //         style: {
+  //           backgroundColor: "#dc3545",
+  //           color: "white",
+  //           "&:hover": {
+  //             cursor: "pointer",
+  //           },
+  //         },
+  //       },
+  //     ],
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 4,
+  //     selector: (row) => row.Priority,
+  //     field: "Priority",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 5,
+  //     selector: (row) => row.Degree,
+  //     field: "Prof",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 6,
+  //     selector: (row) => row.JobSpecialty,
+  //     field: "Speciality",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 7,
+  //     selector: (row) => row.Facility,
+  //     field: "Facility",
+  //     filter: 'agSetColumnFilter',
+  //     reorder: true,
+  //     width: 50,
+  //   },
+  //   {
+  //     id: 8,
+  //     selector: (row) => row.City,
+  //     field: "City",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 9,
+  //     selector: (row) => row.State,
+  //     field: "State",
+  //     filter: 'agSetColumnFilter',
+  //   },
+
+  //   {
+  //     id: 10,
+  //     selector: (row) => row.FormattedStartDate,
+  //     field: "Start Date",
+  //     filter: 'agSetColumnFilter',
+  //     reorder: true,
+  //   },
+  //   {
+  //     id: 11,
+  //     selector: (row) => row.FormattedEndDate,
+  //     field: "End Date",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 12,
+  //     selector: (row) => row.Shift,
+  //     field: "Shift",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 13,
+  //     selector: (row) => row.DurationWeeks,
+  //     field: "DurationWeeks",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 14,
+  //     selector: (row) => `$ ${row.BillRate}`,
+  //     field: "BillRate",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 15,
+  //     selector: (row) => row.SourceName,
+  //     field: "ExternalVMSName",
+  //     filter: 'agSetColumnFilter',
+  //   },
+  //   {
+  //     id: 16,
+  //     selector: (row) => moment(row.PostDate).format("MM/DD/YYYY"),
+  //     field: "PostDate",
+  //     filter: 'agSetColumnFilter',
+
+  //     reorder: true,
+  //     width: 50,
+  //   },
+  // ]
+  
+  );
+  const defaultColDef = useMemo(() => {
+    return {
+      flex: 1,
+      minWidth: 200,
+      resizable: true,
+      floatingFilter: true,
+    };
+  }, []);
+
+  const onGridReady = useCallback((params) => {
+  
+    console.log("Issue",allJobs)
+  
+  }, []);
+
+
+
 
   const handleFilterChange = (e, name) => {
 
-    // if(name=="VMS"){
-    //   console.log(e,"DheerajArr");
-    //   GetAllJobs(setAllJobs, setIsloading, e);
-    // }else if(name!=""){
-    //   GetAllJobs(setAllJobs, setIsloading, e.target.value);
-    // }
 
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
+    GetAllJobs(setAllJobs, setIsloading);
     const formatDate = moment(e).format("MM/DD/YYYY");
 
-    name === "startDate" || name === "endDate"
-      ? setFilters({ ...filters, [name]: formatDate })
-      : setFilters({ ...filters, [name]: e.target.value });
-    setApplied(filters);
+  //   name === "startDate" || name === "endDate"
+  //     ? setFilters({ ...filters, [name]: formatDate })
+  //     : setFilters({ ...filters, [name]: e.target.value });
+  //   setApplied(filters);
   };
   const handleOnCellClick = (params) => {
     setFinalClickInfo(params);
@@ -360,6 +543,8 @@ const AllJobs = () => {
     handleShow();
   };
 
+
+  
   //Row Styling ********************************************************************
 
   const handleCloseCanvas = () => setShowCanvas(false);
@@ -367,36 +552,14 @@ const AllJobs = () => {
 
   const loopData = filterArray.length !== 0 ? filterArray : [];
 
-  const customStyles = {
-    rows: {
-      style: {
-        width: "100px",
-        fontSize: "13px",
-      },
-    },
-    headCells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-      },
-    },
-    cells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-        borderBottom: "1px solid #dedede",
-      },
-    },
-  };
+
 
   const columns = [
     {
       id: 1,
       selector: (row) => row.ProviderJobID,
       name: "Job-ID",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 2,
@@ -409,7 +572,7 @@ const AllJobs = () => {
           ? "Per Diem"
           : row.WorkType,
       name: "Job-Type",
-      sortable: true,
+      filter: 'agSetColumnFilter',
       reorder: true,
       width: 5,
     },
@@ -459,39 +622,31 @@ const AllJobs = () => {
           },
         },
       ],
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 4,
       selector: (row) => row.Priority,
       name: "Priority",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 5,
       selector: (row) => row.Degree,
       name: "Prof",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 6,
       selector: (row) => row.JobSpecialty,
       name: "Speciality",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 7,
       selector: (row) => row.Facility,
       name: "Facility",
-      sortable: true,
+      filter: 'agSetColumnFilter',
       reorder: true,
       width: 50,
     },
@@ -499,71 +654,57 @@ const AllJobs = () => {
       id: 8,
       selector: (row) => row.City,
       name: "City",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 9,
       selector: (row) => row.State,
       name: "State",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
 
     {
       id: 10,
       selector: (row) => row.FormattedStartDate,
       name: "Start Date",
-      sortable: true,
+      filter: 'agSetColumnFilter',
       reorder: true,
     },
     {
       id: 11,
       selector: (row) => row.FormattedEndDate,
       name: "End Date",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 12,
       selector: (row) => row.Shift,
       name: "Shift",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 13,
       selector: (row) => row.DurationWeeks,
       name: "DurationWeeks",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 14,
       selector: (row) => `$ ${row.BillRate}`,
       name: "BillRate",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 15,
       selector: (row) => row.SourceName,
       name: "ExternalVMSName",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      filter: 'agSetColumnFilter',
     },
     {
       id: 16,
       selector: (row) => moment(row.PostDate).format("MM/DD/YYYY"),
       name: "PostDate",
-      sortable: true,
+      filter: 'agSetColumnFilter',
       reorder: true,
       width: 50,
     },
@@ -625,7 +766,7 @@ const AllJobs = () => {
     getAllVmsConfig(setVMS);
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
+    GetAllJobs(setAllJobs, setIsloading);
     GetActiveVMSAPI({ setVMSDetails , setLoading})
   }, []);
 
@@ -724,7 +865,7 @@ const AllJobs = () => {
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  multiple
+                  
        
                   onChange={(e) =>{
                     handleFilterChange(field, "VMS")
@@ -891,33 +1032,16 @@ const AllJobs = () => {
                     Please Select VMS to get data by Clicking on apply filters
                   </div>
                 ) : (
-                  <DataGrid
-                    columns={columns}
-                    data={allJobs}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
-                      },
-                    }}
-                   
-                    // onSelectedRowsChange={(row) => {
-                    //   setSelectedRow(row.selectedRows);
-                    //   setFinalClickInfo(row.selectedRows);
-                    // }}
-                    // onRowClicked={(row) => handleOnCellClick(row)}
-                    // selectableRowDisabled={(row) =>
-                    //   user.rollId == 7 && row.amId >= 0
-                    //     ? true
-                    //     : user.rollId == 6 && row.tlId >= 0
-                    //     ? true
-                    //     : user.rollId == 5 && row.amId >= 0
-                    //     ? true
-                    //     : false
-                    // }
-                    // dense
-                  />
+                  <div style={containerStyle}>
+                  <div style={gridStyle} className="ag-theme-alpine">
+                    <AgGridReact
+                      rowData={rowData}
+                      columnDefs={columnDefs}
+                      defaultColDef={defaultColDef}
+                      // onGridReady={onGridReady}
+                    />
+                  </div>
+                </div>
                 )}
               </>
             )}

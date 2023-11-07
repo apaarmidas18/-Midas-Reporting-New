@@ -11,9 +11,10 @@ const GetAllJobs = (setAllJobs, setIsloading, vms) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: `{"vmsIds":${vms}}`
+    // body: `{"vmsIds":${vms}}`
     // body: `{"vmsIds":[${vms}]}`,
     // body: `{"vmsIds":['MedicalSolutions']}`,
+    body: '{"vmsIds":["MedicalSolutions","Kruse","Medefis5","WorkforceSG","StafferLink"]}'
     // body: `{"vmsId":"${"MedicalSolutions"}"}`,
   };
   setIsloading(true);
@@ -33,7 +34,7 @@ const GetAllJobs = (setAllJobs, setIsloading, vms) => {
     .then((response) => response.json())
 
     .then((response) => {
-      setIsloading(false); console.log(response)
+      setIsloading(false); //console.log(response)
 
       setAllJobs(Object.keys(response).map((item, index) => response[item]));
     })
