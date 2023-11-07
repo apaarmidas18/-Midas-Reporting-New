@@ -8,9 +8,14 @@ const CreateUser = (values, navigate) => {
     email: values.email,
     password: values.password,
     status: values.status,
+    phone: values.number,
     rollId: values.rollId,
     type: values.type,
+<<<<<<< HEAD
     managerId: values.teamLeadId,
+=======
+    managerId: values.managerId,
+>>>>>>> 6432fd8b2882485f97a31327a4f91c330b88c8c0
   };
 
   var config = {
