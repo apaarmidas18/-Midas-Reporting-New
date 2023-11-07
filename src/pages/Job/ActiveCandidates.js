@@ -339,12 +339,7 @@ const AllJobs = () => {
 
   const handleFilterChange = (e, name) => {
 
-    // if(name=="VMS"){
-    //   console.log(e,"DheerajArr");
-    //   GetAllJobs(setAllJobs, setIsloading, e);
-    // }else if(name!=""){
-    //   GetAllJobs(setAllJobs, setIsloading, e.target.value);
-    // }
+
 
     GetAllJobs(setAllJobs, setIsloading, currentVMS);
     const formatDate = moment(e).format("MM/DD/YYYY");
