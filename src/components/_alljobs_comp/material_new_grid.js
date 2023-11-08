@@ -20,6 +20,11 @@ import {
   lighten,
 } from "@mui/material";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileDownloadDoneOutlined from '@mui/icons-material/FileDownloadDoneOutlined';
+import AssignmentIndTwoTone from '@mui/icons-material/AssignmentIndTwoTone';
+import FileDownloadDoneTwoTone from '@mui/icons-material/FileDownloadDoneTwoTone';
+import FileDownloadOffTwoTone from '@mui/icons-material/FileDownloadOffTwoTone';
+
 
 //Icons Imports
 import { AccountCircle, Send } from "@mui/icons-material";
@@ -33,7 +38,7 @@ const TableGrid = (props) => {
     () => [
       {
         id: "job-details", //id used to define `group` column
-        header: "Jobs",
+        
         columns: [
           {
             accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
@@ -396,7 +401,55 @@ const TableGrid = (props) => {
         }}
       >
 
-<CustomModal
+
+        <Button
+          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
+          onClick={handleExportData}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Data
+        </Button>
+        <Button
+          disabled={table.getPrePaginationRowModel().rows.length === 0}
+          //export all rows, including from the next page, (still respects filtering and sorting)
+          onClick={() =>
+            handleExportRows(table.getPrePaginationRowModel().rows)
+          }
+          startIcon={<FileDownloadDoneOutlined />}
+        >
+          Export All Rows
+        </Button>
+        <Button
+          disabled={table.getRowModel().rows.length === 0}
+          //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+          onClick={() => handleExportRows(table.getRowModel().rows)}
+          startIcon={<FileDownloadOffTwoTone />}
+        >
+          Export Page Rows
+        </Button>
+        <Button
+          disabled={
+            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
+          }
+          //only export selected rows
+          onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
+          startIcon={<FileDownloadDoneTwoTone />}
+        >
+          Export Selected Rows
+        </Button>
+
+        <Button
+          onClick={handleShow1}
+          disabled={
+           ( !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected() ||(user.rollId === 5 ) )
+          }
+          data-toggle={"tooltip"}
+          startIcon={<AssignmentIndTwoTone />}
+        >
+          Assign Job
+        </Button>
+
+        <CustomModal
     open={show1}
     handleClose={handleClose1}
     children={
@@ -411,57 +464,6 @@ const TableGrid = (props) => {
     jobid={0}
     className={"assign-modal"}
   />
-        <Button
-          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
-          onClick={handleExportData}
-          startIcon={<FileDownloadIcon />}
-        >
-          Export All Data
-        </Button>
-        <Button
-          disabled={table.getPrePaginationRowModel().rows.length === 0}
-          //export all rows, including from the next page, (still respects filtering and sorting)
-          onClick={() =>
-            handleExportRows(table.getPrePaginationRowModel().rows)
-          }
-          startIcon={<FileDownloadIcon />}
-        >
-          Export All Rows
-        </Button>
-        <Button
-          disabled={table.getRowModel().rows.length === 0}
-          //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-          onClick={() => handleExportRows(table.getRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
-        >
-          Export Page Rows
-        </Button>
-        <Button
-          disabled={
-            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-          }
-          //only export selected rows
-          onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
-        >
-          Export Selected Rows
-        </Button>
-
-        <Button
-          variant={user.rollId === 5 ? "light" : "primary"}
-          onClick={handleShow1}
-          disabled={user.rollId === 5 && true}
-          data-toggle={"tooltip"}
-          data-placement="top"
-          title="Assign a Job"
-          style={{
-            padding: "12px",
-            whiteSpace: "nowrap",
-            fontSize: "11px",
-          }}
-        >
-          Assign Job
-        </Button>
       </Box>
     ),
     muiTableBodyRowProps: ({ row }) => ({
@@ -478,9 +480,8 @@ const TableGrid = (props) => {
     }),
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
-    onRowSelectionChange: setRowSelection,
-    state: { rowSelection },
-    positionToolbarAlertBanner: "bottom",
+ 
+    positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {
       size: "small",
       variant: "outlined",

@@ -358,7 +358,7 @@ const AllJobs = () => {
             isSidebarExpanded ? "container " : "container tab-container"
           }
         >
-          <div class="d-flex mt-2 mb-2">
+          {/* <div class="d-flex mt-2 mb-2">
             <TabName tabname="Jobs" />
             <div className="right-data d-flex align-items-center">
               <Button
@@ -408,7 +408,7 @@ const AllJobs = () => {
                 Apply Filters
               </Button>
             </div>
-          </div>
+          </div> */}
 
           <CustomModal
             open={show}
