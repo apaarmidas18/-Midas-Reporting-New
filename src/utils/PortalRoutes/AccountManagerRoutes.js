@@ -14,11 +14,11 @@ export default [
     tabroute: "assigned-job",
     fontlogo: "fa-solid fa-chart-line",
   },
-  // {
-  //   tabname: "Active",
-  //   tabroute: "active-candidates",
-  //   fontlogo: "fa-solid fa-chart-line",
-  // },
+  {
+    tabname: "Active",
+    tabroute: "active-candidates",
+    fontlogo: "fa-solid fa-chart-line",
+  },
   {
     tabname: "Booked",
     tabroute: "booked-candidates",

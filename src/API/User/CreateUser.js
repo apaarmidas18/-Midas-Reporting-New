@@ -10,7 +10,7 @@ const CreateUser = (values, navigate) => {
     status: values.status,
     rollId: values.rollId,
     type: values.type,
-    teamLeadId: values.teamLeadId,
+    managerId: values.teamLeadId,
   };
 
   var config = {

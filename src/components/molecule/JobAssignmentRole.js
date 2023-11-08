@@ -13,7 +13,7 @@ const JobAssignmentRole = (props) => {
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
-    jobIds: finalClickInfo.map((item, index) => item.ProviderJobID),
+    jobIds: finalClickInfo.map((item, index) => item),
     assignType: "",
   });
 
@@ -112,7 +112,7 @@ const JobAssignmentRole = (props) => {
 
             <span className="job-id-span mt-3">
               <strong>Job ID -</strong>
-              {finalClickInfo.map((item, index) => `${item.ProviderJobID}, `)}
+              {finalClickInfo.map((item, index) => `${item}, `)}
             </span>
             <div className="col-md-12 text-center">
               <button
