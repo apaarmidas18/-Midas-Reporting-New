@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import React, { useEffect, useState } from "react";
-
+import CustomModal from "../JobModal";
+import JobAssignmentRole from "../molecule/JobAssignmentRole";
 //MRT Imports
 import {
   MaterialReactTable,
@@ -8,7 +9,7 @@ import {
   MRT_GlobalFilterTextField,
   MRT_ToggleFiltersButton,
 } from "material-react-table";
-
+import { mkConfig, generateCsv, download } from 'export-to-csv'; //or use your library of choice here
 //Material UI Imports
 import {
   Box,
@@ -18,6 +19,8 @@ import {
   Typography,
   lighten,
 } from "@mui/material";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
 //Icons Imports
 import { AccountCircle, Send } from "@mui/icons-material";
 import moment from "moment";
@@ -69,10 +72,10 @@ const TableGrid = (props) => {
                   {renderedCellValue == "1"
                     ? "Travel"
                     : renderedCellValue == "2"
-                    ? "Perm"
-                    : renderedCellValue == "3"
-                    ? "Per-Diem"
-                    : ""}
+                      ? "Perm"
+                      : renderedCellValue == "3"
+                        ? "Per-Diem"
+                        : ""}
                 </span>
               </Box>
             ),
@@ -345,34 +348,136 @@ const TableGrid = (props) => {
     []
   );
   console.log("rowsSelected:", rowsSelected);
+
+  const csvConfig = mkConfig({
+    fieldSeparator: ',',
+    decimalSeparator: '.',
+    useKeysAsHeaders: true,
+  });
+
+  const handleExportRows = (rows) => {
+    const rowData = rows.map((row) => row.original);
+    const csv = generateCsv(csvConfig)(rowData);
+    download(csvConfig)(csv);
+  };
+
+  const handleExportData = () => {
+    const csv = generateCsv(csvConfig)(data);
+    download(csvConfig)(csv);
+  };
+
+  const [show1, setShow1] = useState(false);
+  const [teamLeadID, setTeamLeadID] = useState([]);
+  const { finalClickInfo, setFinalClickInfo } = props;
+  const [dataByRole, setDataByRole] = useState([]);
+  const handleShow1 = () => setShow1(true);
+  const handleClose1 = () => setShow1(false);
+ 
   const table = useMaterialReactTable({
     columns,
     data,
     enableFullScreenToggle: true,
-    enableColumnFilterModes: true,
+    enableColumnFilterModes: false,
     enableColumnOrdering: true,
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
-    enableRowActions: true,
-    initialState: { showColumnFilters: true, showGlobalFilter: true },
+    // enableRowActions: true,
+    initialState: { showColumnFilters: false, showGlobalFilter: true },
     paginationDisplayMode: "pages",
     getRowId: (row) => row.userId,
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '16px',
+          padding: '8px',
+          flexWrap: 'wrap',
+        }}
+      >
+
+<CustomModal
+    open={show1}
+    handleClose={handleClose1}
+    children={
+      <JobAssignmentRole
+        dataByRole={dataByRole}
+        teamLeadID={teamLeadID}
+        finalClickInfo={finalClickInfo}
+        setFinalClickInfo={setFinalClickInfo}
+        selected={selected}
+      />
+    }
+    jobid={0}
+    className={"assign-modal"}
+  />
+        <Button
+          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
+          onClick={handleExportData}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Data
+        </Button>
+        <Button
+          disabled={table.getPrePaginationRowModel().rows.length === 0}
+          //export all rows, including from the next page, (still respects filtering and sorting)
+          onClick={() =>
+            handleExportRows(table.getPrePaginationRowModel().rows)
+          }
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Rows
+        </Button>
+        <Button
+          disabled={table.getRowModel().rows.length === 0}
+          //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+          onClick={() => handleExportRows(table.getRowModel().rows)}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export Page Rows
+        </Button>
+        <Button
+          disabled={
+            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
+          }
+          //only export selected rows
+          onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export Selected Rows
+        </Button>
+
+        <Button
+          variant={user.rollId === 5 ? "light" : "primary"}
+          onClick={handleShow1}
+          disabled={user.rollId === 5 && true}
+          data-toggle={"tooltip"}
+          data-placement="top"
+          title="Assign a Job"
+          style={{
+            padding: "12px",
+            whiteSpace: "nowrap",
+            fontSize: "11px",
+          }}
+        >
+          Assign Job
+        </Button>
+      </Box>
+    ),
     muiTableBodyRowProps: ({ row }) => ({
       //implement row selection click events manually
-
-      onClick: () => {
-        setSelected(row.original.ProviderJobID);
+      onClick: () =>
         setRowSelection((prev) => ({
           ...prev,
-          [row.id]: !prev[row.original.id],
-        }));
-      },
+          [row.id]: !prev[row.id],
+        })),
       selected: rowSelection[row.id],
       sx: {
-        cursor: "pointer",
+        cursor: 'pointer',
       },
     }),
+    onRowSelectionChange: setRowSelection,
+    state: { rowSelection },
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
     positionToolbarAlertBanner: "bottom",
@@ -409,34 +514,7 @@ const TableGrid = (props) => {
         </Box>
       </Box>
     ),
-    renderRowActionMenuItems: ({ closeMenu }) => [
-      <MenuItem
-        key={0}
-        onClick={() => {
-          // View profile logic...
-          closeMenu();
-        }}
-        sx={{ m: 0 }}
-      >
-        <ListItemIcon>
-          <AccountCircle />
-        </ListItemIcon>
-        View Profile
-      </MenuItem>,
-      <MenuItem
-        key={1}
-        onClick={() => {
-          // Send email logic...
-          closeMenu();
-        }}
-        sx={{ m: 0 }}
-      >
-        <ListItemIcon>
-          <Send />
-        </ListItemIcon>
-        Send Email
-      </MenuItem>,
-    ],
+
     renderTopToolbar: ({ table }) => {
       const handleDeactivate = () => {
         table.getSelectedRowModel().flatRows.map((row) => {
@@ -456,51 +534,7 @@ const TableGrid = (props) => {
         });
       };
 
-      return (
-        <Box
-          sx={(theme) => ({
-            backgroundColor: lighten(theme.palette.background.default, 0.05),
-            display: "flex",
-            gap: "0.5rem",
-            p: "8px",
-            justifyContent: "space-between",
-          })}
-        >
-          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            {/* import MRT sub-components */}
-            <MRT_GlobalFilterTextField table={table} />
-            <MRT_ToggleFiltersButton table={table} />
-          </Box>
-          <Box>
-            <Box sx={{ display: "flex", gap: "0.5rem" }}>
-              <Button
-                color="error"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleDeactivate}
-                variant="contained"
-              >
-                Deactivate
-              </Button>
-              <Button
-                color="success"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleActivate}
-                variant="contained"
-              >
-                Activate
-              </Button>
-              <Button
-                color="info"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleContact}
-                variant="contained"
-              >
-                Contact
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      );
+
     },
   });
 
