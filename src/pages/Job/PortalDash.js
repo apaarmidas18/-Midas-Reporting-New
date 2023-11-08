@@ -4,11 +4,11 @@ import TabName from "../../components/TabName";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
 import { Chart } from "react-google-charts";
+
 // import ExampleTable from "./ExampleTable";
 
 
 const PortalDash = () => {
-
   const data = [
     ["Task", "Total Jobs"],
     ["Closed", 17219],
@@ -36,6 +36,7 @@ const PortalDash = () => {
             isSidebarExpanded ? "container " : "container tab-container"
           }
         >
+          
           <div className="container dashboard-page mt-2">
             <div className="dash-head mb-2">
               <h3>Dashboard</h3>
@@ -134,6 +135,7 @@ const PortalDash = () => {
               </div>
             </div>
           </div>
+        
           {/* <div className="container">
          <ExampleTable/>
           </div> */}

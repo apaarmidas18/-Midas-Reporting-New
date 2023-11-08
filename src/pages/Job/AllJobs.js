@@ -22,7 +22,8 @@ import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
 import Lottie from "react-lottie";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
-import loader from "../../lottie/search.json";
+// import loader from "../../lottie/search.json";
+import Loader from "../../components/atoms/Loader";
 const RobotixModalContent = (props) => {
   const { finalClickInfo, setFinalClickInfo } = props;
 
@@ -322,32 +323,30 @@ const AllJobs = () => {
       return null;
     }
   };
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: loader,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: loader,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
+  const masterApicall = async () => {
+    await getAllVmsConfig(setVMS, setVMSDetails);
+    await GetAllJobs(setAllJobs, setIsloading);
   };
-
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     masterApicall();
   }, []);
-  const masterApicall = async () => {
-    await getAllVmsConfig(setVMS, setVMSDetails);
-    await GetAllJobs(setAllJobs, setIsloading);
-  };
 
   console.log(vmsDetails)
 
   useEffect(() => {
     userRoles();
-    id.push({ ...selected });
+    id.push(selected);
   }, []);
-  console.log(selected);
   return (
     <>
       {/* FILTER TABS */}
@@ -457,7 +456,8 @@ const AllJobs = () => {
             )}
             {isloading ? (
               <>
-                <Lottie options={defaultOptions} width={100} height={100} />
+              <Loader/>
+                {/* <Lottie options={defaultOptions} width={100} height={100} /> */}
               </>
             ) : (
               <>
