@@ -3,22 +3,21 @@ import NewHor from "../../components/NewHor";
 import TabName from "../../components/TabName";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
-import { Chart } from "react-google-charts";
+// import { Chart } from "react-google-charts";
 
 const PortalDash = () => {
+  // const data = [
+  //   ["Task", "Total Jobs"],
+  //   ["Closed", 17219],
+  //   ["Open", 5201],
+  //   ["Filled", 290],
+  //   ["Cancelled", 1400],
+  //   // ["Sleep", 7],
+  // ];
 
-  const data = [
-    ["Task", "Total Jobs"],
-    ["Closed", 17219],
-    ["Open", 5201],
-    ["Filled", 290],
-    ["Cancelled", 1400],
-    // ["Sleep", 7],
-  ];
-
-  const options = {
-    title: "All Jobs",
-  };
+  // const options = {
+  //   title: "All Jobs",
+  // };
 
   const { isSidebarExpanded } = useContext(Sidebar_Context);
   return (
@@ -121,13 +120,13 @@ const PortalDash = () => {
               </div>
               <div className="col-md-7">
                 <div className="team-table">
-                <Chart
+                  {/* <Chart
       chartType="PieChart"
       data={data}
       options={options}
       width={"100%"}
       height={"300px"}
-    />
+    /> */}
                 </div>
               </div>
             </div>

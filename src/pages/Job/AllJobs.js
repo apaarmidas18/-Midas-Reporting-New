@@ -330,22 +330,20 @@ const AllJobs = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
+  const masterApicall = async () => {
+    await getAllVmsConfig(setVMS, setVMSDetails);
+    await GetAllJobs(setAllJobs, setIsloading);
+  };
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     masterApicall();
   }, []);
-  const masterApicall = async () => {
-    await getAllVmsConfig(setVMS, setVMSDetails);
-    await GetAllJobs(setAllJobs, setIsloading);
-  };
 
   useEffect(() => {
     userRoles();
-    id.push({ ...selected });
+    id.push(selected);
   }, []);
-  console.log(selected);
   return (
     <>
       {/* FILTER TABS */}
