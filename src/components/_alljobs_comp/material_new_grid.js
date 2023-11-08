@@ -381,6 +381,7 @@ const TableGrid = (props) => {
   const table = useMaterialReactTable({
     columns,
     data,
+    // enableColumnFilterModes: true,
     enableFullScreenToggle: true,
     enableColumnFilterModes: false,
     enableColumnOrdering: true,
@@ -515,7 +516,6 @@ const TableGrid = (props) => {
         </Box>
       </Box>
     ),
-
     renderTopToolbar: ({ table }) => {
       const handleDeactivate = () => {
         table.getSelectedRowModel().flatRows.map((row) => {
@@ -534,7 +534,6 @@ const TableGrid = (props) => {
           alert("contact " + row.getValue("name"));
         });
       };
-
 
     },
   });
