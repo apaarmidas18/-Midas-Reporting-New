@@ -2,7 +2,8 @@ import React from "react";
 import { host, jobshost } from "../../static";
 // import { chost, host } from "../../static";
 
-const GetAllJobs = (setAllJobs, setIsloading, vmsDetails) => {
+const GetAllJobs = (setAllJobs, setIsloading) => {
+  const vmsDetails = JSON.parse(localStorage.getItem("VmsDetails"));
   const user = JSON.parse(localStorage.getItem("User"));
   var vmArr = [];
   const vms = vmsDetails.filter((item, index) =>
@@ -25,7 +26,6 @@ const GetAllJobs = (setAllJobs, setIsloading, vmsDetails) => {
 
       .then((response) => {
         setIsloading(false);
-
         setAllJobs(Object.keys(response).map((item, index) => response[item]));
       })
       .catch((err) => console.error(err));

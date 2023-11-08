@@ -7,13 +7,19 @@ import tl_assignee_stat from "../../utils/Jobs/tl_assignee_stat";
 import AssignJobs from "../../API/Jobs/AssignJobs";
 
 const JobAssignmentRole = (props) => {
-  const { finalClickInfo, setFinalClickInfo, dataByRole, teamLeadID } = props;
+  const {
+    finalClickInfo,
+    setFinalClickInfo,
+    dataByRole,
+    teamLeadID,
+    selected,
+  } = props;
   const user = JSON.parse(localStorage.getItem("User"));
   const [isValidate, setIsValidate] = useState(false);
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
-    jobIds: finalClickInfo.map((item, index) => item),
+    jobIds: [selected],
     assignType: "",
   });
 
@@ -112,7 +118,7 @@ const JobAssignmentRole = (props) => {
 
             <span className="job-id-span mt-3">
               <strong>Job ID -</strong>
-              {finalClickInfo.map((item, index) => `${item}, `)}
+              {`${selected}, `}
             </span>
             <div className="col-md-12 text-center">
               <button

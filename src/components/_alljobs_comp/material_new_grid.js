@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //MRT Imports
 import {
@@ -23,8 +23,9 @@ import { AccountCircle, Send } from "@mui/icons-material";
 import moment from "moment";
 
 const TableGrid = (props) => {
-  const { data } = props;
-
+  const { data, user, setSelected, selected } = props;
+  var rowsSelected = [];
+  const [rowSelection, setRowSelection] = useState({});
   const columns = useMemo(
     () => [
       {
@@ -343,19 +344,37 @@ const TableGrid = (props) => {
     ],
     []
   );
-
+  console.log("rowsSelected:", rowsSelected);
   const table = useMaterialReactTable({
     columns,
     data,
+    enableFullScreenToggle: true,
     enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
     enableRowActions: true,
-    enableRowSelection: true,
     initialState: { showColumnFilters: true, showGlobalFilter: true },
     paginationDisplayMode: "pages",
+    getRowId: (row) => row.userId,
+    muiTableBodyRowProps: ({ row }) => ({
+      //implement row selection click events manually
+
+      onClick: () => {
+        setSelected(row.original.ProviderJobID);
+        setRowSelection((prev) => ({
+          ...prev,
+          [row.id]: !prev[row.original.id],
+        }));
+      },
+      selected: rowSelection[row.id],
+      sx: {
+        cursor: "pointer",
+      },
+    }),
+    onRowSelectionChange: setRowSelection,
+    state: { rowSelection },
     positionToolbarAlertBanner: "bottom",
     muiSearchTextFieldProps: {
       size: "small",
@@ -484,6 +503,7 @@ const TableGrid = (props) => {
       );
     },
   });
+
 
   return <MaterialReactTable table={table} />;
 };
