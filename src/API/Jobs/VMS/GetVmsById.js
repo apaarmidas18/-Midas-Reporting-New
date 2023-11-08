@@ -13,6 +13,7 @@ const getAllVmsConfig = async (setVMS, setVMsDetails) => {
 
   const response = await apiFetch.data;
   setVMsDetails(response);
+  localStorage.setItem("VmsDetails", JSON.stringify(response));
   var resp = response.filter(
     (item, index) => item.accountManager === parsedData.id
   );
