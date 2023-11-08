@@ -1,6 +1,5 @@
 import React from "react";
 import { host, jobshost } from "../../static";
-// import { chost, host } from "../../static";
  
 const GetAllJobs = (setAllJobs, setIsloading, vmsDetails) => {
   const user = JSON.parse(localStorage.getItem("User"));

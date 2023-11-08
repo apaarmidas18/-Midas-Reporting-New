@@ -4,7 +4,7 @@ import TabName from "../../components/TabName";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
 import { Chart } from "react-google-charts";
-import ExampleTable from "./ExampleTable";
+// import ExampleTable from "./ExampleTable";
 
 
 const PortalDash = () => {
@@ -134,9 +134,9 @@ const PortalDash = () => {
               </div>
             </div>
           </div>
-          <div className="container">
+          {/* <div className="container">
          <ExampleTable/>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

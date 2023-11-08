@@ -341,6 +341,8 @@ const AllJobs = () => {
     await GetAllJobs(setAllJobs, setIsloading);
   };
 
+  console.log(vmsDetails)
+
   useEffect(() => {
     userRoles();
     id.push({ ...selected });
