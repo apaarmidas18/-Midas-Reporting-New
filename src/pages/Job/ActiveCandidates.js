@@ -26,8 +26,8 @@ import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 import active_vms from "../../utils/active_vms";
 import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
 import GetVmsById from "../../API/Jobs/VMS/GetVmsById";
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
 import {
   applySortFilter,
   getComparator,
@@ -323,13 +323,19 @@ const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
   const [vmsDetails, setVMSDetails] = useState([]);
-  const [loading, setLoading]= useState([]);
+  const [loading, setLoading] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState("name");
   const [applied, setApplied] = useState([]);
+  // const [selectionModel, setSelectionModel] =
+  //   React.useState <
+  //   import("@mui/x-data-grid").GridRowSelectionModel >
+  //   (() => allJobs.filter((r) => r.age > 40).map((r) => r.id));
+  // const [selectedRows, setSelectedRows] = React.useState([]);
 
+  // console.log("selectionModel:", selectionModel);
   //Modal  Bootstrap ******************************************
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -338,10 +344,14 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
+    // if(name=="VMS"){
+    //   console.log(e,"DheerajArr");
+    //   GetAllJobs(setAllJobs, setIsloading, e);
+    // }else if(name!=""){
+    //   GetAllJobs(setAllJobs, setIsloading, e.target.value);
+    // }
 
-
-
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
+    // GetAllJobs(setAllJobs, setIsloading, currentVMS);
     const formatDate = moment(e).format("MM/DD/YYYY");
 
     name === "startDate" || name === "endDate"
@@ -358,7 +368,10 @@ const AllJobs = () => {
   //Row Styling ********************************************************************
 
   const handleCloseCanvas = () => setShowCanvas(false);
-  const handleShowCanvas = () => setShowCanvas(true);
+  const handleShowCanvas = () => {
+    setShowCanvas(true);
+    GetAllJobs(setAllJobs, setIsloading, vmsDetails);
+  };
 
   const loopData = filterArray.length !== 0 ? filterArray : [];
 
@@ -384,186 +397,60 @@ const AllJobs = () => {
     },
   };
 
-  const columns = [
-    {
-      id: 1,
-      selector: (row) => row.ProviderJobID,
-      name: "Job-ID",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 2,
-      selector: (row) =>
-        row.WorkType == "1"
+  /* row.WorkType == "1"
           ? "Travel"
           : row.WorkType == "2"
           ? "Perm"
           : row.WorkType == "3"
           ? "Per Diem"
           : row.WorkType,
-      name: "Job-Type",
-      sortable: true,
-      reorder: true,
-      width: 5,
-    },
+      name: "Job-Type", */
+  const columns = [
+    { field: "ProviderJobID", headerName: "JOB-Id" },
     {
-      id: 3,
-      selector: (row) => row.StatusString,
-      name: "Status",
-      conditionalCellStyles: [
-        {
-          when: (row) => row.StatusString === "Open",
-          style: {
-            backgroundColor: "#ccffb2bd",
-            color: "black",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Cancelled",
-          style: {
-            backgroundColor: "#ff7c7c",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Manually Frozen",
-          style: {
-            backgroundColor: "rgb(253 189 111)",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-        {
-          when: (row) => row.StatusString === "Closed",
-          style: {
-            backgroundColor: "#dc3545",
-            color: "white",
-            "&:hover": {
-              cursor: "pointer",
-            },
-          },
-        },
-      ],
-      sortable: true,
-      reorder: true,
-      width: 10,
+      field: "WorkType",
+      headerName: "Work Type",
+      renderCell: (params) => {
+        if (params.row.WorkType == 1) {
+          return <div>Travel</div>;
+        } else if (params.row.WorkType == 2) {
+          return <div>Perm</div>;
+        } else if (params.row.WorkType == 3) {
+          return <div>Per-Diem</div>;
+        } else return "";
+      },
     },
+    { field: "StatusString", headerName: "Status" },
+    { field: "Priority", headerName: "Priority" },
+    { field: "Degree", headerName: "Profession" },
+    { field: "JobSpecialty", headerName: "Speciality" },
+    { field: "Facility", headerName: "Facility" },
+    { field: "City", headerName: "city" },
+    { field: "State", headerName: "state" },
+    { field: "FormattedStartDate", headerName: "Start Date" },
+    { field: "FormattedEndDate", headerName: "End Date" },
+    { field: "Shift", headerName: "shift" },
+    { field: "DurationWeeks", headerName: "Duration" },
     {
-      id: 4,
-      selector: (row) => row.Priority,
-      name: "Priority",
-      sortable: true,
-      reorder: true,
-      width: 10,
+      field: "BillRate",
+      headerName: "Bill rate",
+      renderCell: (params) => {
+        if (params.row.BillRate) {
+          return <div>{params.row.BillRate}$</div>;
+        } else return "";
+      },
     },
+    { field: "SourceName", headerName: "Vms name" },
     {
-      id: 5,
-      selector: (row) => row.Degree,
-      name: "Prof",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 6,
-      selector: (row) => row.JobSpecialty,
-      name: "Speciality",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 7,
-      selector: (row) => row.Facility,
-      name: "Facility",
-      sortable: true,
-      reorder: true,
-      width: 50,
-    },
-    {
-      id: 8,
-      selector: (row) => row.City,
-      name: "City",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 9,
-      selector: (row) => row.State,
-      name: "State",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-
-    {
-      id: 10,
-      selector: (row) => row.FormattedStartDate,
-      name: "Start Date",
-      sortable: true,
-      reorder: true,
-    },
-    {
-      id: 11,
-      selector: (row) => row.FormattedEndDate,
-      name: "End Date",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 12,
-      selector: (row) => row.Shift,
-      name: "Shift",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 13,
-      selector: (row) => row.DurationWeeks,
-      name: "DurationWeeks",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 14,
-      selector: (row) => `$ ${row.BillRate}`,
-      name: "BillRate",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 15,
-      selector: (row) => row.SourceName,
-      name: "ExternalVMSName",
-      sortable: true,
-      reorder: true,
-      width: 10,
-    },
-    {
-      id: 16,
-      selector: (row) => moment(row.PostDate).format("MM/DD/YYYY"),
-      name: "PostDate",
-      sortable: true,
-      reorder: true,
-      width: 50,
+      field: "PostDate",
+      headerName: "Post date",
+      renderCell: (params) => {
+        if (params.row.PostDate) {
+          return <div>{moment(params.row.PostDate).format("DD/MM/YYYY")}</div>;
+        } else return "";
+      },
     },
   ];
-
   const handleExcelExport = () => {
     const filteredData = loopData.map((item) => {
       return {
@@ -614,25 +501,17 @@ const AllJobs = () => {
     }
   };
 
-
-
   useEffect(() => {
-    getAllVmsConfig(setVMS);
+    getAllVmsConfig(setVMS, setVMSDetails);
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
-    GetActiveVMSAPI({ setVMSDetails , setLoading})
   }, []);
-
-
 
   useEffect(() => {
     userRoles();
   }, []);
+  console.log(allJobs);
 
-  const currentVMS = vmsDetails.filter((item, index)=>
-  item.accountManager === user.id && item.vmsName).map((item )=> item.vmsName)
-  console.log(currentVMS)
   return (
     <>
       <div className="job-filter">
@@ -720,14 +599,10 @@ const AllJobs = () => {
                   class="form-select"
                   aria-label="Default select example"
                   multiple
-       
-                  onChange={(e) =>{
-                    handleFilterChange(field, "VMS")
-                    }
-                  }
-                 
+                  onChange={(e) => {
+                    handleFilterChange(field, "VMS");
+                  }}
                 >
-                  
                   <option selected>Select VMS</option>
                   {vms.map((item, index) => (
                     <option value={item.vmsName}>{item.vmsName}</option>
@@ -875,7 +750,7 @@ const AllJobs = () => {
                   errorState
                 ) : (
                   <div class="text-center p-5">
-                    Please Select VMS to get data by Clicking on apply filters
+                    Please Select VMS to get dataew by Clicking on apply filters
                   </div>
                 )}
               </>
@@ -883,20 +758,29 @@ const AllJobs = () => {
               <>
                 {allJobs.length === 0 ? (
                   <div class="text-center p-5">
-                    Please Select VMS to get data by Clicking on apply filters
+                    Please Select VMS to get daweta by Clicking on apply filters
                   </div>
                 ) : (
                   <DataGrid
                     columns={columns}
-                    data={allJobs}
+                    rows={allJobs}
                     initialState={{
                       pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
+                        paginationModel: { page: 0, pageSize: 10 },
                       },
                     }}
-                   
+                    getRowId={(row) => row.ProviderJobID}
+                    autoHeight={true}
+                    dense
+                    // selectionModel={selectionModel}
+                    // onSelectionModelChange={(e) => {
+                    //   setSelectionModel(e);
+                    //   const selectedIDs = new Set(e);
+                    //   const selectedRows = rows.filter((r) =>
+                    //     selectedIDs.has(r.id)
+                    //   );
+                    //   setSelectedRows(selectedRows);
+                    // }}
                     // onSelectedRowsChange={(row) => {
                     //   setSelectedRow(row.selectedRows);
                     //   setFinalClickInfo(row.selectedRows);
