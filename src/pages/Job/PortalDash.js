@@ -4,6 +4,8 @@ import TabName from "../../components/TabName";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
 import { Chart } from "react-google-charts";
+import ExampleTable from "./ExampleTable";
+
 
 const PortalDash = () => {
 
@@ -122,15 +124,18 @@ const PortalDash = () => {
               <div className="col-md-7">
                 <div className="team-table">
                 <Chart
-      chartType="PieChart"
-      data={data}
-      options={options}
-      width={"100%"}
-      height={"300px"}
+            chartType="PieChart"
+            data={data}
+            options={options}
+            width={"100%"}
+          height={"300px"}
     />
                 </div>
               </div>
             </div>
+          </div>
+          <div className="container">
+         <ExampleTable/>
           </div>
         </div>
       </div>

@@ -347,7 +347,7 @@ const TableGrid = (props) => {
   const table = useMaterialReactTable({
     columns,
     data,
-    enableColumnFilterModes: true,
+    // enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
     enableColumnPinning: true,
@@ -390,34 +390,34 @@ const TableGrid = (props) => {
         </Box>
       </Box>
     ),
-    renderRowActionMenuItems: ({ closeMenu }) => [
-      <MenuItem
-        key={0}
-        onClick={() => {
-          // View profile logic...
-          closeMenu();
-        }}
-        sx={{ m: 0 }}
-      >
-        <ListItemIcon>
-          <AccountCircle />
-        </ListItemIcon>
-        View Profile
-      </MenuItem>,
-      <MenuItem
-        key={1}
-        onClick={() => {
-          // Send email logic...
-          closeMenu();
-        }}
-        sx={{ m: 0 }}
-      >
-        <ListItemIcon>
-          <Send />
-        </ListItemIcon>
-        Send Email
-      </MenuItem>,
-    ],
+    // renderRowActionMenuItems: ({ closeMenu }) => [
+    //   <MenuItem
+    //     key={0}
+    //     onClick={() => {
+    //       // View profile logic...
+    //       closeMenu();
+    //     }}
+    //     sx={{ m: 0 }}
+    //   >
+    //     <ListItemIcon>
+    //       <AccountCircle />
+    //     </ListItemIcon>
+    //     View Profile
+    //   </MenuItem>,
+    //   <MenuItem
+    //     key={1}
+    //     onClick={() => {
+    //       // Send email logic...
+    //       closeMenu();
+    //     }}
+    //     sx={{ m: 0 }}
+    //   >
+    //     <ListItemIcon>
+    //       <Send />
+    //     </ListItemIcon>
+    //     Send Email
+    //   </MenuItem>,
+    // ],
     renderTopToolbar: ({ table }) => {
       const handleDeactivate = () => {
         table.getSelectedRowModel().flatRows.map((row) => {
@@ -437,51 +437,51 @@ const TableGrid = (props) => {
         });
       };
 
-      return (
-        <Box
-          sx={(theme) => ({
-            backgroundColor: lighten(theme.palette.background.default, 0.05),
-            display: "flex",
-            gap: "0.5rem",
-            p: "8px",
-            justifyContent: "space-between",
-          })}
-        >
-          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            {/* import MRT sub-components */}
-            <MRT_GlobalFilterTextField table={table} />
-            <MRT_ToggleFiltersButton table={table} />
-          </Box>
-          <Box>
-            <Box sx={{ display: "flex", gap: "0.5rem" }}>
-              <Button
-                color="error"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleDeactivate}
-                variant="contained"
-              >
-                Deactivate
-              </Button>
-              <Button
-                color="success"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleActivate}
-                variant="contained"
-              >
-                Activate
-              </Button>
-              <Button
-                color="info"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleContact}
-                variant="contained"
-              >
-                Contact
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      );
+      // return (
+      //   <Box
+      //     sx={(theme) => ({
+      //       backgroundColor: lighten(theme.palette.background.default, 0.05),
+      //       display: "flex",
+      //       gap: "0.5rem",
+      //       p: "8px",
+      //       justifyContent: "space-between",
+      //     })}
+      //   >
+      //     <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+      //       {/* import MRT sub-components */}
+      //       <MRT_GlobalFilterTextField table={table} />
+      //       <MRT_ToggleFiltersButton table={table} />
+      //     </Box>
+      //     <Box>
+      //       <Box sx={{ display: "flex", gap: "0.5rem" }}>
+      //         <Button
+      //           color="error"
+      //           disabled={!table.getIsSomeRowsSelected()}
+      //           onClick={handleDeactivate}
+      //           variant="contained"
+      //         >
+      //           Deactivate
+      //         </Button>
+      //         <Button
+      //           color="success"
+      //           disabled={!table.getIsSomeRowsSelected()}
+      //           onClick={handleActivate}
+      //           variant="contained"
+      //         >
+      //           Activate
+      //         </Button>
+      //         <Button
+      //           color="info"
+      //           disabled={!table.getIsSomeRowsSelected()}
+      //           onClick={handleContact}
+      //           variant="contained"
+      //         >
+      //           Contact
+      //         </Button>
+      //       </Box>
+      //     </Box>
+      //   </Box>
+      // );
     },
   });
 
