@@ -352,7 +352,7 @@ const TableGrid = (props) => {
     ],
     []
   );
-  console.log("rowsSelected:", rowsSelected);
+  console.log("rowsSelected:", rowSelection);
 
   const csvConfig = mkConfig({
     fieldSeparator: ',',
@@ -468,11 +468,16 @@ const TableGrid = (props) => {
     ),
     muiTableBodyRowProps: ({ row }) => ({
       //implement row selection click events manually
+      
       onClick: () =>
+       {
         setRowSelection((prev) => ({
           ...prev,
           [row.id]: !prev[row.id],
-        })),
+        }))
+        // alert(JSON.stringify(row.original.ProviderJobID))
+        // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
+       },
       selected: rowSelection[row.id],
       sx: {
         cursor: 'pointer',
