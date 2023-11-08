@@ -12,8 +12,6 @@ const CreateUser = (values, navigate) => {
     rollId: values.rollId,
     type: values.type,
     managerId: values.managerId,
-
-    
   };
 
   var config = {
