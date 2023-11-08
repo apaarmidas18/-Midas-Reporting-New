@@ -31,6 +31,8 @@ import {
   getComparator,
 } from "../../components/molecule/jobs_functions/sort_filter";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
+import search from "../../lottie/search.json";
+import Lottie from "react-lottie";
 import GetActiveVMSAPI from "../../API/Jobs/GetActiveVMSAPI";
 const States = [
   "AL",
@@ -292,7 +294,7 @@ const RobotixModalContent = (props) => {
 
 const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
-
+  const [robotixModal, setRobotixModal] = useState([]);
   const [errorState, setErrorState] = useState("");
   const [field, setField] = useState([]);
   const [show, setShow] = useState(false);
@@ -320,8 +322,8 @@ const AllJobs = () => {
   const [vms, setVMS] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
-  const [vmsDetails, setVMSDetails] = useState([]);
-  const [loading, setLoading]= useState([]);
+  const [vmsDetails, setVMsDetails] = useState([]);
+  const [loading, setLoading] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
@@ -335,7 +337,7 @@ const AllJobs = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
 
   const handleFilterChange = (e, name) => {
-
+    GetAllJobs(setAllJobs, setIsloading, vmsDetails);
     // if(name=="VMS"){
     //   console.log(e,"DheerajArr");
     //   GetAllJobs(setAllJobs, setIsloading, e);
@@ -343,7 +345,7 @@ const AllJobs = () => {
     //   GetAllJobs(setAllJobs, setIsloading, e.target.value);
     // }
 
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
+    // GetAllJobs(setAllJobs, setIsloading, e.);
     const formatDate = moment(e).format("MM/DD/YYYY");
 
     name === "startDate" || name === "endDate"
@@ -352,15 +354,17 @@ const AllJobs = () => {
     setApplied(filters);
   };
   const handleOnCellClick = (params) => {
-    setFinalClickInfo(params);
-
+    setRobotixModal(params);
     handleShow();
   };
 
   //Row Styling ********************************************************************
 
   const handleCloseCanvas = () => setShowCanvas(false);
-  const handleShowCanvas = () => setShowCanvas(true);
+  const handleShowCanvas = () => {
+    setShowCanvas(true);
+    GetAllJobs(setAllJobs, setIsloading, vmsDetails);
+  };
 
   const loopData = filterArray.length !== 0 ? filterArray : [];
 
@@ -599,12 +603,12 @@ const AllJobs = () => {
     XLSX.writeFile(workbook, "Job-List.xlsx"); // Adjust the filename as needed
   };
 
-  const filteredUsers = applySortFilter(
-    allJobs,
-    getComparator(order, orderBy),
-    filters
-  );
-
+  // const filteredUsers = applySortFilter(
+  //   allJobs,
+  //   getComparator(order, orderBy),
+  //   filters
+  // );
+  const filteredUsers = [];
   const userRoles = async () => {
     if (user.rollId === 7) {
       await GetRolesAssignment(setTeamLeadID, 6);
@@ -616,25 +620,27 @@ const AllJobs = () => {
     }
   };
 
-
-
   useEffect(() => {
-    getAllVmsConfig(setVMS);
+    getAllVmsConfig(setVMS, setVMsDetails);
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
-    GetAllJobs(setAllJobs, setIsloading, currentVMS);
-    GetActiveVMSAPI({ setVMSDetails , setLoading})
+    // setTimeout(() => {
+    //   GetAllJobs(setAllJobs, setIsloading, vmsDetails);
+    // }, 7000);
   }, []);
-
-
 
   useEffect(() => {
     userRoles();
   }, []);
 
-  const currentVMS = vmsDetails.filter((item, index)=>
-  item.accountManager === user.id && item.vmsName).map((item )=> item.vmsName)
-  console.log(currentVMS)
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: search,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <>
       <div className="job-filter">
@@ -722,14 +728,10 @@ const AllJobs = () => {
                   class="form-select"
                   aria-label="Default select example"
                   multiple
-       
-                  onChange={(e) =>{
-                    handleFilterChange(field, "VMS")
-                    }
-                  }
-                 
+                  // onChange={(e) => {
+                  //   handleFilterChange(field, "VMS");
+                  // }}
                 >
-                  
                   <option selected>Select VMS</option>
                   {vms.map((item, index) => (
                     <option value={item.vmsName}>{item.vmsName}</option>
@@ -836,27 +838,29 @@ const AllJobs = () => {
             handleClose={handleClose}
             children={
               <RobotixModalContent
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
+                finalClickInfo={robotixModal}
+                setFinalClickInfo={setRobotixModal}
               />
             }
-            jobid={finalClickInfo.ProviderJobID}
+            jobid={robotixModal.ProviderJobID}
             className={"job-modal"}
           />
-          <CustomModal
-            open={show1}
-            handleClose={handleClose1}
-            children={
-              <JobAssignmentRole
-                dataByRole={dataByRole}
-                teamLeadID={teamLeadID}
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
-              />
-            }
-            jobid={0}
-            className={"assign-modal"}
-          />
+          {finalClickInfo.length === 0 ? null : (
+            <CustomModal
+              open={show1}
+              handleClose={handleClose1}
+              children={
+                <JobAssignmentRole
+                  dataByRole={dataByRole}
+                  teamLeadID={teamLeadID}
+                  finalClickInfo={finalClickInfo}
+                  setFinalClickInfo={setFinalClickInfo}
+                />
+              }
+              jobid={0}
+              className={"assign-modal"}
+            />
+          )}
           <div className="job-table">
             {filterArray.length !== 0 ? (
               <div className="applied-filers ">
@@ -871,15 +875,10 @@ const AllJobs = () => {
             ) : (
               ""
             )}
-            {isloading ? (
+            {isloading == true ? (
               <>
-                {errorState ? (
-                  errorState
-                ) : (
-                  <div class="text-center p-5">
-                    Please Select VMS to get data by Clicking on apply filters
-                  </div>
-                )}
+                <Lottie options={defaultOptions} height={200} width={200} />
+                <span></span>
               </>
             ) : (
               <>
@@ -897,6 +896,7 @@ const AllJobs = () => {
                     onSelectedRowsChange={(row) => {
                       setSelectedRow(row.selectedRows);
                       setFinalClickInfo(row.selectedRows);
+                      setRobotixModal(row.selectedRows);
                     }}
                     onRowClicked={(row) => handleOnCellClick(row)}
                     selectableRowDisabled={(row) =>

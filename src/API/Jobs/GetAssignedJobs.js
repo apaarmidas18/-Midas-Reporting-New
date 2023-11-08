@@ -1,15 +1,16 @@
 import React from "react";
-import { host } from "../../static";
+import { host, jobshost } from "../../static";
 
 const GetAssignedJobs = (setAssignedJobs, setIsloading) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+
   const options = {
     method: "GET",
   };
 
-  fetch(`${host}jobs/get-assigned-jobs`, options)
+  fetch(`${jobshost}jobAssignment/allAssignedToMe/${user.id}`, options)
     .then((response) => response.json())
     .then((response) => {
-      //   console.log("response:", response);
       if (response) {
         setAssignedJobs(response);
         setIsloading(false);
