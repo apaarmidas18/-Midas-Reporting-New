@@ -28,18 +28,376 @@ import FileDownloadOffTwoTone from "@mui/icons-material/FileDownloadOffTwoTone";
 //Icons Imports
 import { AccountCircle, Send } from "@mui/icons-material";
 import moment from "moment";
+import DataTable from "react-data-table-component";
 
 const TableGrid = (props) => {
-  const { data, user, setSelected, selected } = props;
+  const {
+    data,
+    user,
+    setSelected,
+    selected,
+    columnsss,
+    dataa,
+    userData,
+    route,
+  } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
   const [arrayState, setArrayState] = useState([]);
-
-  const columns = useMemo(
+  var assign_columns = useMemo(
     () => [
       {
-        id: "job-details", //id used to define `group` column
+        id: "Job-details", //id used to define `group` column
+        columns: [
+          {
+            accessorFn: (row) => `${row.assignee}`, //accessorFn used to join multiple data into a single cell
+            id: "assignee", //id is still required when using accessorFn instead of accessorKey
+            header: "Job-Assignee",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorFn: (row) => `${row.assigner}`, //accessorFn used to join multiple data into a single cell
+            id: "assigner", //id is still required when using accessorFn instead of accessorKey
+            header: "Job-Assigner",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
+            id: "ProviderJobId", //id is still required when using accessorFn instead of accessorKey
+            header: "Job-Id",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "WorkType", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "WorkType",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>
+                  {renderedCellValue == "1"
+                    ? "Travel"
+                    : renderedCellValue == "2"
+                    ? "Perm"
+                    : renderedCellValue == "3"
+                    ? "Per-Diem"
+                    : ""}
+                </span>
+              </Box>
+            ),
+          },
 
+          {
+            accessorKey: "StatusString", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "StatusString",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "Priority", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Priority",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "Degree", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Profession",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "JobSpecialty", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Speciality",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "Facility", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Facility",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "City", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "City",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "State", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "State",
+            size: 300,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "FormattedStartDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Start Date",
+            size: 300,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{JSON.stringify(renderedCellValue)}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "FormattedEndDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "End Date",
+            size: 300,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{JSON.stringify(renderedCellValue)}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "Shift", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "Shift",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{JSON.stringify(renderedCellValue)}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorFn: (row) => `${row.DurationWeeks}`, //accessorFn used to join multiple data into a single cell
+            id: "DurationWeeks", //id is still required when using accessorFn instead of accessorKey
+            header: "DurationWeeks",
+            size: 100,
+          },
+
+          {
+            accessorKey: "BillRate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            header: "Bill Rate",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{JSON.stringify(renderedCellValue)}$</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "SourceName", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+            filterVariant: "autocomplete",
+            header: "VMS-Name",
+            size: 100,
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>{renderedCellValue}</span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "PostDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+            enableClickToCopy: true,
+
+            header: "Post Date",
+            size: 100,
+
+            Cell: ({ renderedCellValue, row }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+                <span>
+                  {JSON.stringify(
+                    moment(renderedCellValue).format("DD/MM/YYYY")
+                  )}
+                </span>
+              </Box>
+            ),
+          },
+        ],
+      },
+    ],
+    []
+  );
+  var job_columns = useMemo(
+    () => [
+      {
+        id: "Job-details", //id used to define `group` column
         columns: [
           {
             accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
@@ -347,13 +705,40 @@ const TableGrid = (props) => {
           },
         ],
       },
-
-      //     ],
-      //   },
     ],
     []
   );
+  const columns = route == "assigned" ? assign_columns : job_columns;
 
+  // const columns = useMemo(
+  //   () => [
+  //     {
+  //       id: "job-details", //id used to define `group` column
+
+  //       columns: [
+  //         {
+  //           accessorFn: (row) => `${row.assignee}`, //accessorFn used to join multiple data into a single cell
+  //           id: "assignee", //id is still required when using accessorFn instead of accessorKey
+  //           header: "assignee",
+  //           size: 100,
+  //         },
+  //         {
+  //           accessorFn: (row) => `${row.assigner}`, //accessorFn used to join multiple data into a single cell
+  //           id: "assigner", //id is still required when using accessorFn instead of accessorKey
+  //           header: "assigner",
+  //           size: 100,
+  //         },
+  //         {
+  //           accessorFn: (row) => `${row.assignType}`, //accessorFn used to join multiple data into a single cell
+  //           id: "assignType", //id is still required when using accessorFn instead of accessorKey
+  //           header: "assignType",
+  //           size: 100,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   []
+  // );
   const csvConfig = mkConfig({
     fieldSeparator: ",",
     decimalSeparator: ".",
@@ -375,8 +760,11 @@ const TableGrid = (props) => {
   const [teamLeadID, setTeamLeadID] = useState([]);
   const { finalClickInfo, setFinalClickInfo } = props;
   const [dataByRole, setDataByRole] = useState([]);
+  const [dataaa, setUserData] = useState([]);
+
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
+  var datarow = [];
 
   const table = useMaterialReactTable({
     columns,
@@ -408,7 +796,7 @@ const TableGrid = (props) => {
         >
           Export All Data
         </Button>
-        <Button
+        {/* <Button
           disabled={table.getPrePaginationRowModel().rows.length === 0}
           //export all rows, including from the next page, (still respects filtering and sorting)
           onClick={() =>
@@ -425,8 +813,8 @@ const TableGrid = (props) => {
           startIcon={<FileDownloadOffTwoTone />}
         >
           Export Page Rows
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           disabled={
             !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
           }
@@ -435,7 +823,7 @@ const TableGrid = (props) => {
           startIcon={<FileDownloadDoneTwoTone />}
         >
           Export Selected Rows
-        </Button>
+        </Button> */}
 
         <Button
           onClick={handleShow1}
@@ -472,9 +860,7 @@ const TableGrid = (props) => {
           ...prev,
           [row.id]: !prev[row.id],
         }));
-        arrayState.push(JSON.stringify(row.original.ProviderJobID));
-        // alert(JSON.stringify(row.original.ProviderJobID))
-        // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
+        arrayState.push(row.original.ProviderJobID);
       },
       selected: rowSelection[row.id],
       sx: {
@@ -503,18 +889,17 @@ const TableGrid = (props) => {
           alignItems: "center",
         }}
       >
-        <img
-          alt="avatar"
-          height={200}
-          src={row.original.avatar}
-          loading="lazy"
-          style={{ borderRadius: "50%" }}
-        />
         <Box sx={{ textAlign: "center" }}>
-          <Typography variant="h4">Signature Catch Phrase:</Typography>
-          <Typography variant="h1">
-            &quot;{row.original.signatureCatchPhrase}&quot;
-          </Typography>
+          {/* <div className="job-table mt-3">
+            <DataTable
+              columns={columnsss}
+              data={datarow}
+              pagination
+              selectableRows
+              // onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
+              dense
+            />
+          </div> */}
         </Box>
       </Box>
     ),
@@ -538,7 +923,6 @@ const TableGrid = (props) => {
       };
     },
   });
-  console.log(arrayState  );
   return <MaterialReactTable table={table} />;
 };
 

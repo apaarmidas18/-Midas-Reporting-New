@@ -14,10 +14,12 @@ import recruiter from "./assigned_data_factory/recruiter";
 import { teamlead } from "./assigned_data_factory/teamlead";
 import GetAllUsers from "../../API/User/GetAllUsers";
 import assignee_stat from "../../utils/Jobs/assignee_stat";
+import TableGrid from "../../components/_alljobs_comp/material_new_grid";
 
 const AssignedJob = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
   const [loading, setLoading] = useState("");
-  const [data, setUserData] = useState([]);
+  const [data_user, setUserData] = useState([]);
   const [recruiterData, setRecruiterData] = useState([]);
   const [manager, setManager] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
@@ -273,12 +275,12 @@ const AssignedJob = () => {
     var name2 = "";
     var type = "";
 
-    data
+    data_user
       .filter((item, index) => item.id === element.assignee)
       .map((ite, index) => {
         return (name1 = ite.name);
       });
-    data
+    data_user
       .filter((item, index) => item.id === element.assigner)
       .map((ite, index) => {
         return (name2 = ite.name);
@@ -298,6 +300,31 @@ const AssignedJob = () => {
     });
 
     jobsfeeds.push(...element.jobsFeedsSet);
+  }
+  var assignJobdetails = [];
+
+  for (let index = 0; index < jobsfeeds.length; index++) {
+    const element = jobsfeeds[index];
+    var name1 = "";
+    var name2 = "";
+
+    data_user
+      .filter((item, index) => item.id === element.amId)
+      .map((ite, index) => {
+        return (name1 = ite.name);
+      });
+
+    data_user
+      .filter((item, index) => item.id === element.tlId)
+      .map((ite, index) => {
+        return (name2 = ite.name);
+      });
+
+    assignJobdetails.push({
+      ...element,
+      assignee: name2,
+      assigner: name1,
+    });
   }
 
   return (
@@ -328,17 +355,13 @@ const AssignedJob = () => {
               <span>Export List</span>
             </button>
           </div>
-          <div className="job-table mt-3">
-            <DataTable
-              columns={columns}
-              data={jobsfeeds}
-              pagination
-              selectableRows
-              customStyles={customStyles}
-              // onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
-              dense
-            />
-          </div>
+          <TableGrid
+            data={assignJobdetails}
+            user={user}
+            columnsss={columns}
+            route={"assigned"}
+            userData={data_user}
+          />
         </div>
       </div>
     </>
