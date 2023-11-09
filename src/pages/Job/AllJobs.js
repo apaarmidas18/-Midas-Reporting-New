@@ -341,7 +341,7 @@ const AllJobs = () => {
     masterApicall();
   }, []);
 
-  console.log(vmsDetails)
+
 
   useEffect(() => {
     userRoles();
