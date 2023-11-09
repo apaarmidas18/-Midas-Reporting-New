@@ -9,7 +9,7 @@ import {
   MRT_GlobalFilterTextField,
   MRT_ToggleFiltersButton,
 } from "material-react-table";
-import { mkConfig, generateCsv, download } from 'export-to-csv'; //or use your library of choice here
+import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
 //Material UI Imports
 import {
   Box,
@@ -19,12 +19,11 @@ import {
   Typography,
   lighten,
 } from "@mui/material";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import FileDownloadDoneOutlined from '@mui/icons-material/FileDownloadDoneOutlined';
-import AssignmentIndTwoTone from '@mui/icons-material/AssignmentIndTwoTone';
-import FileDownloadDoneTwoTone from '@mui/icons-material/FileDownloadDoneTwoTone';
-import FileDownloadOffTwoTone from '@mui/icons-material/FileDownloadOffTwoTone';
-
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileDownloadDoneOutlined from "@mui/icons-material/FileDownloadDoneOutlined";
+import AssignmentIndTwoTone from "@mui/icons-material/AssignmentIndTwoTone";
+import FileDownloadDoneTwoTone from "@mui/icons-material/FileDownloadDoneTwoTone";
+import FileDownloadOffTwoTone from "@mui/icons-material/FileDownloadOffTwoTone";
 
 //Icons Imports
 import { AccountCircle, Send } from "@mui/icons-material";
@@ -34,11 +33,13 @@ const TableGrid = (props) => {
   const { data, user, setSelected, selected } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
+  const [arrayState, setArrayState] = useState([]);
+
   const columns = useMemo(
     () => [
       {
         id: "job-details", //id used to define `group` column
-        
+
         columns: [
           {
             accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
@@ -77,10 +78,10 @@ const TableGrid = (props) => {
                   {renderedCellValue == "1"
                     ? "Travel"
                     : renderedCellValue == "2"
-                      ? "Perm"
-                      : renderedCellValue == "3"
-                        ? "Per-Diem"
-                        : ""}
+                    ? "Perm"
+                    : renderedCellValue == "3"
+                    ? "Per-Diem"
+                    : ""}
                 </span>
               </Box>
             ),
@@ -352,11 +353,10 @@ const TableGrid = (props) => {
     ],
     []
   );
-  console.log("rowsSelected:", rowSelection);
 
   const csvConfig = mkConfig({
-    fieldSeparator: ',',
-    decimalSeparator: '.',
+    fieldSeparator: ",",
+    decimalSeparator: ".",
     useKeysAsHeaders: true,
   });
 
@@ -377,7 +377,7 @@ const TableGrid = (props) => {
   const [dataByRole, setDataByRole] = useState([]);
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
- 
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -395,14 +395,12 @@ const TableGrid = (props) => {
     renderTopToolbarCustomActions: ({ table }) => (
       <Box
         sx={{
-          display: 'flex',
-          gap: '16px',
-          padding: '8px',
-          flexWrap: 'wrap',
+          display: "flex",
+          gap: "16px",
+          padding: "8px",
+          flexWrap: "wrap",
         }}
       >
-
-
         <Button
           //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
           onClick={handleExportData}
@@ -442,7 +440,8 @@ const TableGrid = (props) => {
         <Button
           onClick={handleShow1}
           disabled={
-           ( !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected() ||(user.rollId === 5 ) )
+            (!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()) ||
+            user.rollId === 5
           }
           data-toggle={"tooltip"}
           startIcon={<AssignmentIndTwoTone />}
@@ -451,42 +450,40 @@ const TableGrid = (props) => {
         </Button>
 
         <CustomModal
-    open={show1}
-    handleClose={handleClose1}
-    children={
-      <JobAssignmentRole
-        dataByRole={dataByRole}
-        teamLeadID={teamLeadID}
-        finalClickInfo={finalClickInfo}
-        setFinalClickInfo={setFinalClickInfo}
-        selected={selected}
-      />
-    }
-    jobid={0}
-    className={"assign-modal"}
-  />
+          open={show1}
+          handleClose={handleClose1}
+          children={
+            <JobAssignmentRole
+              dataByRole={dataByRole}
+              teamLeadID={teamLeadID}
+              finalClickInfo={arrayState}
+              setFinalClickInfo={setFinalClickInfo}
+              selected={selected}
+            />
+          }
+          jobid={0}
+          className={"assign-modal"}
+        />
       </Box>
     ),
     muiTableBodyRowProps: ({ row }) => ({
-      //implement row selection click events manually
-      
-      onClick: () =>
-       {
+      onClick: () => {
         setRowSelection((prev) => ({
           ...prev,
           [row.id]: !prev[row.id],
-        }))
+        }));
+        arrayState.push(JSON.stringify(row.original.ProviderJobID));
         // alert(JSON.stringify(row.original.ProviderJobID))
         // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
-       },
+      },
       selected: rowSelection[row.id],
       sx: {
-        cursor: 'pointer',
+        cursor: "pointer",
       },
     }),
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
- 
+
     positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {
       size: "small",
@@ -539,11 +536,9 @@ const TableGrid = (props) => {
           alert("contact " + row.getValue("name"));
         });
       };
-
     },
   });
-
-
+  console.log(arrayState  );
   return <MaterialReactTable table={table} />;
 };
 
