@@ -2,7 +2,7 @@ import React from "react";
 import { host, jobshost } from "../../static";
 
 const GetManagerById = (
-  setManager,
+  setAllJobs,
   setLoading,
 
 ) => {
@@ -12,14 +12,13 @@ const GetManagerById = (
    
   };
 
-  fetch(`${jobshost}allvms/getAllOpenFeeds`, requestOptions)
+  fetch(`${jobshost}allvms/getAllFeeds`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {
         return (
-          setManager(result.payload),
-          setRecruiterData(result.payload),
-          setTeamlData(result.payload),
+        
+          setAllJobs(result.payload),
           setLoading(false)
         );
       }

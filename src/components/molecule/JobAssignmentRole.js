@@ -1,33 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BoldLabel from "../atoms/BoldLabel";
 import InputField from "../atoms/InputField";
 import Select from "../atoms/Select";
 import assignee_stat from "../../utils/Jobs/assignee_stat";
 import tl_assignee_stat from "../../utils/Jobs/tl_assignee_stat";
 import AssignJobs from "../../API/Jobs/AssignJobs";
+import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 
 const JobAssignmentRole = (props) => {
-  const {
-    finalClickInfo,
-    setFinalClickInfo,
-    dataByRole,
-    teamLeadID,
-    selected,
-  } = props;
+  const { finalClickInfo, setFinalClickInfo, selected } = props;
   const user = JSON.parse(localStorage.getItem("User"));
   const [isValidate, setIsValidate] = useState(false);
+  const [teamLeadID, setTeamLeadID] = useState([]);
+  const [dataByRole, setDataByRole] = useState([]);
+
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
-    jobIds: [selected],
+    jobIds: finalClickInfo.map((item, index) => JSON.parse(item)),
     assignType: "",
   });
+
+
+
 
   const handleSubmit = async (e) => {
     AssignJobs(assigned);
     e.preventDefault();
   };
 
+  console.log(finalClickInfo)
   const handleChange = (name, value) => {
     if (name == "assignerUserId" || name == "assigneeUserId") {
       setAssigned({ ...assigned, [name]: JSON.parse(value) });
@@ -35,6 +37,19 @@ const JobAssignmentRole = (props) => {
       setAssigned({ ...assigned, [name]: value });
     }
   };
+  const userRoles = async () => {
+    if (user.rollId === 7) {
+      await GetRolesAssignment(setTeamLeadID, 6);
+      await GetRolesAssignment(setDataByRole, 5);
+    } else if (user.rollId === 6) {
+      await GetRolesAssignment(setDataByRole, 5);
+    } else {
+      return null;
+    }
+  };
+  useEffect(() => {
+    userRoles();
+  }, []);
 
   return (
     <>
@@ -118,7 +133,7 @@ const JobAssignmentRole = (props) => {
 
             <span className="job-id-span mt-3">
               <strong>Job ID -</strong>
-              {`${selected}, `}
+              {finalClickInfo.map((item, index) => `${item}, `)}
             </span>
             <div className="col-md-12 text-center">
               <button

@@ -9,7 +9,7 @@ import {
   MRT_GlobalFilterTextField,
   MRT_ToggleFiltersButton,
 } from "material-react-table";
-import { mkConfig, generateCsv, download } from 'export-to-csv'; //or use your library of choice here
+import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
 //Material UI Imports
 import {
   Box,
@@ -19,21 +19,28 @@ import {
   Typography,
   lighten,
 } from "@mui/material";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileDownloadDoneOutlined from "@mui/icons-material/FileDownloadDoneOutlined";
+import AssignmentIndTwoTone from "@mui/icons-material/AssignmentIndTwoTone";
+import FileDownloadDoneTwoTone from "@mui/icons-material/FileDownloadDoneTwoTone";
+import FileDownloadOffTwoTone from "@mui/icons-material/FileDownloadOffTwoTone";
 
 //Icons Imports
 import { AccountCircle, Send } from "@mui/icons-material";
 import moment from "moment";
+import swal from "sweetalert";
 
 const TableGrid = (props) => {
   const { data, user, setSelected, selected } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
+  const [arrayState, setArrayState] = useState([]);
+
   const columns = useMemo(
     () => [
       {
         id: "job-details", //id used to define `group` column
-        header: "Jobs",
+
         columns: [
           {
             accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
@@ -72,10 +79,10 @@ const TableGrid = (props) => {
                   {renderedCellValue == "1"
                     ? "Travel"
                     : renderedCellValue == "2"
-                      ? "Perm"
-                      : renderedCellValue == "3"
-                        ? "Per-Diem"
-                        : ""}
+                    ? "Perm"
+                    : renderedCellValue == "3"
+                    ? "Per-Diem"
+                    : ""}
                 </span>
               </Box>
             ),
@@ -347,11 +354,10 @@ const TableGrid = (props) => {
     ],
     []
   );
-  console.log("rowsSelected:", rowsSelected);
 
   const csvConfig = mkConfig({
-    fieldSeparator: ',',
-    decimalSeparator: '.',
+    fieldSeparator: ",",
+    decimalSeparator: ".",
     useKeysAsHeaders: true,
   });
 
@@ -372,7 +378,7 @@ const TableGrid = (props) => {
   const [dataByRole, setDataByRole] = useState([]);
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
- 
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -390,28 +396,12 @@ const TableGrid = (props) => {
     renderTopToolbarCustomActions: ({ table }) => (
       <Box
         sx={{
-          display: 'flex',
-          gap: '16px',
-          padding: '8px',
-          flexWrap: 'wrap',
+          display: "flex",
+          gap: "16px",
+          padding: "8px",
+          flexWrap: "wrap",
         }}
       >
-
-<CustomModal
-    open={show1}
-    handleClose={handleClose1}
-    children={
-      <JobAssignmentRole
-        dataByRole={dataByRole}
-        teamLeadID={teamLeadID}
-        finalClickInfo={finalClickInfo}
-        setFinalClickInfo={setFinalClickInfo}
-        selected={selected}
-      />
-    }
-    jobid={0}
-    className={"assign-modal"}
-  />
         <Button
           //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
           onClick={handleExportData}
@@ -425,7 +415,7 @@ const TableGrid = (props) => {
           onClick={() =>
             handleExportRows(table.getPrePaginationRowModel().rows)
           }
-          startIcon={<FileDownloadIcon />}
+          startIcon={<FileDownloadDoneOutlined />}
         >
           Export All Rows
         </Button>
@@ -433,7 +423,7 @@ const TableGrid = (props) => {
           disabled={table.getRowModel().rows.length === 0}
           //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
           onClick={() => handleExportRows(table.getRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
+          startIcon={<FileDownloadOffTwoTone />}
         >
           Export Page Rows
         </Button>
@@ -443,45 +433,74 @@ const TableGrid = (props) => {
           }
           //only export selected rows
           onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
+          startIcon={<FileDownloadDoneTwoTone />}
         >
           Export Selected Rows
         </Button>
 
         <Button
-          variant={user.rollId === 5 ? "light" : "primary"}
           onClick={handleShow1}
-          disabled={user.rollId === 5 && true}
+          disabled={
+            (!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()) ||
+            user.rollId === 5
+          }
           data-toggle={"tooltip"}
-          data-placement="top"
-          title="Assign a Job"
-          style={{
-            padding: "12px",
-            whiteSpace: "nowrap",
-            fontSize: "11px",
-          }}
+          startIcon={<AssignmentIndTwoTone />}
         >
           Assign Job
         </Button>
+
+        <CustomModal
+          open={show1}
+          handleClose={handleClose1}
+          children={
+            <JobAssignmentRole
+              dataByRole={dataByRole}
+              teamLeadID={teamLeadID}
+              finalClickInfo={arrayState}
+              setFinalClickInfo={setFinalClickInfo}
+              selected={selected}
+            />
+          }
+          jobid={0}
+          className={"assign-modal"}
+        />
       </Box>
     ),
     muiTableBodyRowProps: ({ row }) => ({
-      //implement row selection click events manually
-      onClick: () =>
+      onClick: async () => {
         setRowSelection((prev) => ({
           ...prev,
           [row.id]: !prev[row.id],
-        })),
+        }));
+
+        if (row.original.ProviderJobID) {
+          if (
+            arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
+            true
+          ) {
+            var dataOut = arrayState.indexOf(JSON.stringify(row.original.ProviderJobID));
+            let a = arrayState.splice(dataOut , 1)
+            return a;
+         
+          } else {
+            arrayState.push(JSON.stringify(row.original.ProviderJobID));
+          }
+        } else {
+          return null;
+        }
+        // alert(JSON.stringify(row.original.ProviderJobID))
+        // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
+      },
       selected: rowSelection[row.id],
       sx: {
-        cursor: 'pointer',
+        cursor: "pointer",
       },
     }),
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
-    onRowSelectionChange: setRowSelection,
-    state: { rowSelection },
-    positionToolbarAlertBanner: "bottom",
+
+    positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {
       size: "small",
       variant: "outlined",
@@ -533,11 +552,9 @@ const TableGrid = (props) => {
           alert("contact " + row.getValue("name"));
         });
       };
-
     },
   });
-
-
+  console.log(arrayState);
   return <MaterialReactTable table={table} />;
 };
 
