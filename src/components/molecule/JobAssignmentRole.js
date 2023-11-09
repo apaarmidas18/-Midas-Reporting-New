@@ -21,12 +21,15 @@ const JobAssignmentRole = (props) => {
     assignType: "",
   });
 
-  console.log(finalClickInfo.map((item, index) => JSON.parse(item)));
+
+
+
   const handleSubmit = async (e) => {
     AssignJobs(assigned);
     e.preventDefault();
   };
 
+  console.log(finalClickInfo)
   const handleChange = (name, value) => {
     if (name == "assignerUserId" || name == "assigneeUserId") {
       setAssigned({ ...assigned, [name]: JSON.parse(value) });

@@ -2,7 +2,7 @@ import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router";
 
-const NewHor = () => {
+const NewHor = ({tab}) => {
   const navigate = useNavigate();
 
   const loginData = localStorage.getItem("User");
@@ -14,6 +14,7 @@ const NewHor = () => {
   return (
     <>
       <nav className="new-nav">
+        <span>{tab}</span>
         <Dropdown className="portal-logout">
           <Dropdown.Toggle id="portal-login">Logout</Dropdown.Toggle>
 

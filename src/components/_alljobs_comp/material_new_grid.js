@@ -855,12 +855,29 @@ const TableGrid = (props) => {
       </Box>
     ),
     muiTableBodyRowProps: ({ row }) => ({
-      onClick: () => {
+      onClick: async () => {
         setRowSelection((prev) => ({
           ...prev,
           [row.id]: !prev[row.id],
         }));
-        arrayState.push(row.original.ProviderJobID);
+
+        if (row.original.ProviderJobID) {
+          if (
+            arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
+            true
+          ) {
+            var dataOut = arrayState.indexOf(JSON.stringify(row.original.ProviderJobID));
+            let a = arrayState.splice(dataOut , 1)
+            return a;
+         
+          } else {
+            arrayState.push(JSON.stringify(row.original.ProviderJobID));
+          }
+        } else {
+          return null;
+        }
+        // alert(JSON.stringify(row.original.ProviderJobID))
+        // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
       },
       selected: rowSelection[row.id],
       sx: {

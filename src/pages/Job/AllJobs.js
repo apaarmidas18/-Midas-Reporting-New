@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NewHor from "../../components/NewHor";
-import TabName from "../../components/TabName";
+// import TabName from "../../components/TabName";
 import moment from "moment";
 import { HiOutlineDownload } from "react-icons/hi";
 import * as XLSX from "xlsx/xlsx.mjs";
@@ -341,7 +341,7 @@ const AllJobs = () => {
     masterApicall();
   }, []);
 
-  console.log(vmsDetails)
+
 
   useEffect(() => {
     userRoles();
@@ -354,11 +354,11 @@ const AllJobs = () => {
         class={"container-fluid table-container"}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <NewHor />
+        <NewHor tab="JOBS"/>
 
         <div
           className={
-            isSidebarExpanded ? "container " : "container tab-container"
+            isSidebarExpanded ? "container mt-2 mb-2" : "container tab-container mt-2 mb-2"
           }
         >
           {/* <div class="d-flex mt-2 mb-2">
