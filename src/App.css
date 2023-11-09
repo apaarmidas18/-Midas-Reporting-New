@@ -1209,7 +1209,7 @@ input[switch="warning"]:checked + label:before {
 /* //Sidebar ********************************************************* */
 .sidebar {
   width: 240px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   border-right: 0.3px solid #e3e3e3;
   transition: width 0.3s ease-in-out;
@@ -1326,6 +1326,14 @@ input[switch="warning"]:checked + label:before {
   height: 54px;
   background: #0033c4;
   position: relative;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.new-nav span{
+  font-weight: 500;
+    font-family: 'Roboto';
+    font-size: 18px;
 }
 .pdf-options {
   display: block;
@@ -1515,13 +1523,13 @@ input[switch="warning"]:checked + label:before {
 }
 
 @media screen and (min-width: 992px) {
-  .tab-container {
-    max-width: 1050px !important;
+  .container {
+    max-width: 1000px !important;
   }
 }
 @media screen and (min-width: 1200px) {
-  .tab-container {
-    max-width: 1250px !important;
+  .container {
+    max-width: 1200px !important;
   }
   
   @media screen and (min-width: 1400px) {
@@ -1568,9 +1576,9 @@ input[switch="warning"]:checked + label:before {
   border-radius: 10px;
 }
 
-.portal-logout {
+/* .portal-logout {
   float: right;
-}
+} */
 
 #portal-login {
   background: none !important;
@@ -1670,6 +1678,7 @@ border-radius: 7px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 10px;
   padding: 10px;
+
 }
 .ver-line{
   background: linear-gradient( #FF4500,#FF6347);
