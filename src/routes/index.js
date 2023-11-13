@@ -89,6 +89,7 @@ import ActiveVMS from "../pages/Job/ActiveVMS";
 import VMSConfig from "../pages/Job/VMSConfig";
 import PortalDash from "../pages/Job/PortalDash";
 import Jobs from "../pages/Job/Jobs";
+import AllJobsFeeds from "../pages/Job/AllJobsFeeds";
 
 export const Router = () => {
   return useRoutes([
@@ -235,6 +236,7 @@ export const Router = () => {
         { path: "dashboard", element: <PortalDash /> },
         { path: "jobs", element: <AllJobs /> },
         { path: "all-jobs", element: <Jobs/> },
+        { path: "all-jobs-feeds", element: <AllJobsFeeds/> },
 
         { path: "active-candidates", element: <ActiveCandidates /> },
         { path: "assigned-job", element: <AssignedJob /> },
