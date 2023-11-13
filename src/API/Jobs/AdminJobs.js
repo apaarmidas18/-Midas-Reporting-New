@@ -1,7 +1,7 @@
 import React from "react";
 import { host, jobshost } from "../../static";
 
-const GetManagerById = (
+const AdminJobs = (
   setAllJobs,
   setLoading,
 
@@ -26,4 +26,4 @@ const GetManagerById = (
     .catch((error) => console.log("error", error));
 };
 
-export default GetManagerById;
+export default AdminJobs;
