@@ -86,8 +86,8 @@ const TableGrid = (props) => {
             ),
           },
           {
-            accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
-            id: "ProviderJobId", //id is still required when using accessorFn instead of accessorKey
+            accessorFn: (row) => `${row.SourceID}`, //accessorFn used to join multiple data into a single cell
+            id: "SourceID", //id is still required when using accessorFn instead of accessorKey
             header: "Job-Id",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -250,7 +250,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "State",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -269,7 +269,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "Start Date",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -288,7 +288,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "End Date",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -400,8 +400,8 @@ const TableGrid = (props) => {
         id: "Job-details", //id used to define `group` column
         columns: [
           {
-            accessorFn: (row) => `${row.ProviderJobID}`, //accessorFn used to join multiple data into a single cell
-            id: "ProviderJobId", //id is still required when using accessorFn instead of accessorKey
+            accessorFn: (row) => `${row.SourceID}`, //accessorFn used to join multiple data into a single cell
+            id: "SourceID", //id is still required when using accessorFn instead of accessorKey
             header: "Job-Id",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -451,16 +451,26 @@ const TableGrid = (props) => {
             filterVariant: "autocomplete",
             header: "StatusString",
             size: 100,
-            Cell: ({ renderedCellValue, row }) => (
+            Cell: ({ renderedCellValue, row, cell }) => (
               <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
+                sx={(theme) => ({
+                  backgroundColor:
+                    cell.getValue() == "Closed"
+                      ? theme.palette.error.dark
+                      : cell.getValue() == "Cancelled" &&
+                        cell.getValue() == "Frozen"
+                      ? theme.palette.warning.dark
+                      : theme.palette.success.dark,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+                  maxWidth: "9ch",
+                  p: "0.25rem",
+                })}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
+                <span>
+                  {renderedCellValue === "O" ? "Open" : renderedCellValue}
+                </span>
               </Box>
             ),
           },
@@ -564,7 +574,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "State",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -583,7 +593,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "Start Date",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -593,7 +603,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -602,7 +612,7 @@ const TableGrid = (props) => {
             enableClickToCopy: true,
             filterVariant: "autocomplete",
             header: "End Date",
-            size: 300,
+            size: 100,
             Cell: ({ renderedCellValue, row }) => (
               <Box
                 sx={{
@@ -612,7 +622,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -631,7 +641,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -656,7 +666,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}$</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -695,11 +705,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>
-                  {JSON.stringify(
-                    moment(renderedCellValue).format("DD/MM/YYYY")
-                  )}
-                </span>
+                <span>{moment(renderedCellValue).format("DD/MM/YYYY")}</span>
               </Box>
             ),
           },
@@ -709,36 +715,6 @@ const TableGrid = (props) => {
     []
   );
   const columns = route == "assigned" ? assign_columns : job_columns;
-
-  // const columns = useMemo(
-  //   () => [
-  //     {
-  //       id: "job-details", //id used to define `group` column
-
-  //       columns: [
-  //         {
-  //           accessorFn: (row) => `${row.assignee}`, //accessorFn used to join multiple data into a single cell
-  //           id: "assignee", //id is still required when using accessorFn instead of accessorKey
-  //           header: "assignee",
-  //           size: 100,
-  //         },
-  //         {
-  //           accessorFn: (row) => `${row.assigner}`, //accessorFn used to join multiple data into a single cell
-  //           id: "assigner", //id is still required when using accessorFn instead of accessorKey
-  //           header: "assigner",
-  //           size: 100,
-  //         },
-  //         {
-  //           accessorFn: (row) => `${row.assignType}`, //accessorFn used to join multiple data into a single cell
-  //           id: "assignType", //id is still required when using accessorFn instead of accessorKey
-  //           header: "assignType",
-  //           size: 100,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   []
-  // );
   const csvConfig = mkConfig({
     fieldSeparator: ",",
     decimalSeparator: ".",
@@ -776,8 +752,14 @@ const TableGrid = (props) => {
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
-    // enableRowActions: true,
-    initialState: { showColumnFilters: false, showGlobalFilter: true },
+
+    enableRowActions: (row) =>
+      row.amId >= 0 && user.rollId === 7 ? false : true,
+    initialState: {
+      showColumnFilters: false,
+      showGlobalFilter: true,
+      density: "compact",
+    },
     paginationDisplayMode: "pages",
     getRowId: (row) => row.userId,
     renderTopToolbarCustomActions: ({ table }) => (
@@ -789,41 +771,9 @@ const TableGrid = (props) => {
           flexWrap: "wrap",
         }}
       >
-        <Button
-          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
-          onClick={handleExportData}
-          startIcon={<FileDownloadIcon />}
-        >
+        <Button onClick={handleExportData} startIcon={<FileDownloadIcon />}>
           Export All Data
         </Button>
-        {/* <Button
-          disabled={table.getPrePaginationRowModel().rows.length === 0}
-          //export all rows, including from the next page, (still respects filtering and sorting)
-          onClick={() =>
-            handleExportRows(table.getPrePaginationRowModel().rows)
-          }
-          startIcon={<FileDownloadDoneOutlined />}
-        >
-          Export All Rows
-        </Button>
-        <Button
-          disabled={table.getRowModel().rows.length === 0}
-          //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-          onClick={() => handleExportRows(table.getRowModel().rows)}
-          startIcon={<FileDownloadOffTwoTone />}
-        >
-          Export Page Rows
-        </Button> */}
-        {/* <Button
-          disabled={
-            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-          }
-          //only export selected rows
-          onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadDoneTwoTone />}
-        >
-          Export Selected Rows
-        </Button> */}
 
         <Button
           onClick={handleShow1}
@@ -866,18 +816,17 @@ const TableGrid = (props) => {
             arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
             true
           ) {
-            var dataOut = arrayState.indexOf(JSON.stringify(row.original.ProviderJobID));
-            let a = arrayState.splice(dataOut , 1)
+            var dataOut = arrayState.indexOf(
+              JSON.stringify(row.original.ProviderJobID)
+            );
+            let a = arrayState.splice(dataOut, 1);
             return a;
-         
           } else {
             arrayState.push(JSON.stringify(row.original.ProviderJobID));
           }
         } else {
           return null;
         }
-        // alert(JSON.stringify(row.original.ProviderJobID))
-        // console.log("SELECTED ROW",JSON.stringify(row.original.ProviderJobID))
       },
       selected: rowSelection[row.id],
       sx: {
@@ -894,7 +843,7 @@ const TableGrid = (props) => {
     },
     muiPaginationProps: {
       color: "secondary",
-      rowsPerPageOptions: [10, 20, 30],
+      rowsPerPageOptions: [50, 100, 150],
       shape: "rounded",
       variant: "outlined",
     },
@@ -906,18 +855,195 @@ const TableGrid = (props) => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ textAlign: "center" }}>
-          {/* <div className="job-table mt-3">
-            <DataTable
-              columns={columnsss}
-              data={datarow}
-              pagination
-              selectableRows
-              // onSelectedRowsChange={(row) => setSelectedRow(row.selectedRows)}
-              dense
-            />
-          </div> */}
-        </Box>
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="row job-select-row">
+                <div className="col-md-2 job-select">
+                  <label>Job-ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.SourceID}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job-Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.Title}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Type</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={
+                      row.original.WorkType == "1"
+                        ? "Travel"
+                        : row.original.WorkType == "2"
+                        ? "Perm"
+                        : row.original.WorkType == "3"
+                        ? "Per Diem"
+                        : row.original.WorkType
+                    }
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Status</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.StatusString}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Profession</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.Degree}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Speciality</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.JobSpecialty}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Facility</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.Facility}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.City}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job State</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.State}
+                    disabled
+                  />
+                </div>
+
+                <div className="col-md-2 job-select">
+                  <label>Job On Call Rate</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={`$ ${row.original.OnCallRate}`}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Bill Rate</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={`$ ${row.original.BillRate}`}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>VMS Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.SourceName}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Start Date</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={moment(row.original.FormattedStartDate).format(
+                      "MM/DD/YYYY"
+                    )}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job End Date</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={moment(row.original.EndDate).format("MM/DD/YYYY")}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Posted On</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={moment(row.original.PostDate).format("MM/DD/YYYY")}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Guaranteed Hours</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.GuaranteedHours}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-2 job-select">
+                  <label>Job Bonus</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={`$ ${row.original.Bonus}`}
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Box>
     ),
     renderTopToolbar: ({ table }) => {
@@ -940,7 +1066,7 @@ const TableGrid = (props) => {
       };
     },
   });
-  return <MaterialReactTable table={table} />;
+  return <MaterialReactTable table={table} minRows={30} />;
 };
 
 export default TableGrid;

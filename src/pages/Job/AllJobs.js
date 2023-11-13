@@ -24,201 +24,201 @@ import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
 // import loader from "../../lottie/search.json";
 import Loader from "../../components/atoms/Loader";
-const RobotixModalContent = (props) => {
-  const { finalClickInfo, setFinalClickInfo } = props;
+// const RobotixModalContent = (props) => {
+//   const { finalClickInfo, setFinalClickInfo } = props;
 
-  return (
-    <div>
-      <div className="row">
-        <div className="col-md-12">
-          <div className="row job-select-row">
-            <div className="col-md-4 job-select">
-              <label>Job-ID</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.ProviderJobID}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job-Title</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.Title}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Type</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={
-                  finalClickInfo.WorkType == 1
-                    ? "Travel"
-                    : finalClickInfo.WorkType == "2"
-                    ? "Perm"
-                    : finalClickInfo.WorkType == 3
-                    ? "Per Diem"
-                    : finalClickInfo.WorkType
-                }
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Status</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.StatusString}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Profession</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.Degree}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Speciality</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.JobSpecialty}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Facility</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.Facility}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.City}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job State</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.State}
-                disabled
-              />
-            </div>
+//   return (
+//     <div>
+//       <div className="row">
+//         <div className="col-md-12">
+//           <div className="row job-select-row">
+//             <div className="col-md-4 job-select">
+//               <label>Job-ID</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.ProviderJobID}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job-Title</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.Title}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Type</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={
+//                   finalClickInfo.WorkType == 1
+//                     ? "Travel"
+//                     : finalClickInfo.WorkType == "2"
+//                     ? "Perm"
+//                     : finalClickInfo.WorkType == 3
+//                     ? "Per Diem"
+//                     : finalClickInfo.WorkType
+//                 }
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Status</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.StatusString}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Profession</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.Degree}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Speciality</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.JobSpecialty}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Facility</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.Facility}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job City</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.City}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job State</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.State}
+//                 disabled
+//               />
+//             </div>
 
-            <div className="col-md-4 job-select">
-              <label>Job On Call Rate</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo.OnCallRate}`}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Bill Rate</label>
-              <input
-                type="number"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo.BillRate}`}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>VMS Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.SourceName}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Start Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo["startdate"]).format("MM/DD/YYYY")}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job End Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo.EndDate).format("MM/DD/YYYY")}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Posted On</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={moment(finalClickInfo["created-at"]).format(
-                  "MM/DD/YYYY"
-                )}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Guaranteed Hours</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={finalClickInfo.GuaranteedHours}
-                disabled
-              />
-            </div>
-            <div className="col-md-4 job-select">
-              <label>Job Bonus</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                value={`$ ${finalClickInfo.Bonus}`}
-                disabled
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//             <div className="col-md-4 job-select">
+//               <label>Job On Call Rate</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={`$ ${finalClickInfo.OnCallRate}`}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Bill Rate</label>
+//               <input
+//                 type="number"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={`$ ${finalClickInfo.BillRate}`}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>VMS Name</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.SourceName}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Start Date</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={moment(finalClickInfo["startdate"]).format("MM/DD/YYYY")}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job End Date</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={moment(finalClickInfo.EndDate).format("MM/DD/YYYY")}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Posted On</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={moment(finalClickInfo["created-at"]).format(
+//                   "MM/DD/YYYY"
+//                 )}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Guaranteed Hours</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={finalClickInfo.GuaranteedHours}
+//                 disabled
+//               />
+//             </div>
+//             <div className="col-md-4 job-select">
+//               <label>Job Bonus</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="exampleFormControlInput1"
+//                 value={`$ ${finalClickInfo.Bonus}`}
+//                 disabled
+//               />
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -341,11 +341,8 @@ const AllJobs = () => {
     masterApicall();
   }, []);
 
-
-
   useEffect(() => {
     userRoles();
-    id.push(selected);
   }, []);
   return (
     <>
@@ -354,109 +351,19 @@ const AllJobs = () => {
         class={"container-fluid table-container"}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <NewHor tab="JOBS"/>
+        <NewHor tab="JOBS" />
 
         <div
           className={
-            isSidebarExpanded ? "container mt-2 mb-2" : "container tab-container mt-2 mb-2"
+            isSidebarExpanded
+              ? "container mt-2 mb-2"
+              : "container tab-container mt-2 mb-2"
           }
         >
-          {/* <div class="d-flex mt-2 mb-2">
-            <TabName tabname="Jobs" />
-            <div className="right-data d-flex align-items-center">
-              <Button
-                variant={user.rollId === 5 ? "light" : "primary"}
-                onClick={handleShow1}
-                disabled={user.rollId === 5 && true}
-                data-toggle={"tooltip"}
-                data-placement="top"
-                title="Assign a Job"
-                style={{
-                  padding: "12px",
-                  whiteSpace: "nowrap",
-                  fontSize: "11px",
-                }}
-              >
-                Assign Job
-              </Button>
-
-              <button
-                className="export-btn"
-                data-toggle={"tooltip"}
-                data-placement="top"
-                title="Export List in CSV"
-                style={{
-                  width: "126px",
-                  whiteSpace: "nowrap",
-                  height: "40px",
-                }}
-                onClick={() => handleExcelExport()}
-              >
-                <HiOutlineDownload size={22} />
-                <span>Export List</span>
-              </button>
-              <Button
-                variant="primary"
-                data-toggle={"tooltip"}
-                data-placement="top"
-                title="Apply Filters On Jobs"
-                onClick={handleShowCanvas}
-                style={{
-                  padding: "12px",
-                  whiteSpace: "nowrap",
-                  fontSize: "11px",
-                }}
-              >
-                <i class="fa-solid fa-filter fa-lg"></i>
-                Apply Filters
-              </Button>
-            </div>
-          </div> */}
-
-          <CustomModal
-            open={show}
-            handleClose={handleClose}
-            children={
-              <RobotixModalContent
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
-              />
-            }
-            jobid={finalClickInfo}
-            className={"job-modal"}
-          />
-          <CustomModal
-            open={show1}
-            handleClose={handleClose1}
-            children={
-              <JobAssignmentRole
-                dataByRole={dataByRole}
-                teamLeadID={teamLeadID}
-                finalClickInfo={finalClickInfo}
-                setFinalClickInfo={setFinalClickInfo}
-                selected={selected}
-              />
-            }
-            jobid={0}
-            className={"assign-modal"}
-          />
           <div className="job-table">
-            {filterArray.length !== 0 ? (
-              <div className="applied-filers ">
-                <h5>Filters</h5>
-                {Object.keys([filters[0]]).map((key, i) => (
-                  <>
-                    <span>{key}</span>
-                    <span>{[filters][key].city}</span>
-                  </>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
             {isloading ? (
               <>
-              <Loader/>
+                <Loader />
                 {/* <Lottie options={defaultOptions} width={100} height={100} /> */}
               </>
             ) : (

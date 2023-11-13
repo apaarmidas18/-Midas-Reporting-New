@@ -15,6 +15,7 @@ import { teamlead } from "./assigned_data_factory/teamlead";
 import GetAllUsers from "../../API/User/GetAllUsers";
 import assignee_stat from "../../utils/Jobs/assignee_stat";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
+import ByManager from "./AssignedAPI/ByManager";
 
 const AssignedJob = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -24,6 +25,7 @@ const AssignedJob = () => {
   const [manager, setManager] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
   const [isloading, setIsloading] = useState(false);
+  const [assigned_by_manager, setAssignedbyManager] = useState([]);
   const { isSidebarExpanded } = useContext(Sidebar_Context);
   const loopData = [];
 
@@ -264,11 +266,15 @@ const AssignedJob = () => {
 
   useEffect(() => {
     GetAssignedJobs(setAssignedJobs, setIsloading);
+    ByManager(setAssignedbyManager, setIsloading);
     GetAllUsers({ setUserData, setLoading });
   }, []);
 
   var rows = [];
   var jobsfeeds = [];
+  var assigned_manager = [];
+  var assignJobdetails = [];
+
   for (let index = 0; index < assignedJobs.length; index++) {
     const element = assignedJobs[index];
     var name1 = "";
@@ -301,12 +307,14 @@ const AssignedJob = () => {
 
     jobsfeeds.push(...element.jobsFeedsSet);
   }
-  var assignJobdetails = [];
 
+  console.log(jobsfeeds);
   for (let index = 0; index < jobsfeeds.length; index++) {
     const element = jobsfeeds[index];
     var name1 = "";
     var name2 = "";
+
+    console.log(element);
 
     data_user
       .filter((item, index) => item.id === element.amId)
@@ -326,6 +334,33 @@ const AssignedJob = () => {
       assigner: name1,
     });
   }
+
+  for (let index = 0; index < assigned_by_manager.length; index++) {
+    const element = assigned_by_manager[index].jobsFeedsSet;
+    var name1 = "";
+    var name2 = "";
+    for (var i of element) {
+      data_user
+        .filter((item, index) => item.id === i.amId)
+        .map((ite, index) => {
+          return (name1 = ite.name);
+        });
+
+      data_user
+        .filter((item, index) => item.id === i.tlId)
+        .map((ite, index) => {
+          return (name2 = ite.name);
+        });
+
+      assigned_manager.push({
+        ...i,
+        assignee: name1,
+        assigner: name2,
+      });
+    }
+  }
+
+  console.log(assigned_manager);
 
   return (
     <>
@@ -355,13 +390,41 @@ const AssignedJob = () => {
               <span>Export List</span>
             </button>
           </div>
-          <TableGrid
-            data={assignJobdetails}
-            user={user}
-            columnsss={columns}
-            route={"assigned"}
-            userData={data_user}
-          />
+          {user.rollId == 7 ? (
+            <TableGrid
+              data={assigned_manager}
+              user={user}
+              columnsss={columns}
+              route={"assigned"}
+              userData={data_user}
+            />
+          ) : user.rollId == 6 ? (
+            <>
+              <span class="p-2 m-2 bg-light text-dark rounded 2xl bordered">
+                Assigned to me
+              </span>
+
+              <TableGrid
+                data={assignJobdetails}
+                user={user}
+                columnsss={columns}
+                route={"assigned"}
+                userData={data_user}
+              />
+
+              <span class="p-2 m-2 bg-light text-dark rounded 2xl bordered">
+                Assigned By Me
+              </span>
+
+              <TableGrid
+                data={assigned_manager}
+                user={user}
+                columnsss={columns}
+                route={"assigned"}
+                userData={data_user}
+              />
+            </>
+          ) : null}
         </div>
       </div>
     </>
