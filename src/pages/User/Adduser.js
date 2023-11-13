@@ -92,6 +92,11 @@ const ADMINROLLS = [
 
     label: "Team-Lead",
   },
+  {
+    value: 7,
+
+    label: "Account-Manager",
+  },
 ];
 
 const STATUS = [
@@ -110,13 +115,13 @@ const STATUS = [
 
 const USERTYPE = [
   {
-    value: 1,
+    value: "Internal",
 
     label: "Internal",
   },
 
   {
-    value: 2,
+    value: "External",
 
     label: "External",
   },
@@ -149,7 +154,7 @@ const Adduser = () => {
 
       password: "",
 
-      number: "",
+      // number: "",
 
       rollId: "",
 
@@ -183,7 +188,7 @@ const Adduser = () => {
 
       type: Yup.string().required("Required"),
 
-      number: Yup.string().required("Required"),
+      // number: Yup.string().required("Required"),
     }),
 
     onSubmit: (values) => {
@@ -271,7 +276,7 @@ const Adduser = () => {
               </span>
             </div>
 
-            <div class="mb-3 col-md-6">
+            {/* <div class="mb-3 col-md-6">
               <Label labelName="Phone Number" labelFor="Phone Number" />
               <InputField
                 inptype="number"
@@ -286,7 +291,7 @@ const Adduser = () => {
                   <div className="text-danger">{formik.errors.password}</div>
                 ) : null}
               </span>
-            </div>
+            </div> */}
 
             <div className="col-md-6">
               <Label
@@ -294,14 +299,20 @@ const Adduser = () => {
                 labelFor="Status"
                 style={{ marginBottom: "8px" }}
               />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="status"
+              >
+                <option selected>Open this select menu</option>
 
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={STATUS}
-                selectName="status"
-              />
-
+                {STATUS.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
+            
               <span className="text-danger">
                 {formik.touched.status && formik.errors.status ? (
                   <div className="text-danger">{formik.errors.status}</div>
@@ -316,12 +327,19 @@ const Adduser = () => {
                 style={{ marginBottom: "8px" }}
               />
 
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={ROLLS}
-                selectName="rollId"
-              />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="rollId"
+              >
+                <option selected>Open this select menu</option>
+
+                {ROLLS.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
 
               <span className="text-danger">
                 {formik.touched.rollId && formik.errors.rollId ? (
@@ -336,12 +354,20 @@ const Adduser = () => {
                 labelFor="User-Type"
                 style={{ marginBottom: "8px" }}
               />
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={USERTYPE}
-                selectName="type"
-              />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="type"
+              >
+                <option selected>Open this select menu</option>
+
+                {USERTYPE.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
+
               <span className="text-danger">
                 {formik.touched.type && formik.errors.type ? (
                   <div className="text-danger">{formik.errors.type}</div>
@@ -356,12 +382,20 @@ const Adduser = () => {
                   labelFor="Team Leads"
                   style={{ marginBottom: "8px" }}
                 />
-                <Select
-                  selectChange={formik.handleChange}
-                  selectBlur={formik.handleBlur}
-                  array={teamLead}
-                  selectName="teamLeadId"
-                />
+                <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="managerId"
+              >
+                <option selected>Open this select menu</option>
+
+                {teamLead.map((item, index) => {
+                  return <option value={item.id}>{item.name}</option>;
+                })}
+              </select>
+                
               </div>
             ) : null}
 

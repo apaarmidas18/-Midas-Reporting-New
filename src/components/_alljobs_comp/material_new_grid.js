@@ -736,11 +736,12 @@ const TableGrid = (props) => {
   const [teamLeadID, setTeamLeadID] = useState([]);
   const { finalClickInfo, setFinalClickInfo } = props;
   const [dataByRole, setDataByRole] = useState([]);
-  const [dataaa, setUserData] = useState([]);
-
+  const [disabledRow, setdisabledRow] = useState(false);
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
   var datarow = [];
+
+  console.log(disabledRow);
 
   const table = useMaterialReactTable({
     columns,
@@ -806,10 +807,16 @@ const TableGrid = (props) => {
     ),
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        setRowSelection((prev) => ({
-          ...prev,
-          [row.id]: !prev[row.id],
-        }));
+        {
+          user.rollId == 7 ||
+          (user.rollId == 5 && row.original.amId) ||
+          row.original.tlId >= 0
+            ? setdisabledRow(true)
+            : setRowSelection((prev) => ({
+                ...prev,
+                [row.id]: !prev[row.id],
+              }));
+        }
 
         if (row.original.ProviderJobID) {
           if (
@@ -1066,7 +1073,20 @@ const TableGrid = (props) => {
       };
     },
   });
-  return <MaterialReactTable table={table} minRows={30} />;
+  console.log(arrayState);
+  return (
+    <MaterialReactTable
+      table={table}
+      options={
+        {
+          // rowStyle: {
+          //   backgroundColor:disabledRow == true ? "#eee" :"",
+          // }
+          // muiTableBodyRowProps : {backgroundColor:disabledRow == true ? "#eee" :""}
+        }
+      }
+    />
+  );
 };
 
 export default TableGrid;
