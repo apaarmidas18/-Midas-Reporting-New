@@ -1,6 +1,5 @@
 import React from "react";
 import { host, jobshost } from "../../static";
-// import { chost, host } from "../../static";
 
 const GetAllJobs = async (setAllJobs, setIsloading) => {
   const vmsDetails = await JSON.parse(localStorage.getItem("VmsDetails"));
@@ -33,4 +32,26 @@ const GetAllJobs = async (setAllJobs, setIsloading) => {
   }
 };
 export default GetAllJobs;
-/* response.source.job.map((item , index) =>  item["bill-rate-note"].replaceAll("![CDATA["  , "").replaceAll("]]" , "").replaceAll("!" , ""))); */
+
+// const GetAllJobs = (setAllJobs, setIsloading) => {
+//   var requestOptions = {
+//     method: "Get",
+//     redirect: "follow",
+   
+//   };
+
+//   fetch("http://192.168.1.172:9000/alldata", requestOptions)
+//     .then((response) => response.json())
+//     .then((response) => {
+//       if (response) {
+//         return (
+        
+//           setAllJobs(Object.keys(response).map((item, index) => response[item])),
+//           setIsloading(false)
+//         );
+//       }
+//     })
+//     .catch((error) => console.log("error", error));
+// }
+
+// export default GetAllJobs

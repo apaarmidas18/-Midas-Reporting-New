@@ -8,7 +8,6 @@ const CreateUser = (values, navigate) => {
     email: values.email,
     password: values.password,
     status: values.status,
-    phone: values.number,
     rollId: values.rollId,
     type: values.type,
     managerId: values.managerId,

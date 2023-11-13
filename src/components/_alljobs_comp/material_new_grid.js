@@ -376,8 +376,11 @@ const TableGrid = (props) => {
   const [teamLeadID, setTeamLeadID] = useState([]);
   const { finalClickInfo, setFinalClickInfo } = props;
   const [dataByRole, setDataByRole] = useState([]);
+  const [disabledRow, setdisabledRow] = useState(false);
   const handleShow1 = () => setShow1(true);
   const handleClose1 = () => setShow1(false);
+
+console.log(disabledRow)
 
   const table = useMaterialReactTable({
     columns,
@@ -469,20 +472,26 @@ const TableGrid = (props) => {
     ),
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        setRowSelection((prev) => ({
-          ...prev,
-          [row.id]: !prev[row.id],
-        }));
+        
+        {
+          user.rollId == 7 || user.rollId == 5 && row.original.amId || row.original.tlId >= 0
+            ? setdisabledRow(true)
+            : setRowSelection((prev) => ({
+                ...prev,
+                [row.id]: !prev[row.id],
+              }));
+        }
 
         if (row.original.ProviderJobID) {
           if (
             arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
             true
           ) {
-            var dataOut = arrayState.indexOf(JSON.stringify(row.original.ProviderJobID));
-            let a = arrayState.splice(dataOut , 1)
+            var dataOut = arrayState.indexOf(
+              JSON.stringify(row.original.ProviderJobID)
+            );
+            let a = arrayState.splice(dataOut, 1);
             return a;
-         
           } else {
             arrayState.push(JSON.stringify(row.original.ProviderJobID));
           }
@@ -495,6 +504,8 @@ const TableGrid = (props) => {
       selected: rowSelection[row.id],
       sx: {
         cursor: "pointer",
+       
+       
       },
     }),
     onRowSelectionChange: setRowSelection,
@@ -555,7 +566,12 @@ const TableGrid = (props) => {
     },
   });
   console.log(arrayState);
-  return <MaterialReactTable table={table} />;
+  return <MaterialReactTable table={table}  options={{
+    // rowStyle: {
+    //   backgroundColor:disabledRow == true ? "#eee" :"",
+    // }
+    // muiTableBodyRowProps : {backgroundColor:disabledRow == true ? "#eee" :""} 
+  }}/>;
 };
 
 export default TableGrid;
