@@ -336,7 +336,7 @@ const AssignedJob = () => {
         <NewHor />
         <div
           className={
-            isSidebarExpanded ? "container " : "container tab-container"
+            isSidebarExpanded ? "container" : "container tab-container"
           }
         >
           <div class="d-flex">
