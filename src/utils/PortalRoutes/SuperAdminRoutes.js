@@ -5,21 +5,17 @@ export default [
       fontlogo: "fa-solid fa-house",
     },
   
-    {
-      tabname: "All Jobs",
-      tabroute: "all-jobs-feeds",
-      fontlogo: "fa-solid fa-square-poll-vertical",
-    },
+    
     // {
     //   tabname: "Jobs",
     //   tabroute: "jobs",
     //   fontlogo: "fa-solid fa-square-poll-vertical",
     // },
-    {
-      tabname: "Assigned Job",
-      tabroute: "assigned-job",
-      fontlogo: "fa-solid fa-star",
-    },
+    // {
+    //   tabname: "Assigned Job",
+    //   tabroute: "assigned-job",
+    //   fontlogo: "fa-solid fa-star",
+    // },
     // {
     //   tabname: "Active",
     //   tabroute: "active-candidates",
@@ -49,6 +45,11 @@ export default [
       tabname: "Assign VMS",
       tabroute: "vms-config",
       fontlogo: "fa-solid fa-table",
+    },
+    {
+      tabname: "All Jobs",
+      tabroute: "all-jobs-feeds",
+      fontlogo: "fa-solid fa-square-poll-vertical",
     },
   ];
   

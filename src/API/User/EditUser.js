@@ -8,10 +8,12 @@ export const EditUserAPI = (values, selectedUser, navigate) => {
   myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     name: values.name,
+    email: values.email,
     password: values.password,
     status: values.status,
     rollId: values.rollId,
     type: values.type,
+    managerId: values.managerId,
   });
 
   var requestOptions = {

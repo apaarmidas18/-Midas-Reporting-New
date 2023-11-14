@@ -16,6 +16,7 @@ import {
   Button,
   ListItemIcon,
   MenuItem,
+  Tooltip,
   Typography,
   lighten,
 } from "@mui/material";
@@ -496,7 +497,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "Degree", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Profession",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -515,7 +516,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "JobSpecialty", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Speciality",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -534,7 +535,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "Facility", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Facility",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -753,6 +754,7 @@ const TableGrid = (props) => {
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
+    filterVariant: 'multi-select',
 
     enableRowActions: (row) =>
       row.amId >= 0 && user.rollId === 7 ? false : true,
@@ -772,10 +774,10 @@ const TableGrid = (props) => {
           flexWrap: "wrap",
         }}
       >
+        <Tooltip title="Export All Data">
         <Button onClick={handleExportData} startIcon={<FileDownloadIcon />}>
-          Export All Data
         </Button>
-
+        </Tooltip>
         <Button
           onClick={handleShow1}
           disabled={
@@ -1077,9 +1079,10 @@ const TableGrid = (props) => {
   return (
     <MaterialReactTable
       table={table}
-      options={{
-        pageSize:30
-      }}
+      // options={{
+      //   pageSize:30,
+      // }}
+      
     />
   );
 };

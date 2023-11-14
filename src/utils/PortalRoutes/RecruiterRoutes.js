@@ -4,11 +4,7 @@ export default [
     tabroute: "dashboard",
     fontlogo: "fa-solid fa-house",
   },
-  {
-    tabname: "All Jobs",
-    tabroute: "all-jobs-feeds",
-    fontlogo: "fa-solid fa-square-poll-vertical",
-  },
+  
 
  
   {
@@ -36,4 +32,9 @@ export default [
     tabroute: "availability-log",
     fontlogo: "fa-solid fa-list",
   },
+  {
+    tabname: "All Jobs",
+    tabroute: "all-jobs-feeds",
+    fontlogo: "fa-solid fa-square-poll-vertical",
+  }
 ];

@@ -160,6 +160,8 @@ const EditUser = () => {
     },
   });
 
+
+  console.log(formik.values)
   useEffect(() => {
     GetAllTeamLeads({ setTeamLead });
     // GetActiveVMSAPI({ setVMSDetails });

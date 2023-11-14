@@ -5,11 +5,7 @@ export default [
     fontlogo: "fa-solid fa-house",
   },
 
-  {
-    tabname: "All Jobs",
-    tabroute: "all-jobs-feeds",
-    fontlogo: "fa-solid fa-square-poll-vertical",
-  },
+ 
   // {
   //   tabname: "Jobs",
   //   tabroute: "jobs",
@@ -50,4 +46,9 @@ export default [
     tabroute: "vms-config",
     fontlogo: "fa-solid fa-table",
   },
+  {
+    tabname: "All Jobs",
+    tabroute: "all-jobs-feeds",
+    fontlogo: "fa-solid fa-square-poll-vertical",
+  }
 ];
