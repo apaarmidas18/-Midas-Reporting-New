@@ -1244,7 +1244,7 @@ input[switch="warning"]:checked + label:before {
   transition: 0.5s all;
 }
 .collapsed .new-sidebar-list li {
-  padding: 22px 5px;
+  padding: 17px 5px;
 }
 .collapsed .nav-tab-heading {
   display: none;
@@ -1297,12 +1297,20 @@ input[switch="warning"]:checked + label:before {
   color: #6a6b83;
   font-size: 18px;
 }
+
+.new-sidebar-list .fa-solid:hover{
+  color: #0056b3;
+}
+
 .new-sidebar-list a {
   color: #6a6b83;
   display: inline-block;
   font-size: 14px;
   font-weight: 600;
   transition: 0.5s all;
+}
+.collapsed .new-sidebar-list .logo-link{
+  display: block!important;
 }
 .new-sidebar-list a:hover {
   cursor: pointer;
@@ -1742,6 +1750,9 @@ input[switch="warning"]:checked + label:before {
     border-top: solid 3px transparent;
   }
 }
+<<<<<<< HEAD
 .tab span {
   cursor: pointer;
 }
+=======
+>>>>>>> eb567c165b5871b9e05c39ff71bcf279b44e6098

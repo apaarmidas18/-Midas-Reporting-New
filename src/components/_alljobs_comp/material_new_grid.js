@@ -16,6 +16,7 @@ import {
   Button,
   ListItemIcon,
   MenuItem,
+  Tooltip,
   Typography,
   lighten,
 } from "@mui/material";
@@ -635,7 +636,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "Degree", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Profession",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -654,7 +655,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "JobSpecialty", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Speciality",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -673,7 +674,7 @@ const TableGrid = (props) => {
           {
             accessorKey: "Facility", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
-            filterVariant: "autocomplete",
+            filterVariant: "multi-select",
             header: "Facility",
             size: 100,
             Cell: ({ renderedCellValue, row }) => (
@@ -893,11 +894,10 @@ const TableGrid = (props) => {
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
-    // enableRowSelection: (row) =>
-    //   (user.rollId == 5 && row.original.finalUserAssignee == 0) ||
-    //   (user.rollId == 7 && row.original.amId == 0)
-    //     ? false
-    //     : true,
+    filterVariant: "multi-select",
+
+    enableRowActions: (row) =>
+      row.amId >= 0 && user.rollId === 7 ? false : true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -914,10 +914,12 @@ const TableGrid = (props) => {
           flexWrap: "wrap",
         }}
       >
-        <Button onClick={handleExportData} startIcon={<FileDownloadIcon />}>
-          Export All Data
-        </Button>
-
+        <Tooltip title="Export All Data">
+          <Button
+            onClick={handleExportData}
+            startIcon={<FileDownloadIcon />}
+          ></Button>
+        </Tooltip>
         <Button
           onClick={handleShow1}
           disabled={
@@ -957,10 +959,10 @@ const TableGrid = (props) => {
           //   row.original.amId !== undefined
           // ) {
           //   return
-           setRowSelection((prev) => ({
-              ...prev,
-              [row.id]: !prev[row.id],
-            }));
+          setRowSelection((prev) => ({
+            ...prev,
+            [row.id]: !prev[row.id],
+          }));
           // } else if (
           //   user.rollId === 7 &&
           //   row.original.tlId !== 0 &&
@@ -1015,7 +1017,7 @@ const TableGrid = (props) => {
     },
     muiPaginationProps: {
       color: "secondary",
-      rowsPerPageOptions: [50, 100, 150],
+      rowsPerPageOptions: [10, 50, 100, 150],
       shape: "rounded",
       variant: "outlined",
     },
@@ -1243,14 +1245,9 @@ const TableGrid = (props) => {
   return (
     <MaterialReactTable
       table={table}
-      options={
-        {
-          // rowStyle: {
-          //   backgroundColor:disabledRow == true ? "#eee" :"",
-          // }
-          // muiTableBodyRowProps : {backgroundColor:disabledRow == true ? "#eee" :""}
-        }
-      }
+      // options={{
+      //   pageSize:30,
+      // }}
     />
   );
 };
