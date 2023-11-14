@@ -741,8 +741,6 @@ const TableGrid = (props) => {
   const handleClose1 = () => setShow1(false);
   var datarow = [];
 
-  console.log(disabledRow);
-
   const table = useMaterialReactTable({
     columns,
     data,
@@ -754,8 +752,6 @@ const TableGrid = (props) => {
     enableColumnPinning: true,
     enableFacetedValues: true,
 
-    enableRowActions: (row) =>
-      row.amId >= 0 && user.rollId === 7 ? false : true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -807,15 +803,19 @@ const TableGrid = (props) => {
     ),
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        {
-          user.rollId == 7 ||
-          (user.rollId == 5 && row.original.amId) ||
-          row.original.tlId >= 0
+        if (route !== "assigned") {
+          (user.rollId == 7 && row.original.amId >= 0) ||
+          (user.rollId == 6 && row.original.tlId >= 0)
             ? setdisabledRow(true)
             : setRowSelection((prev) => ({
                 ...prev,
                 [row.id]: !prev[row.id],
               }));
+        } else {
+          setRowSelection((prev) => ({
+            ...prev,
+            [row.id]: !prev[row.id],
+          }));
         }
 
         if (row.original.ProviderJobID) {
@@ -1073,7 +1073,6 @@ const TableGrid = (props) => {
       };
     },
   });
-  console.log(arrayState);
   return (
     <MaterialReactTable
       table={table}

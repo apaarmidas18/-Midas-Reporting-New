@@ -12,13 +12,11 @@ const getAllVmsConfig = async (setVMS, setVMsDetails) => {
   const apiFetch = await axios.request(options);
 
   const response = await apiFetch.data;
-  console.log(response);
   localStorage.setItem("VmsDetails", JSON.stringify(response));
 
   var resp = response.filter(
     (item, index) => item.accountManager === parsedData.id
   );
-  console.log(resp);
 
   setVMS(resp);
 };

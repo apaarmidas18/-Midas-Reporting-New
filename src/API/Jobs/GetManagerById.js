@@ -27,7 +27,7 @@ const GetManagerById = (
         );
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default GetManagerById;

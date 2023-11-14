@@ -14,7 +14,7 @@ const GetAllClients = ({ setClientDetails, setLoading }) => {
         return setClientDetails(result), setLoading(false);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error", ));
 };
 
 export default GetAllClients;

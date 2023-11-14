@@ -331,7 +331,6 @@ const AllJobsFeeds = () => {
     // masterApicall();
     AdminJobs(setAllJobs, setLoading)
   }, []);
-  console.log(allJobs, "grid")
 
   
 

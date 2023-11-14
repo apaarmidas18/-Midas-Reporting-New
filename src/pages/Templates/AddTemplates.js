@@ -267,7 +267,6 @@ const AddTemplates = () => {
       .request(options)
       .then(function (response) {
         var result = response.data;
-        console.log(result);
         if (result.baseResponse.status == "success") {
           navigate("/dashboard/view-templates");
         }

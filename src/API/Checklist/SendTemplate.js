@@ -20,7 +20,7 @@ const SendTemplate = (request, navigate, tId) => {
   };
   axios(config)
     .then(function (response) {
-      console.log(response);
+
       if (response.data.baseResponse.status == "success") {
         navigate(
           `/template/request-document/${response.data.response.request_id}`
@@ -35,7 +35,7 @@ const SendTemplate = (request, navigate, tId) => {
       }
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("error");
     });
 };
 

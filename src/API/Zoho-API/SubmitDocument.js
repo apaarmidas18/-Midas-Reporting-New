@@ -22,6 +22,6 @@ export const SubmitDocument = (action, rid) => {
   };
   fetch(`${dhost}document/submitDocument/${rid}/${token}`, requestOptions)
     .then((response) => response.json())
-    .then((response) => console.log(response))
+    .then((response) => console.log("response"))
     .catch((error) => console.error("Error fetching PDF:", error));
 };

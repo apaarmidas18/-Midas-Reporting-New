@@ -19,7 +19,7 @@ const GetAllJobs = async (setAllJobs, setIsloading) => {
       body: `{"vmsIds":${JSON.stringify(vmArr)}}`,
     };
     setIsloading(true);
-    console.log(`${jobshost}allvms/getAllOpenByVMSIdFlux`, options);
+  
 
     await fetch(`${jobshost}allvms/getAllOpenByVMSIdFlux`, options)
       .then((response) => response.json())

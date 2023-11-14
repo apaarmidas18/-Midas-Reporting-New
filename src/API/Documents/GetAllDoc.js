@@ -16,7 +16,7 @@ const GetAllDoc = (setDocumentsDetails, setLoading) => {
         return setDocumentsDetails(result), setLoading(true);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error",));
 };
 
 export default GetAllDoc;

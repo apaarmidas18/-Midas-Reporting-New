@@ -24,7 +24,7 @@ const GetAllExtensions = ({ setExtensions, setLoading, PId }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error");
     });
 };
 

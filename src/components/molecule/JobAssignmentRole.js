@@ -20,16 +20,13 @@ const JobAssignmentRole = (props) => {
     jobIds: finalClickInfo.map((item, index) => JSON.parse(item)),
     assignType: "",
   });
-
-
-
+  console.log(assigned);
 
   const handleSubmit = async (e) => {
     AssignJobs(assigned);
     e.preventDefault();
   };
 
-  console.log(finalClickInfo)
   const handleChange = (name, value) => {
     if (name == "assignerUserId" || name == "assigneeUserId") {
       setAssigned({ ...assigned, [name]: JSON.parse(value) });
@@ -80,6 +77,7 @@ const JobAssignmentRole = (props) => {
                 required={true}
                 selectChange={(e) => {
                   const selValue = JSON.parse(e.target.value);
+                  console.log(selValue);
                   handleChange("assignType", selValue.value);
                 }}
               />

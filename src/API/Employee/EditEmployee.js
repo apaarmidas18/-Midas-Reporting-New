@@ -50,5 +50,5 @@ export const EditEmployeeAPI = (values, navigate, EMPID) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error",));
 };

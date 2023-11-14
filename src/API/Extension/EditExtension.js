@@ -4,7 +4,6 @@ import swal from "sweetalert";
 import { host } from "../../static";
 
 export const EditExtensionAPI = (values, navigate, PId) => {
-  console.log(PId);
   const user = localStorage.getItem("User");
   const UserData = JSON.parse(user);
   const start = moment(values.startDate).format("MM/DD/YYYY");
@@ -48,6 +47,6 @@ export const EditExtensionAPI = (values, navigate, PId) => {
       }
     })
     .catch(function(error) {
-      console.log(error);
+      console.log("error");
     });
 };

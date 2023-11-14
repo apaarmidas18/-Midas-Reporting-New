@@ -308,13 +308,10 @@ const AssignedJob = () => {
     jobsfeeds.push(...element.jobsFeedsSet);
   }
 
-  console.log(jobsfeeds);
   for (let index = 0; index < jobsfeeds.length; index++) {
     const element = jobsfeeds[index];
     var name1 = "";
     var name2 = "";
-
-    console.log(element);
 
     data_user
       .filter((item, index) => item.id === element.amId)
@@ -330,8 +327,8 @@ const AssignedJob = () => {
 
     assignJobdetails.push({
       ...element,
-      assignee: name2,
-      assigner: name1,
+      assignee: name1,
+      assigner: name2,
     });
   }
 
@@ -360,8 +357,7 @@ const AssignedJob = () => {
     }
   }
 
-  console.log(assigned_manager);
-
+  console.log(assignJobdetails);
   return (
     <>
       <div

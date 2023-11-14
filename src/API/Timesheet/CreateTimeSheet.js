@@ -29,7 +29,7 @@ const CreateTimeSheet = (values) => {
     requestOptions
   )
     .then((response) => response.json())
-    .then((result) => console.log(result.message))
+    .then((result) => console.log("result.message"))
     .catch((error) => console.log("error", error));
 };
 

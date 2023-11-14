@@ -42,10 +42,8 @@ const EditProjectAPI = (values, navigate, data) => {
     data: data,
   };
 
-  console.log("dataLL", data);
-
   axios(config)
-    .then(function(response) {
+    .then(function (response) {
       if (response.data.status == 200) {
         navigate("/dashboard/view-project");
       } else {
@@ -56,7 +54,7 @@ const EditProjectAPI = (values, navigate, data) => {
         });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 };

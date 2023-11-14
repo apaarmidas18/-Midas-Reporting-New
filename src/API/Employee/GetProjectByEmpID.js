@@ -19,7 +19,7 @@ const GetProjectByEmpId = ({ setProjectDetails, emp_id, setLoading }) => {
       }
     })
     .catch(function(error) {
-      console.log(error);
+      console.log("error");
     });
 };
 

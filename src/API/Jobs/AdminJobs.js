@@ -14,7 +14,7 @@ const AdminJobs = (setAllJobs, setLoading) => {
         return setAllJobs(result.payload), setLoading(false);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error",));
 };
 
 export default AdminJobs;

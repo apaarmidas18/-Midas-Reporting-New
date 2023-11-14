@@ -19,7 +19,6 @@ const UploadDocsAPI = ({
     renewal === true
       ? renewalInput + " " + FileNameRemoveSpace.toUpperCase()
       : FileNameRemoveSpace.toUpperCase();
-  console.log("formattedDate:", formattedDate);
   var formdata = new FormData();
   formdata.append("file", file);
   formdata.append("fileName", DocumentName);
@@ -37,7 +36,6 @@ const UploadDocsAPI = ({
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
       if (result.status === 200) {
         swal({
           title: "Upload",

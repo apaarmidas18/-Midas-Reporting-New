@@ -20,7 +20,6 @@ const GetAllEmployee = ({ setEmployeeDetails, setLoading }) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
         if (result) {
           setEmployeeDetails(result.items);
           setLoading(false);

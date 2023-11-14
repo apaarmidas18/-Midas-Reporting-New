@@ -338,11 +338,8 @@ const AllJobs = () => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     // masterApicall();
-    GetAllJobs(setAllJobs, setLoading)
+    GetAllJobs(setAllJobs, setLoading);
   }, []);
-  console.log(allJobs, "grid")
-
-  
 
   useEffect(() => {
     userRoles();
@@ -355,11 +352,13 @@ const AllJobs = () => {
         class={"container-fluid table-container"}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <NewHor tab="JOBS"/>
+        <NewHor tab="JOBS" />
 
         <div
           className={
-            isSidebarExpanded ? "container mt-2 mb-2" : "container tab-container mt-2 mb-2"
+            isSidebarExpanded
+              ? "container mt-2 mb-2"
+              : "container tab-container mt-2 mb-2"
           }
         >
           {/* <div class="d-flex mt-2 mb-2">
@@ -457,7 +456,7 @@ const AllJobs = () => {
             )}
             {isloading ? (
               <>
-              <Loader/>
+                <Loader />
                 {/* <Lottie options={defaultOptions} width={100} height={100} /> */}
               </>
             ) : (

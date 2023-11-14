@@ -3,12 +3,7 @@ import { dhost } from "../../static";
 const GetAllDocuments = ({ setAllDocuments, setLoading }) => {
   const token = localStorage.getItem("token");
 
-  console.log(token);
-  if (token == null) {
-    console.log("no Token available");
-  } else {
-    console.log("token", token);
-  }
+  
   var requestOptions = {
     method: "GET",
     redirect: "follow",

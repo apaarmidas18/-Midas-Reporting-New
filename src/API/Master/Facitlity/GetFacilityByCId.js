@@ -2,7 +2,7 @@ import React from "react";
 import { host } from "../../../static";
 
 const GetFacilityByCId = (id, setFacilityData) => {
-  console.log(id);
+
   const cId = id;
   var requestOptions = {
     method: "GET",
@@ -15,10 +15,9 @@ const GetFacilityByCId = (id, setFacilityData) => {
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log("result:", result);
       setFacilityData(result);
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error", ));
 };
 
 export default GetFacilityByCId;

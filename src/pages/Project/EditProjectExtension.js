@@ -242,7 +242,6 @@ const EditProjectExtension = () => {
                 ) : null}
               </span>
             </div>
-            {console.log(formik.values)}
             <div class="mb-3 col-md-6">
               <Label labelName="Travel Allowance" labelFor="Travel Allowance" />
               <InputField
