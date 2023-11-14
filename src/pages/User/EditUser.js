@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLocation, useNavigate } from "react-router";
@@ -8,12 +8,16 @@ import Button from "../../components/atoms/Button";
 import Select from "../../components/atoms/Select";
 import InputField from "../../components/atoms/InputField";
 import Label from "../../components/atoms/Label";
+import GetAllTeamLeads from "../../API/User/GetAllTeamLeads";
+import GetAllUsers from "../../API/User/GetAllUsers";
 
 const ROLLSSUPERADMIN = [
   {
     value: 1,
+
     label: "Super-Admin",
   },
+
   {
     value: 2,
 
@@ -42,6 +46,12 @@ const ROLLSSUPERADMIN = [
     value: 6,
 
     label: "Team-Lead",
+  },
+
+  {
+    value: 7,
+
+    label: "Account-Manager",
   },
 ];
 
@@ -75,6 +85,11 @@ const ADMINROLLS = [
 
     label: "Team-Lead",
   },
+  {
+    value: 7,
+
+    label: "Account-Manager",
+  },
 ];
 
 const STATUS = [
@@ -93,13 +108,13 @@ const STATUS = [
 
 const USERTYPE = [
   {
-    value: 1,
+    value: "Internal",
 
     label: "Internal",
   },
 
   {
-    value: 2,
+    value: "External",
 
     label: "External",
   },
@@ -107,6 +122,9 @@ const USERTYPE = [
 
 const EditUser = () => {
   const location = useLocation();
+  const [teamLead, setTeamLead] = useState([]);
+  const [userDataAll, setUserData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const selectedUser = location.state.data;
   const userData = localStorage.getItem("User");
   const user = JSON.parse(userData);
@@ -122,6 +140,7 @@ const EditUser = () => {
       password: selectedUser.password,
       rollId: selectedUser.rollId,
       type: selectedUser.type,
+      managerId : selectedUser.managerId,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
@@ -140,6 +159,17 @@ const EditUser = () => {
       EditUserAPI(values, selectedUser, navigate);
     },
   });
+
+  useEffect(() => {
+    GetAllTeamLeads({ setTeamLead });
+    // GetActiveVMSAPI({ setVMSDetails });
+    GetAllUsers({ setUserData, setLoading });
+  }, []);
+
+  const Account_manager = userDataAll.filter(
+    (item, index) => item.rollId === 7
+  );
+
   //validation**************************************************************************8
 
   return (
@@ -155,7 +185,7 @@ const EditUser = () => {
       </div>
       <div className="container-fluid round-border bg-white p-4 mt-4 rounded-2xl">
         <form onSubmit={formik.handleSubmit}>
-          <div className="row">
+        <div className="row">
             <div class="mb-3 col-md-6">
               <Label labelName="Name" labelFor="name" />
               <InputField
@@ -165,12 +195,14 @@ const EditUser = () => {
                 inpblur={formik.handleBlur}
                 inpvalue={formik.values.name}
               />
+
               <span className="text-danger">
                 {formik.touched.name && formik.errors.name ? (
                   <div className="text-danger">{formik.errors.name}</div>
                 ) : null}
               </span>
             </div>
+
             <div class="mb-3 col-md-6">
               <Label labelName="Email address" labelFor="email" />
               <InputField
@@ -180,12 +212,14 @@ const EditUser = () => {
                 inpblur={formik.handleBlur}
                 inpvalue={formik.values.email}
               />
+
               <span className="text-danger">
                 {formik.touched.email && formik.errors.email ? (
                   <div className="text-danger">{formik.errors.email}</div>
                 ) : null}
               </span>
             </div>
+
             <div class="mb-3 col-md-6">
               <Label labelName="Password" labelFor="Password" />
               <InputField
@@ -195,31 +229,42 @@ const EditUser = () => {
                 inpblur={formik.handleBlur}
                 inpvalue={formik.values.password}
               />
+
               <span className="text-danger">
                 {formik.touched.password && formik.errors.password ? (
                   <div className="text-danger">{formik.errors.password}</div>
                 ) : null}
               </span>
             </div>
+
             <div className="col-md-6">
               <Label
                 labelName="Status"
                 labelFor="Status"
                 style={{ marginBottom: "8px" }}
               />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="status"
+                value={formik.values.status}
+              >
+                <option selected>Open this select menu</option>
 
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={STATUS}
-                selectName="status"
-              />
+                {STATUS.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
+            
               <span className="text-danger">
                 {formik.touched.status && formik.errors.status ? (
                   <div className="text-danger">{formik.errors.status}</div>
                 ) : null}
               </span>
             </div>
+
             <div className="col-md-6">
               <Label
                 labelName="Role"
@@ -227,37 +272,107 @@ const EditUser = () => {
                 style={{ marginBottom: "8px" }}
               />
 
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={ROLLS}
-                selectName="rollId"
-              />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="rollId"
+                value={formik.values.rollId}
+              >
+                <option selected>Open this select menu</option>
+
+                {ROLLS.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
+
               <span className="text-danger">
                 {formik.touched.rollId && formik.errors.rollId ? (
                   <div className="text-danger">{formik.errors.rollId}</div>
                 ) : null}
               </span>
             </div>
+
             <div className="col-md-6">
               <Label
                 labelName="User-Type"
                 labelFor="User-Type"
                 style={{ marginBottom: "8px" }}
               />
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="type"
+                value={formik.values.type}
+              >
+                <option selected>Open this select menu</option>
 
-              <Select
-                selectChange={formik.handleChange}
-                selectBlur={formik.handleBlur}
-                array={USERTYPE}
-                selectName="type"
-              />
+                {USERTYPE.map((item, index) => {
+                  return <option value={item.value}>{item.label}</option>;
+                })}
+              </select>
+
               <span className="text-danger">
                 {formik.touched.type && formik.errors.type ? (
                   <div className="text-danger">{formik.errors.type}</div>
                 ) : null}
               </span>
             </div>
+
+            {formik.values.rollId == "5" ? (
+              <div className="col-md-6">
+                <Label
+                  labelName="Team Leads"
+                  labelFor="Team Leads"
+                  style={{ marginBottom: "8px" }}
+                />
+                <select
+                class="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="managerId"
+                value={formik.values.managerId}
+              >
+                <option selected>Open this select menu</option>
+
+                {teamLead.map((item, index) => {
+                  return <option value={item.id}>{item.name}</option>;
+                })}
+              </select>
+                
+              </div>
+            ) : null}
+
+            {formik.values.rollId == "6" ? (
+              <div className="col-md-6">
+                <label
+                  className="form-label"
+                  for="exampleFormControlSelect2"
+                  style={{ marginBottom: "8px" }}
+                >
+                  Account Manager
+                </label>
+
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  name="managerId"
+                  value={formik.values.managerId}
+                >
+                  <option selected>Open this select menu</option>
+
+                  {Account_manager.map((item, index) => {
+                    return <option value={item.id}>{item.name}</option>;
+                  })}
+                </select>
+              </div>
+            ) : null}
           </div>
           <Button
             btnTitle="Submit"

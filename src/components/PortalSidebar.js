@@ -76,10 +76,10 @@ const PortalSidebar = () => {
                           ? highlightedItemClass
                           : ""
                       }
-                    >
+                    ><Link className="logo-link" to={item.tabroute}>
                       <i className={item.fontlogo}></i>
-
-                      <Link to={item.tabroute}>{item.tabname}</Link>
+                      </Link>
+                      <Link  to={item.tabroute}>{item.tabname}</Link>
                     </span>
                   </li>
                 );

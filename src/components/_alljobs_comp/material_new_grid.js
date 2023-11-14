@@ -850,7 +850,7 @@ const TableGrid = (props) => {
     },
     muiPaginationProps: {
       color: "secondary",
-      rowsPerPageOptions: [50, 100, 150],
+      rowsPerPageOptions: [10, 50, 100, 150],
       shape: "rounded",
       variant: "outlined",
     },
@@ -1077,14 +1077,9 @@ const TableGrid = (props) => {
   return (
     <MaterialReactTable
       table={table}
-      options={
-        {
-          // rowStyle: {
-          //   backgroundColor:disabledRow == true ? "#eee" :"",
-          // }
-          // muiTableBodyRowProps : {backgroundColor:disabledRow == true ? "#eee" :""}
-        }
-      }
+      options={{
+        pageSize:30
+      }}
     />
   );
 };

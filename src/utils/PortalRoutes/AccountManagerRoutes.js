@@ -5,9 +5,14 @@ export default [
     fontlogo: "fa-solid fa-house",
   },
   {
-    tabname: "Jobs",
-    tabroute: "jobs",
+    tabname: "All Jobs",
+    tabroute: "all-jobs-feeds",
     fontlogo: "fa-solid fa-square-poll-vertical",
+  },
+  {
+    tabname: "Client Jobs",
+    tabroute: "jobs",
+    fontlogo: "fa-solid fa-user",
   },
   {
     tabname: "Assigned Jobs",
@@ -17,7 +22,7 @@ export default [
   {
     tabname: "Active",
     tabroute: "active-candidates",
-    fontlogo: "fa-solid fa-chart-line",
+    fontlogo: "fa-solid fa-fire",
   },
   {
     tabname: "Booked",

@@ -24,7 +24,7 @@ import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
 // import loader from "../../lottie/search.json";
 import Loader from "../../components/atoms/Loader";
-// const RobotixModalContent = (props) => {
+
 //   const { finalClickInfo, setFinalClickInfo } = props;
 
 //   return (

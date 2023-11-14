@@ -1749,3 +1749,6 @@ border-radius: 7px;
     border-top: solid 3px transparent;
   }
 }
+.collapsed .new-sidebar-list .logo-link{
+  display: block!important;
+}

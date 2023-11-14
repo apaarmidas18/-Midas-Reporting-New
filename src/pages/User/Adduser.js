@@ -154,8 +154,6 @@ const Adduser = () => {
 
       password: "",
 
-      // number: "",
-
       rollId: "",
 
       type: "",

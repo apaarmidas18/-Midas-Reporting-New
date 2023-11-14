@@ -10,11 +10,11 @@ export default [
     tabroute: "all-jobs-feeds",
     fontlogo: "fa-solid fa-square-poll-vertical",
   },
-  {
-    tabname: "Jobs",
-    tabroute: "jobs",
-    fontlogo: "fa-solid fa-square-poll-vertical",
-  },
+  // {
+  //   tabname: "Jobs",
+  //   tabroute: "jobs",
+  //   fontlogo: "fa-solid fa-square-poll-vertical",
+  // },
   {
     tabname: "Assigned Job",
     tabroute: "assigned-job",
@@ -23,7 +23,7 @@ export default [
   // {
   //   tabname: "Active",
   //   tabroute: "active-candidates",
-  //   fontlogo: "fa-solid fa-chart-line",
+  //   fontlogo: "fa-solid fa-fire",
   // },
   {
     tabname: "Booked",
