@@ -1750,9 +1750,3 @@ input[switch="warning"]:checked + label:before {
     border-top: solid 3px transparent;
   }
 }
-<<<<<<< HEAD
-.tab span {
-  cursor: pointer;
-}
-=======
->>>>>>> eb567c165b5871b9e05c39ff71bcf279b44e6098
