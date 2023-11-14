@@ -112,7 +112,7 @@ const JobAssignmentRole = (props) => {
               <select
                 class="form-select"
                 aria-label="Default select example"
-                name="finalassigner"
+                name="assigneeUserId"
                 required={true}
                 disabled={
                   (assigned.assignType === "AM_ASSIGNED_TL" && true) ||

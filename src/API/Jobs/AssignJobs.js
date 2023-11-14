@@ -16,6 +16,7 @@ const AssignJobs = (assigned) => {
     .request(options)
     .then(function (response) {
       if (response.status == 201) {
+        window.location.reload();
         swal({
           title: "Job Assigned Successfully",
           text: `${response.data.status} Job(s) have been successfully assigned`,

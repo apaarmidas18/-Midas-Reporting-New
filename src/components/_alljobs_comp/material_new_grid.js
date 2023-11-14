@@ -47,6 +47,73 @@ const TableGrid = (props) => {
   var assign_columns = useMemo(
     () => [
       {
+        id: "Assignment-Status",
+        columns: [
+          {
+            accessorKey: "amId", //accessorFn used to join multiple data into a single cell
+            id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
+            header: "Assignment",
+            size: 50,
+            Cell: ({ renderedCellValue, row, cell }) => (
+              <Box
+                sx={(theme) => ({
+                  backgroundColor:
+                    renderedCellValue === 0 ||
+                    renderedCellValue === null ||
+                    renderedCellValue === undefined
+                      ? theme.palette.warning.light
+                      : theme.palette.success.light,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+
+                  p: "0.25rem",
+                })}
+              >
+                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+                <span>
+                  {renderedCellValue === 0 ||
+                  renderedCellValue === null ||
+                  renderedCellValue === undefined
+                    ? "Not Assigned"
+                    : "Assigned To AM"}
+                </span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
+            id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
+            header: "Assignment",
+            size: 50,
+            Cell: ({ renderedCellValue, row, cell }) => (
+              <Box
+                sx={(theme) => ({
+                  backgroundColor:
+                    renderedCellValue === 0 ||
+                    renderedCellValue === null ||
+                    renderedCellValue === undefined
+                      ? theme.palette.warning.light
+                      : theme.palette.success.light,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+
+                  p: "0.25rem",
+                })}
+              >
+                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+                <span>
+                  {renderedCellValue !== 0 ||
+                  renderedCellValue !== null ||
+                  renderedCellValue !== undefined
+                    ? "Assigned To TL"
+                    : "Not Assigned"}
+                </span>
+              </Box>
+            ),
+          },
+        ],
+      },
+      {
         id: "Job-details", //id used to define `group` column
         columns: [
           {
@@ -135,15 +202,23 @@ const TableGrid = (props) => {
             accessorKey: "StatusString", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
             enableClickToCopy: true,
             filterVariant: "autocomplete",
-            header: "StatusString",
+            header: "Status",
             size: 100,
-            Cell: ({ renderedCellValue, row }) => (
+            Cell: ({ renderedCellValue, row, cell }) => (
               <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
+                sx={(theme) => ({
+                  backgroundColor:
+                    cell.getValue() == "Closed"
+                      ? theme.palette.error.dark
+                      : cell.getValue() == "Cancelled" &&
+                        cell.getValue() == "Frozen"
+                      ? theme.palette.warning.dark
+                      : theme.palette.success.dark,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+                  maxWidth: "9ch",
+                  p: "0.25rem",
+                })}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
                 <span>{renderedCellValue}</span>
@@ -279,7 +354,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -298,7 +373,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -317,7 +392,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}</span>
+                <span>{renderedCellValue}</span>
               </Box>
             ),
           },
@@ -342,7 +417,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{JSON.stringify(renderedCellValue)}$</span>
+                <span>{renderedCellValue}$</span>
               </Box>
             ),
           },
@@ -381,11 +456,7 @@ const TableGrid = (props) => {
                 }}
               >
                 {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>
-                  {JSON.stringify(
-                    moment(renderedCellValue).format("DD/MM/YYYY")
-                  )}
-                </span>
+                <span>{moment(renderedCellValue).format("DD/MM/YYYY")}</span>
               </Box>
             ),
           },
@@ -396,6 +467,74 @@ const TableGrid = (props) => {
   );
   var job_columns = useMemo(
     () => [
+      {
+        id: "Assignment-Status",
+        columns: [
+          {
+            accessorKey: "amId", //accessorFn used to join multiple data into a single cell
+            id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
+            header: "Assignment",
+            size: 50,
+            Cell: ({ renderedCellValue, row, cell }) => (
+              <Box
+                sx={(theme) => ({
+                  backgroundColor:
+                    renderedCellValue === 0 ||
+                    renderedCellValue === null ||
+                    renderedCellValue === undefined
+                      ? theme.palette.warning.light
+                      : theme.palette.success.light,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+
+                  p: "0.25rem",
+                })}
+              >
+                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+                <span>
+                  {renderedCellValue === 0 ||
+                  renderedCellValue === null ||
+                  renderedCellValue === undefined
+                    ? "Not Assigned"
+                    : "Assigned To AM"}
+                </span>
+              </Box>
+            ),
+          },
+          {
+            accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
+            id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
+            header: "Assignment",
+            size: 50,
+            Cell: ({ renderedCellValue, row, cell }) => (
+              <Box
+                sx={(theme) => ({
+                  backgroundColor:
+                    renderedCellValue === 0 ||
+                    renderedCellValue === null ||
+                    renderedCellValue === undefined
+                      ? theme.palette.warning.light
+                      : theme.palette.success.light,
+                  borderRadius: "0.25rem",
+                  color: "#fff",
+
+                  p: "0.25rem",
+                })}
+              >
+                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+                <span>
+                  {renderedCellValue === 0 ||
+                  renderedCellValue === null ||
+                  renderedCellValue === undefined
+                    ? "Not Assigned"
+                    : "Assigned To TL"}
+                </span>
+              </Box>
+            ),
+          },
+        ],
+      },
+
       {
         id: "Job-details", //id used to define `group` column
         columns: [
@@ -741,6 +880,9 @@ const TableGrid = (props) => {
   const handleClose1 = () => setShow1(false);
   var datarow = [];
 
+  // const handleCondotion =
+  console.log(data);
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -751,7 +893,11 @@ const TableGrid = (props) => {
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
-
+    // enableRowSelection: (row) =>
+    //   (user.rollId == 5 && row.original.finalUserAssignee == 0) ||
+    //   (user.rollId == 7 && row.original.amId == 0)
+    //     ? false
+    //     : true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -804,18 +950,37 @@ const TableGrid = (props) => {
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
         if (route !== "assigned") {
-          (user.rollId == 7 && row.original.amId >= 0) ||
-          (user.rollId == 6 && row.original.tlId >= 0)
+          // if (
+          //   user.rollId === 7 &&
+          //   row.original.amId !== 0 &&
+          //   row.original.amId !== null &&
+          //   row.original.amId !== undefined
+          // ) {
+          //   return
+           setRowSelection((prev) => ({
+              ...prev,
+              [row.id]: !prev[row.id],
+            }));
+          // } else if (
+          //   user.rollId === 7 &&
+          //   row.original.tlId !== 0 &&
+          //   row.original.tlId !== null &&
+          //   row.original.tlId !== undefined
+          // ) {
+          //   setRowSelection((prev) => ({
+          //     ...prev,
+          //     [row.id]: !prev[row.id],
+          //   }));
+          // } else {
+          //   setdisabledRow(true);
+          // }
+        } else {
+          row.original.finalUserAssignee !== 0
             ? setdisabledRow(true)
             : setRowSelection((prev) => ({
                 ...prev,
                 [row.id]: !prev[row.id],
               }));
-        } else {
-          setRowSelection((prev) => ({
-            ...prev,
-            [row.id]: !prev[row.id],
-          }));
         }
 
         if (row.original.ProviderJobID) {
@@ -1073,6 +1238,8 @@ const TableGrid = (props) => {
       };
     },
   });
+
+  console.log(disabledRow);
   return (
     <MaterialReactTable
       table={table}
