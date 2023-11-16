@@ -895,13 +895,16 @@ const TableGrid = (props) => {
     enableColumnPinning: true,
     enableFacetedValues: true,
     filterVariant: "multi-select",
-
+    enableStickyHeader: true,
     enableRowActions: (row) =>
       row.amId >= 0 && user.rollId === 7 ? false : true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
       density: "compact",
+      pagination: {
+        pageSize: 30,
+      },
     },
     paginationDisplayMode: "pages",
     getRowId: (row) => row.userId,
@@ -1017,7 +1020,7 @@ const TableGrid = (props) => {
     },
     muiPaginationProps: {
       color: "secondary",
-      rowsPerPageOptions: [10, 50, 100, 150],
+      rowsPerPageOptions: [30, 50, 100, 150],
       shape: "rounded",
       variant: "outlined",
     },
@@ -1032,18 +1035,17 @@ const TableGrid = (props) => {
         <div>
           <div className="row">
             <div className="col-md-12 d-flex">
-            <div className="col-md-2 job-select">
-                  <label>Job-Description</label>
-                  <textarea
-                    rows="5"
-                    class="form-control"
-                    id="exampleFormControlInput1"
-                    value={row.original.Note}
-                    disabled
-                  />
-                </div>
+              <div className="col-md-2 job-select">
+                <label>Job-Description</label>
+                <textarea
+                  rows="5"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  value={row.original.Note}
+                  disabled
+                />
+              </div>
               <div className="row job-select-row">
-             
                 <div className="col-md-2 job-select">
                   <label>Job-ID</label>
                   <input
@@ -1256,9 +1258,18 @@ const TableGrid = (props) => {
   return (
     <MaterialReactTable
       table={table}
-      // options={{
-      //   pageSize:30,
-      // }}
+      options={{
+        paging: false,
+        headerStyle: {
+          backgroundColor: "#378FC3",
+          color: "#FFF",
+          fontSize: "17px",
+          textAlign: "center",
+          fontWeight: "bold",
+          pageSize: 30,
+        },
+        rowStyle: (row) => console.log(row),
+      }}
     />
   );
 };
