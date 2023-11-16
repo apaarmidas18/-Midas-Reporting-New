@@ -47,73 +47,73 @@ const TableGrid = (props) => {
   const [arrayState, setArrayState] = useState([]);
   var assign_columns = useMemo(
     () => [
-      {
-        id: "Assignment-Status",
-        columns: [
-          {
-            accessorKey: "amId", //accessorFn used to join multiple data into a single cell
-            id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
-            header: "Assignment",
-            size: 50,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    renderedCellValue === 0 ||
-                    renderedCellValue === null ||
-                    renderedCellValue === undefined
-                      ? theme.palette.warning.light
-                      : theme.palette.success.light,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
+      // {
+      //   id: "Assignment-Status",
+      //   columns: [
+      //     {
+      //       accessorKey: "amId", //accessorFn used to join multiple data into a single cell
+      //       id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
+      //       header: "Assignment",
+      //       size: 50,
+      //       Cell: ({ renderedCellValue, row, cell }) => (
+      //         <Box
+      //           sx={(theme) => ({
+      //             backgroundColor:
+      //               renderedCellValue === 0 ||
+      //               renderedCellValue === null ||
+      //               renderedCellValue === undefined
+      //                 ? theme.palette.warning.light
+      //                 : theme.palette.success.light,
+      //             borderRadius: "0.25rem",
+      //             color: "#fff",
 
-                  p: "0.25rem",
-                })}
-              >
-                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-                <span>
-                  {renderedCellValue === 0 ||
-                  renderedCellValue === null ||
-                  renderedCellValue === undefined
-                    ? "Not Assigned"
-                    : "Assigned To AM"}
-                </span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
-            id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
-            header: "Assignment",
-            size: 50,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    renderedCellValue === 0 ||
-                    renderedCellValue === null ||
-                    renderedCellValue === undefined
-                      ? theme.palette.warning.light
-                      : theme.palette.success.light,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
+      //             p: "0.25rem",
+      //           })}
+      //         >
+      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+      //           <span>
+      //             {renderedCellValue === 0 ||
+      //             renderedCellValue === null ||
+      //             renderedCellValue === undefined
+      //               ? "Not Assigned"
+      //               : "Assigned To AM"}
+      //           </span>
+      //         </Box>
+      //       ),
+      //     },
+      //     {
+      //       accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
+      //       id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
+      //       header: "Assignment",
+      //       size: 50,
+      //       Cell: ({ renderedCellValue, row, cell }) => (
+      //         <Box
+      //           sx={(theme) => ({
+      //             backgroundColor:
+      //               renderedCellValue === 0 ||
+      //               renderedCellValue === null ||
+      //               renderedCellValue === undefined
+      //                 ? theme.palette.warning.light
+      //                 : theme.palette.success.light,
+      //             borderRadius: "0.25rem",
+      //             color: "#fff",
 
-                  p: "0.25rem",
-                })}
-              >
-                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-                <span>
-                  {renderedCellValue !== 0 ||
-                  renderedCellValue !== null ||
-                  renderedCellValue !== undefined
-                    ? "Assigned To TL"
-                    : "Not Assigned"}
-                </span>
-              </Box>
-            ),
-          },
-        ],
-      },
+      //             p: "0.25rem",
+      //           })}
+      //         >
+      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+      //           <span>
+      //             {renderedCellValue !== 0 ||
+      //             renderedCellValue !== null ||
+      //             renderedCellValue !== undefined
+      //               ? "Assigned To TL"
+      //               : "Not Assigned"}
+      //           </span>
+      //         </Box>
+      //       ),
+      //     },
+      //   ],
+      // },
       {
         id: "Job-details", //id used to define `group` column
         columns: [
@@ -468,73 +468,73 @@ const TableGrid = (props) => {
   );
   var job_columns = useMemo(
     () => [
-      {
-        id: "Assignment-Status",
-        columns: [
-          {
-            accessorKey: "amId", //accessorFn used to join multiple data into a single cell
-            id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
-            header: "Assignment",
-            size: 50,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    renderedCellValue === 0 ||
-                    renderedCellValue === null ||
-                    renderedCellValue === undefined
-                      ? theme.palette.warning.light
-                      : theme.palette.success.light,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
+      // {
+      //   id: "Assignment-Status",
+      //   columns: [
+      //     {
+      //       accessorKey: "amId", //accessorFn used to join multiple data into a single cell
+      //       id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
+      //       header: "Assignment",
+      //       size: 50,
+      //       Cell: ({ renderedCellValue, row, cell }) => (
+      //         <Box
+      //           sx={(theme) => ({
+      //             backgroundColor:
+      //               renderedCellValue === 0 ||
+      //               renderedCellValue === null ||
+      //               renderedCellValue === undefined
+      //                 ? theme.palette.warning.light
+      //                 : theme.palette.success.light,
+      //             borderRadius: "0.25rem",
+      //             color: "#fff",
 
-                  p: "0.25rem",
-                })}
-              >
-                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-                <span>
-                  {renderedCellValue === 0 ||
-                  renderedCellValue === null ||
-                  renderedCellValue === undefined
-                    ? "Not Assigned"
-                    : "Assigned To AM"}
-                </span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
-            id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
-            header: "Assignment",
-            size: 50,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    renderedCellValue === 0 ||
-                    renderedCellValue === null ||
-                    renderedCellValue === undefined
-                      ? theme.palette.warning.light
-                      : theme.palette.success.light,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
+      //             p: "0.25rem",
+      //           })}
+      //         >
+      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+      //           <span>
+      //             {renderedCellValue === 0 ||
+      //             renderedCellValue === null ||
+      //             renderedCellValue === undefined
+      //               ? "Not Assigned"
+      //               : "Assigned To AM"}
+      //           </span>
+      //         </Box>
+      //       ),
+      //     },
+      //     {
+      //       accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
+      //       id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
+      //       header: "Assignment",
+      //       size: 50,
+      //       Cell: ({ renderedCellValue, row, cell }) => (
+      //         <Box
+      //           sx={(theme) => ({
+      //             backgroundColor:
+      //               renderedCellValue === 0 ||
+      //               renderedCellValue === null ||
+      //               renderedCellValue === undefined
+      //                 ? theme.palette.warning.light
+      //                 : theme.palette.success.light,
+      //             borderRadius: "0.25rem",
+      //             color: "#fff",
 
-                  p: "0.25rem",
-                })}
-              >
-                {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-                <span>
-                  {renderedCellValue === 0 ||
-                  renderedCellValue === null ||
-                  renderedCellValue === undefined
-                    ? "Not Assigned"
-                    : "Assigned To TL"}
-                </span>
-              </Box>
-            ),
-          },
-        ],
-      },
+      //             p: "0.25rem",
+      //           })}
+      //         >
+      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
+      //           <span>
+      //             {renderedCellValue === 0 ||
+      //             renderedCellValue === null ||
+      //             renderedCellValue === undefined
+      //               ? "Not Assigned"
+      //               : "Assigned To TL"}
+      //           </span>
+      //         </Box>
+      //       ),
+      //     },
+      //   ],
+      // },
 
       {
         id: "Job-details", //id used to define `group` column
@@ -1031,8 +1031,19 @@ const TableGrid = (props) => {
       >
         <div>
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-12 d-flex">
+            <div className="col-md-2 job-select">
+                  <label>Job-Description</label>
+                  <textarea
+                    rows="5"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    value={row.original.Note}
+                    disabled
+                  />
+                </div>
               <div className="row job-select-row">
+             
                 <div className="col-md-2 job-select">
                   <label>Job-ID</label>
                   <input

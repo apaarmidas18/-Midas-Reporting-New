@@ -1208,7 +1208,7 @@ input[switch="warning"]:checked + label:before {
 
 /* //Sidebar ********************************************************* */
 .sidebar {
-  width: 240px;
+  width: 60px;
   min-height: 100vh;
   background-color: #fff;
   border-right: 0.3px solid #e3e3e3;
@@ -1312,6 +1312,7 @@ input[switch="warning"]:checked + label:before {
 .collapsed .new-sidebar-list .logo-link{
   display: block!important;
 }
+
 .new-sidebar-list a:hover {
   cursor: pointer;
 }
@@ -1749,4 +1750,10 @@ input[switch="warning"]:checked + label:before {
     border-bottom: solid 3px transparent;
     border-top: solid 3px transparent;
   }
+}
+
+
+.css-nhjqqh-MuiTableContainer-root{
+  max-height: 67vh;
+  overflow: scroll;
 }
