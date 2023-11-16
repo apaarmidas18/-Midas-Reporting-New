@@ -22,7 +22,7 @@ const PortalSidebar = () => {
     setSelectedItem(item);
   };
 
-  const highlightedItemClass = "light-active";
+  const highlightedItemClass = "light-active sidebar-span";
 
   const Routes =
     user.rollId == 1 || user.rollId == 2
@@ -38,16 +38,16 @@ const PortalSidebar = () => {
   return (
     <>
       <div
-        className={`sidebar ${isSidebarExpanded ? "expanded " : "collapsed"}`}
+        className={"sidebar"}
       >
-        <div className="side-button">
+        {/* <div className="side-button">
           <button className="toggle-button" onClick={handleToggleSidebar}>
             <i
               style={{ color: "#fff" }}
               className="fa-solid fa-chevron-left"
             ></i>
           </button>
-        </div>
+        </div> */}
         <nav className="menu">
           <div className="avatar-menu text-center">
             <img src="/images/avatar.svg" />
@@ -62,9 +62,9 @@ const PortalSidebar = () => {
                 : null}
             </h6>
           </div>
-          <div className="sidebar-logo text-center">
+          {/* <div className="sidebar-logo text-center">
             <img src="/images/logob.png" />
-          </div>
+          </div> */}
           <div className="nav-tabs mt-3" style={{ borderBottom: "none" }}>
             <ul className="new-sidebar-list">
               {Routes.map((item, index) => {
@@ -72,14 +72,15 @@ const PortalSidebar = () => {
                   <li key={index} onClick={() => liColor(item.tabname)}>
                     <span
                       className={
+
                         selectedItem === item.tabname
-                          ? highlightedItemClass
-                          : ""
+                          ?  highlightedItemClass
+                          : "sidebar-span"
                       }
                     ><Link className="logo-link" to={item.tabroute}>
                       <i className={item.fontlogo}></i>
                       </Link>
-                      <Link  to={item.tabroute}>{item.tabname}</Link>
+                      <Link className="logo-tab" to={item.tabroute}>{item.tabname}</Link>
                     </span>
                   </li>
                 );

@@ -867,14 +867,14 @@ const TableGrid = (props) => {
         <div>
           <div className="row">
             <div className="col-md-12 d-flex">
-            <div className="col-md-2 job-select">
+            <div className="col-md-4 job-select">
                   <label>Job-Description</label>
                   <textarea
-                    rows="5"
+                    rows="8"
                     class="form-control"
                     id="exampleFormControlInput1"
                     value={row.original.Note}
-                    disabled
+                    readOnly
                   />
                 </div>
               <div className="row job-select-row">
