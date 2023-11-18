@@ -55,13 +55,10 @@ const TableGrid = (props) => {
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
-<<<<<<< HEAD
-=======
   var assign_columns = useMemo(() => assign_table_header, []);
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
->>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
   const columns =
     route == "assigned"
       ? assign_columns
@@ -108,11 +105,8 @@ const TableGrid = (props) => {
     enableColumnPinning: true,
     enableFacetedValues: true,
     filterVariant: "multi-select",
-<<<<<<< HEAD
 
     enableRowActions: true,
-=======
->>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -150,11 +144,6 @@ const TableGrid = (props) => {
         <Button variant="primary" onClick={() => setModalShow(true)}>
           Bill
         </Button>
-<<<<<<< HEAD
-=======
-
-        <BillCalculate show={modalShow} onHide={() => setModalShow(false)} />
->>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
 
         <CustomModal
           open={show1}
@@ -493,7 +482,6 @@ const TableGrid = (props) => {
       };
     },
   });
-<<<<<<< HEAD
   console.log(value);
   return <>
   <MaterialReactTable table={table} />       <BillCalculate
@@ -503,10 +491,6 @@ const TableGrid = (props) => {
      />
 ;
   </>
-=======
-
-  return <MaterialReactTable table={table} />;
->>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
 };
 
 export default TableGrid;
