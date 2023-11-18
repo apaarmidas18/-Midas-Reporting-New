@@ -50,23 +50,17 @@ const TableGrid = (props) => {
   const [rowSelection, setRowSelection] = useState({});
   const [arrayState, setArrayState] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
+  const [ value , setValue] = useState("")
+  var assign_columns = useMemo(() => assign_table_header, []);
+  var job_columns = useMemo(() => job_table_header, []);
+  var feeds_stats = useMemo(() => feeds_table_header, []);
 
-  var assign_columns = useMemo(
-    () => assign_table_header,
-    []
-  );
-  var job_columns = useMemo(
-    () => 
-    job_table_header ,
-    []
-  );
-  var feeds_stats = useMemo(
-    () => 
-    feeds_table_header ,
-    []
-  );
-
-  const columns = route == "assigned" ? assign_columns : route == "feeds" ?feeds_stats  :     job_columns;
+  const columns =
+    route == "assigned"
+      ? assign_columns
+      : route == "feeds"
+      ? feeds_stats
+      : job_columns;
   const csvConfig = mkConfig({
     fieldSeparator: ",",
     decimalSeparator: ".",
@@ -105,10 +99,9 @@ const TableGrid = (props) => {
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
-    filterVariant: 'multi-select',
+    filterVariant: "multi-select",
 
-    enableRowActions: (row) =>
-      row.amId >= 0 && user.rollId === 7 ? false : true,
+    enableRowActions: true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -126,8 +119,10 @@ const TableGrid = (props) => {
         }}
       >
         <Tooltip title="Export All Data">
-        <Button onClick={handleExportData} startIcon={<FileDownloadIcon />}>
-        </Button>
+          <Button
+            onClick={handleExportData}
+            startIcon={<FileDownloadIcon />}
+          ></Button>
         </Tooltip>
         <Button
           onClick={handleShow1}
@@ -142,13 +137,8 @@ const TableGrid = (props) => {
         </Button>
 
         <Button variant="primary" onClick={() => setModalShow(true)}>
-        Bill
-      </Button>
-
-      <BillCalculate
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+          Bill
+        </Button>
 
         <CustomModal
           open={show1}
@@ -167,6 +157,25 @@ const TableGrid = (props) => {
         />
       </Box>
     ),
+    renderRowActionMenuItems: ({ closeMenu, row }) => [
+     <MenuItem>
+      <Button
+        variant="primary"
+        onClick={() => {
+          closeMenu();
+          setModalShow(true);
+          setValue(row.original);
+        }}
+        >
+        Bill
+      </Button>,
+      <BillCalculate
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        values={value}
+     />
+        </MenuItem>
+    ],
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
         {
@@ -227,18 +236,17 @@ const TableGrid = (props) => {
         <div>
           <div className="row">
             <div className="col-md-12 d-flex">
-            <div className="col-md-4 job-select">
-                  <label>Job-Description</label>
-                  <textarea
-                    rows="8"
-                    class="form-control"
-                    id="exampleFormControlInput1"
-                    value={row.original.Note}
-                    readOnly
-                  />
-                </div>
+              <div className="col-md-4 job-select">
+                <label>Job-Description</label>
+                <textarea
+                  rows="8"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  value={row.original.Note}
+                  readOnly
+                />
+              </div>
               <div className="row job-select-row">
-             
                 <div className="col-md-2 job-select">
                   <label>Job-ID</label>
                   <input
@@ -446,14 +454,15 @@ const TableGrid = (props) => {
       };
     },
   });
-  console.log(arrayState);
-  return (
-    <MaterialReactTable
-      table={table}
-    
-      
-    />
-  );
+  console.log(value);
+  return <>
+  <MaterialReactTable table={table} />       <BillCalculate
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        values={value}
+     />
+;
+  </>
 };
 
 export default TableGrid;

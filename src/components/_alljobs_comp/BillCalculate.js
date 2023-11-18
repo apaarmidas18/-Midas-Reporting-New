@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import BoldLabel from "../atoms/BoldLabel";
@@ -6,8 +6,9 @@ import InputField from "../atoms/InputField";
 import html2canvas from 'html2canvas';
 
 const BillCalculate = (props) => {
+  const { values} = props
   const targetElementRef = useRef(null);
-
+const   [ data , setData] = useState(values)
   const captureScreenshot = () => {
     const element = targetElementRef.current;
 
@@ -61,7 +62,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="bill"
                       inpname="billRate"
-                      
+                      inpvalue={values.BillRate}
                       inpcontrol
                     />
                   </div>
@@ -74,7 +75,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="guarHrs"
                       inpname="guarHrs"
-                      
+                      inpvalue={values.GuaranteedHours}
                       inpcontrol
                     />
                   </div>
@@ -84,7 +85,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="city"
                       inpname="city"
-                      
+                      inpvalue={values.City}
                       inpcontrol
                     />
                   </div>
@@ -94,7 +95,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="state"
                       inpname="state"
-                      
+                      inpvalue={values.State}
                       inpcontrol
                     />
                   </div>
@@ -107,7 +108,13 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="jobType"
                       inpname="jobType"
-                      
+                      inpvalue={values.WorkType == "1"
+                      ? "Travel"
+                      : values.WorkType == "2"
+                      ? "Perm"
+                      : values.WorkType == "3"
+                      ? "Per Diem"
+                      : values.WorkType}
                       inpcontrol
                     />
                   </div>
@@ -126,7 +133,7 @@ const BillCalculate = (props) => {
                     <InputField
                       inptype="text"
                       inpid="location"
-                      
+                     
                       
                       inpcontrol="location"
                     />
@@ -140,7 +147,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="hourRates"
                       inpname="hourRates"
-                      
+                      inpvalue={values.BillRate * 0.70}
                       inpcontrol
                     />
                   </div>
@@ -150,7 +157,7 @@ const BillCalculate = (props) => {
                       inptype="text"
                       inpid="grossWeekly"
                       inpname="grossWeekly"
-                      
+                      inpvalue={values.BillRate * 0.70 * values.GuaranteedHours}
                       inpcontrol
                     />
                   </div>
