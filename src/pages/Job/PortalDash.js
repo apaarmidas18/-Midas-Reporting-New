@@ -4,11 +4,15 @@ import TabName from "../../components/TabName";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
 import { Chart } from "react-google-charts";
+import BillCalculate from "../../components/_alljobs_comp/BillCalculate";
+import { Button } from "react-bootstrap";
 
 // import ExampleTable from "./ExampleTable";
 
 
 const PortalDash = () => {
+
+  const [modalShow, setModalShow] = useState(false);
   const data = [
     ["Task", "Total Jobs"],
     ["Closed", 17219],
@@ -136,9 +140,14 @@ const PortalDash = () => {
             </div>
           </div>
         
-          {/* <div className="container">
-         <ExampleTable/>
-          </div> */}
+          <Button variant="primary" onClick={() => setModalShow(true)}>
+        Bill
+      </Button>
+
+      <BillCalculate
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
         </div>
       </div>
     </>

@@ -26,16 +26,16 @@ export default [
     tabroute: "booked-candidates",
     fontlogo: "fa-solid fa-address-book",
   },
-  {
-    tabname: "Pending",
-    tabroute: "pending-candidates",
-    fontlogo: "fa-solid fa-star",
-  },
-  {
-    tabname: "Availability",
-    tabroute: "availability-log",
-    fontlogo: "fa-solid fa-list",
-  },
+  // {
+  //   tabname: "Pending",
+  //   tabroute: "pending-candidates",
+  //   fontlogo: "fa-solid fa-star",
+  // },
+  // {
+  //   tabname: "Availability",
+  //   tabroute: "availability-log",
+  //   fontlogo: "fa-solid fa-list",
+  // },
   // {
   //   tabname: "VMS",
   //   tabroute: "job-vms",
@@ -50,5 +50,10 @@ export default [
     tabname: "All Jobs",
     tabroute: "all-jobs-feeds",
     fontlogo: "fa-solid fa-square-poll-vertical",
-  }
+  },
+  {
+    tabname: "Feed Stats",
+    tabroute: "feed-stats",
+    fontlogo: "fa-solid fa-table",
+  },
 ];
