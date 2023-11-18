@@ -6,11 +6,11 @@ export default [
     },
   
     
-    // {
-    //   tabname: "Jobs",
-    //   tabroute: "jobs",
-    //   fontlogo: "fa-solid fa-square-poll-vertical",
-    // },
+    {
+      tabname: "Jobs",
+      tabroute: "jobs",
+      fontlogo: "fa-solid fa-square-poll-vertical",
+    },
     // {
     //   tabname: "Assigned Job",
     //   tabroute: "assigned-job",
@@ -50,6 +50,11 @@ export default [
       tabname: "All Jobs",
       tabroute: "all-jobs-feeds",
       fontlogo: "fa-solid fa-square-poll-vertical",
+    },
+    {
+      tabname: "Feed Stats",
+      tabroute: "feed-stats",
+      fontlogo: "fa-solid fa-table",
     },
   ];
   
