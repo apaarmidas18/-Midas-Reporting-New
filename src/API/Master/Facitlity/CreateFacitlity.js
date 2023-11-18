@@ -36,7 +36,7 @@ const CreateFacitlity = (values, router) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error", ));
 };
 
 export default CreateFacitlity;

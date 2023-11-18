@@ -15,7 +15,7 @@ const GetActiveVMSAPI = ({ setVMSDetails, setLoading }) => {
         return setVMSDetails(result), setLoading(false);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default GetActiveVMSAPI;

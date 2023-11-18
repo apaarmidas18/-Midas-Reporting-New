@@ -41,7 +41,6 @@ const BlogNewForm = () => {
     },
   });
   //validation**************************************************************************8
-  console.log(formik.values);
   return (
     <>
       <div className="container-fluid round-border bg-white p-4 mt-4 rounded-2xl">

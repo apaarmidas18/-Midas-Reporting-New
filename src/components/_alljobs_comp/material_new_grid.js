@@ -55,6 +55,13 @@ const TableGrid = (props) => {
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
+<<<<<<< HEAD
+=======
+  var assign_columns = useMemo(() => assign_table_header, []);
+  var job_columns = useMemo(() => job_table_header, []);
+  var feeds_stats = useMemo(() => feeds_table_header, []);
+
+>>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
   const columns =
     route == "assigned"
       ? assign_columns
@@ -87,7 +94,8 @@ const TableGrid = (props) => {
   const handleClose1 = () => setShow1(false);
   var datarow = [];
 
-  console.log(disabledRow);
+  // const handleCondotion =
+  console.log(data);
 
   const table = useMaterialReactTable({
     columns,
@@ -100,8 +108,11 @@ const TableGrid = (props) => {
     enableColumnPinning: true,
     enableFacetedValues: true,
     filterVariant: "multi-select",
+<<<<<<< HEAD
 
     enableRowActions: true,
+=======
+>>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -139,6 +150,11 @@ const TableGrid = (props) => {
         <Button variant="primary" onClick={() => setModalShow(true)}>
           Bill
         </Button>
+<<<<<<< HEAD
+=======
+
+        <BillCalculate show={modalShow} onHide={() => setModalShow(false)} />
+>>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
 
         <CustomModal
           open={show1}
@@ -178,10 +194,33 @@ const TableGrid = (props) => {
     ],
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        {
-          user.rollId == 7 ||
-          (user.rollId == 5 && row.original.amId) ||
-          row.original.tlId >= 0
+        if (route !== "assigned") {
+          // if (
+          //   user.rollId === 7 &&
+          //   row.original.amId !== 0 &&
+          //   row.original.amId !== null &&
+          //   row.original.amId !== undefined
+          // ) {
+          //   return
+          setRowSelection((prev) => ({
+            ...prev,
+            [row.id]: !prev[row.id],
+          }));
+          // } else if (
+          //   user.rollId === 7 &&
+          //   row.original.tlId !== 0 &&
+          //   row.original.tlId !== null &&
+          //   row.original.tlId !== undefined
+          // ) {
+          //   setRowSelection((prev) => ({
+          //     ...prev,
+          //     [row.id]: !prev[row.id],
+          //   }));
+          // } else {
+          //   setdisabledRow(true);
+          // }
+        } else {
+          row.original.finalUserAssignee !== 0
             ? setdisabledRow(true)
             : setRowSelection((prev) => ({
                 ...prev,
@@ -454,6 +493,7 @@ const TableGrid = (props) => {
       };
     },
   });
+<<<<<<< HEAD
   console.log(value);
   return <>
   <MaterialReactTable table={table} />       <BillCalculate
@@ -463,6 +503,10 @@ const TableGrid = (props) => {
      />
 ;
   </>
+=======
+
+  return <MaterialReactTable table={table} />;
+>>>>>>> 82103ddefe33cd3f78b74c093707cdbd55fa7480
 };
 
 export default TableGrid;

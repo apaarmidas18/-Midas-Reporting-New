@@ -9,7 +9,6 @@ const AccessToken = async () => {
   fetch(`${dhost}document/generateToken`, options)
     .then((response) => response.json())
     .then(async (result) => {
-      console.log(result.response);
       const access_token = await result.response.access_token;
       // await localStorage.setItem("token", access_token);
       try {

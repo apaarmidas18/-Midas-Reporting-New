@@ -14,7 +14,6 @@ const ExtensionCandidates = () => {
   useEffect(() => {
     GetAllEmployee({ setEmployeeDetails, setLoading });
   }, []);
-  console.log(employeeDetails);
   for (let index = 0; index < employeeDetails.length; index++) {
     const element = employeeDetails[index];
 

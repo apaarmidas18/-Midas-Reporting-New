@@ -34,5 +34,5 @@ export const EditFacilityAPI = (SelectedClient, navigate, FacitlityId) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error", ));
 };

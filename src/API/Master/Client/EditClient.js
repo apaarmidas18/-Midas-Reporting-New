@@ -33,5 +33,5 @@ export const EditClientAPI = (values, router, cId) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error", ));
 };

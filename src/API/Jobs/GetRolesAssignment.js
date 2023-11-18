@@ -15,7 +15,7 @@ const GetRolesAssignment = async (setDataByRole, rollId) => {
         return setDataByRole(result.payload);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default GetRolesAssignment;

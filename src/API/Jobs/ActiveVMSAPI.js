@@ -35,7 +35,7 @@ const ActiveVMSAPI = (values) => {
       // }
       alert(JSON.stringify(result));
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default ActiveVMSAPI;

@@ -12,9 +12,7 @@ const ByManager = (setAssignedbyManager, setIsloading) => {
   axios
     .request(options)
     .then(function (response) {
-      console.log(response.data);
       if (response.data) {
-        console.log();
         setAssignedbyManager(response.data);
         setIsloading(false);
       } else {

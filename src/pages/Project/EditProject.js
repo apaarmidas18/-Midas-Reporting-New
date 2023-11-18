@@ -559,7 +559,6 @@ const EditProject = () => {
                 ) : null}
               </span>
             </div>
-            {console.log("formik.values;", formik.values)}
             {user.rollId <= 2 ? (
               <>
                 {onBoardingData.length == 0 ||

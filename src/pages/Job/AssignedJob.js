@@ -26,6 +26,7 @@ const AssignedJob = () => {
   const [assignedJobs, setAssignedJobs] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [assigned_by_manager, setAssignedbyManager] = useState([]);
+  const [active, setActive] = useState("tab1");
   const { isSidebarExpanded } = useContext(Sidebar_Context);
   const loopData = [];
 
@@ -308,13 +309,10 @@ const AssignedJob = () => {
     jobsfeeds.push(...element.jobsFeedsSet);
   }
 
-  console.log(jobsfeeds);
   for (let index = 0; index < jobsfeeds.length; index++) {
     const element = jobsfeeds[index];
     var name1 = "";
     var name2 = "";
-
-    console.log(element);
 
     data_user
       .filter((item, index) => item.id === element.amId)
@@ -330,8 +328,8 @@ const AssignedJob = () => {
 
     assignJobdetails.push({
       ...element,
-      assignee: name2,
-      assigner: name1,
+      assignee: name1,
+      assigner: name2,
     });
   }
 
@@ -360,8 +358,8 @@ const AssignedJob = () => {
     }
   }
 
+  console.log(assignJobdetails);
   console.log(assigned_manager);
-
   return (
     <>
       <div
@@ -390,6 +388,31 @@ const AssignedJob = () => {
               <span>Export List</span>
             </button>
           </div>
+          {user.rollId == 6 ? (
+            <div class="d-flex flex-direction-row tab">
+              <span
+                class={`${
+                  active === "tab1"
+                    ? " bg-dark text-white "
+                    : "bg-light text-dark"
+                } p-2 m-2  rounded 2xl bordered d-flex pointer`}
+                onClick={() => setActive("tab1")}
+              >
+                Assigned to me
+              </span>
+              <span
+                class={`${
+                  active === "tab2"
+                    ? " bg-dark text-white "
+                    : "bg-light text-dark"
+                } p-2 m-2  rounded 2xl bordered d-flex pointer`}
+                onClick={() => setActive("tab2")}
+              >
+                Assigned By Me
+              </span>
+            </div>
+          ) : null}
+
           {user.rollId == 7 ? (
             <TableGrid
               data={assigned_manager}
@@ -400,30 +423,34 @@ const AssignedJob = () => {
             />
           ) : user.rollId == 6 ? (
             <>
-              <span class="p-2 m-2 bg-light text-dark rounded 2xl bordered">
-                Assigned to me
-              </span>
-
-              <TableGrid
-                data={assignJobdetails}
-                user={user}
-                columnsss={columns}
-                route={"assigned"}
-                userData={data_user}
-              />
-
-              <span class="p-2 m-2 bg-light text-dark rounded 2xl bordered">
-                Assigned By Me
-              </span>
-
-              <TableGrid
-                data={assigned_manager}
-                user={user}
-                columnsss={columns}
-                route={"assigned"}
-                userData={data_user}
-              />
+              {active === "tab1" ? (
+                <TableGrid
+                  data={assignJobdetails}
+                  user={user}
+                  columnsss={columns}
+                  route={"assigned"}
+                  userData={data_user}
+                  disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+                />
+              ) : active === "tab2" ? (
+                <TableGrid
+                  data={assigned_manager}
+                  user={user}
+                  columnsss={columns}
+                  route={"assigned"}
+                  userData={data_user}
+                />
+              ) : null}
             </>
+          ) : user.rollId == 5 ? (
+            <TableGrid
+              data={assignJobdetails}
+              user={user}
+              columnsss={columns}
+              route={"assigned"}
+              userData={data_user}
+              disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+            />
           ) : null}
         </div>
       </div>

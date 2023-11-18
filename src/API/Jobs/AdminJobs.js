@@ -14,7 +14,7 @@ const AdminJobs = (setAllJobs, setIsloading) => {
        setAllJobs(Object.keys(response).map((item, index) => response[item]));
      
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error",));
 };
 
 export default AdminJobs;

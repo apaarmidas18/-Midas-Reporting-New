@@ -10,13 +10,13 @@ const GetAllChecklist = ({ setChecklist, setLoading }) => {
     .then((response) => response.json())
     // .then((result) => console.log(result))
     .then((result) => {
-      console.log("result:", result);
+      console.log("result:");
       if (result) {
         setLoading(false);
         setChecklist(result.response);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default GetAllChecklist;

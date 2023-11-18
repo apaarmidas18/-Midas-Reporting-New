@@ -39,7 +39,7 @@ const CreateClient = (values, navigate) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
-};
+    .catch((error) => console.log("error", ));
+}
 
 export default CreateClient;

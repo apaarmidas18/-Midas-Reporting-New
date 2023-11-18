@@ -29,7 +29,7 @@ const CreateNewBlog = ({ values, navigate }) => {
   fetch(`${host}seo/blog/createNewBlog`, options)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
+
       if (response.baseResponse.status === 1) {
         swal({
           title: "Success.",

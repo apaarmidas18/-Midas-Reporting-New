@@ -15,7 +15,6 @@ const FindTemplateById = ({
 
   fetch(`${dhost}document/findTemplatesById/${tId}`, requestOptions)
     .then((response) => response.json())
-    // .then((result) => console.log(result))
     .then((result) => {
       if (result.baseResponse.status === 1) {
         setLoading(false);
@@ -26,7 +25,7 @@ const FindTemplateById = ({
         setErrorText(result.baseResponse.message);
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error"));
 };
 
 export default FindTemplateById;

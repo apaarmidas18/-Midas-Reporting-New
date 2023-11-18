@@ -3,7 +3,6 @@ import React from "react";
 const Select = (props) => {
   const { selectChange, array, selectName, selectBlur, selectStyle, required } =
     props;
-  console.log(array);
   return (
     <>
       <select
@@ -18,7 +17,7 @@ const Select = (props) => {
         <option selected>Open this select menu</option>
         {array.map((item, index) => {
           return (
-            <option value={item.label ?  JSON.stringify(item.label) : JSON.stringify(item)}>
+            <option value={JSON.stringify(item)}>
               {item.label ? item.label : item.name}
             </option>
           );

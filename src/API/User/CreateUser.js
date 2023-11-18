@@ -21,7 +21,6 @@ const CreateUser = (values, navigate) => {
 
   axios(config)
     .then(function (response) {
-      console.log(response);
       if (response.data.status == 200) {
         navigate("/dashboard/view-user");
       } else {

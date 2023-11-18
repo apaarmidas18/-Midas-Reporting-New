@@ -48,5 +48,5 @@ export const CreateEmployee = (values, navigate) => {
         });
       }
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error",));
 };
