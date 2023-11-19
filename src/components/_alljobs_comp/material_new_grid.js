@@ -140,10 +140,6 @@ const TableGrid = (props) => {
           Assign Job
         </Button>
 
-        <Button variant="primary" onClick={() => setModalShow(true)}>
-          Bill
-        </Button>
-
         <CustomModal
           open={show1}
           handleClose={handleClose1}
@@ -170,12 +166,6 @@ const TableGrid = (props) => {
         }}
       >
         Bill
-          {value.length !== 0  ?   <BillCalculate
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          values={value}
-        /> :  null }
-        
       </MenuItem>,
     ],
     muiTableBodyRowProps: ({ row }) => ({
@@ -482,13 +472,14 @@ const TableGrid = (props) => {
   console.log(value);
   return (
     <>
-      <MaterialReactTable table={table} />{" "}
-      <BillCalculate
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        values={value}
-      />
-      ;
+      <MaterialReactTable table={table} />
+      {value.length !== 0 ? (
+        <BillCalculate
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          values={value}
+        />
+      ) : null}
     </>
   );
 };

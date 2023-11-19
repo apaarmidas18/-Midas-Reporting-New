@@ -20,6 +20,8 @@ const JobAssignmentRole = (props) => {
     jobIds: finalClickInfo.map((item, index) => JSON.parse(item)),
     assignType: "",
   });
+
+  
   console.log(assigned);
 
   const handleSubmit = async (e) => {

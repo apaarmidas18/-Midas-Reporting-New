@@ -5,10 +5,13 @@ import BoldLabel from "../atoms/BoldLabel";
 import InputField from "../atoms/InputField";
 import html2canvas from "html2canvas";
 import GetRates from "../../API/Rates/GetRates";
+import { localStorageAvailable } from "@mui/x-data-grid/utils/utils";
 
 const BillCalculate = ({ values, onHide, show }) => {
+  const dasssta = localStorage.getItem("Data");
   const targetElementRef = useRef(null);
   const [data, setData] = useState(values);
+
   const [currentData, setCurrentData] = useState("");
   const [lodgingRate, setLodgingRate] = useState([]);
   const [mealRate, setMealRate] = useState(0);
@@ -34,13 +37,16 @@ const BillCalculate = ({ values, onHide, show }) => {
     });
   };
 
-
-console.log("mealRate:" , mealRate)
+  console.log("mealRate:", lodgingRate);
 
   useEffect(() => {
-    values === undefined || values === null ? console.log("Waiting For Values") : GetRates(values , setMealRate, setLodgingRate)
+    values === undefined || values === null
+      ? console.log("Waiting For Values")
+      : GetRates(values, setMealRate, setLodgingRate);
   }, []);
 
+  const lodRate =
+    lodgingRate.length !== 0 ? lodgingRate[0].value + mealRate * 7 : 0;
   return (
     <>
       <Modal
@@ -163,6 +169,7 @@ console.log("mealRate:" , mealRate)
                         inptype="text"
                         inpid="location"
                         inpcontrol="location"
+                        inpvalue={values.City +","+  values.State}
                       />
                     </div>
                     <div className="input-parameters col-md-6">
@@ -171,7 +178,11 @@ console.log("mealRate:" , mealRate)
                         inptype="text"
                         inpid="hourRates"
                         inpname="hourRates"
-                        inpvalue={currentData.BillRate * 0.7}
+                        inpvalue={
+                          currentData !== ""
+                            ? currentData.BillRate * 0.7
+                            : values.BillRate * 0.7
+                        }
                         inpcontrol
                       />
                     </div>
@@ -185,9 +196,11 @@ console.log("mealRate:" , mealRate)
                         inpid="grossWeekly"
                         inpname="grossWeekly"
                         inpvalue={
-                          currentData.BillRate *
-                          0.7 *
-                          currentData.GuaranteedHours
+                          currentData !== ""
+                            ? currentData.BillRate *
+                              0.7 *
+                              currentData.GuaranteedHours
+                            : values.BillRate * 0.7 * values.GuaranteedHours
                         }
                         inpcontrol
                       />
@@ -198,11 +211,15 @@ console.log("mealRate:" , mealRate)
                         boldName="Non-Tax Rates"
                       />
                       <InputField
-                        inptype="text"
+                        inptype="number"
                         inpid="nonTax"
                         inpname="nonTax"
                         inpcontrol
-                        inpvalue= {lodgingRate + mealRate * 7}
+                        inpvalue={
+                          lodgingRate.length !== 0
+                            ? lodgingRate[0].value + mealRate * 7
+                            : 0
+                        }
                       />
                     </div>
 
@@ -216,6 +233,15 @@ console.log("mealRate:" , mealRate)
                         inpid="taxRates"
                         inpname="taxRates"
                         inpcontrol
+                        inpvalue={
+                          currentData !== ""
+                            ? currentData.BillRate *
+                                0.7 *
+                                currentData.GuaranteedHours -
+                              lodRate
+                            : values.BillRate * 0.7 * values.GuaranteedHours -
+                              lodRate
+                        }
                       />
                     </div>
 
@@ -229,7 +255,11 @@ console.log("mealRate:" , mealRate)
                         inpid="guarnhrs"
                         inpname="guarnhrs"
                         inpcontrol
-                        value={currentData.GuaranteedHours}
+                        inpvalue={
+                          currentData !== ""
+                            ? currentData.GuaranteedHours
+                            : values.GuaranteedHours
+                        }
                       />
                     </div>
                   </div>
