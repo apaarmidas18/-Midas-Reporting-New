@@ -360,6 +360,7 @@ const AssignedJob = () => {
 
   console.log(assignJobdetails);
   console.log(assigned_manager);
+
   return (
     <>
       <div

@@ -50,14 +50,14 @@ const TableGrid = (props) => {
   const [rowSelection, setRowSelection] = useState({});
   const [arrayState, setArrayState] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [ value , setValue] = useState("")
+  const [value, setValue] = useState([]);
   var assign_columns = useMemo(() => assign_table_header, []);
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
-  var assign_columns = useMemo(() => assign_table_header, []);
-  var job_columns = useMemo(() => job_table_header, []);
-  var feeds_stats = useMemo(() => feeds_table_header, []);
+  // var assign_columns = useMemo(() => assign_table_header, []);
+  // var job_columns = useMemo(() => job_table_header, []);
+  // var feeds_stats = useMemo(() => feeds_table_header, []);
 
   const columns =
     route == "assigned"
@@ -92,7 +92,6 @@ const TableGrid = (props) => {
   var datarow = [];
 
   // const handleCondotion =
-  console.log(data);
 
   const table = useMaterialReactTable({
     columns,
@@ -163,23 +162,20 @@ const TableGrid = (props) => {
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => [
-     <MenuItem>
-      <Button
-        variant="primary"
+      <MenuItem
         onClick={() => {
-          closeMenu();
-          setModalShow(true);
           setValue(row.original);
+          setModalShow(true);
+          closeMenu();
         }}
-        >
+      >
         Bill
-      </Button>,
-      <BillCalculate
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        values={value}
-     />
-        </MenuItem>
+        <BillCalculate
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          values={value}
+        />
+      </MenuItem>,
     ],
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
@@ -483,14 +479,17 @@ const TableGrid = (props) => {
     },
   });
   console.log(value);
-  return <>
-  <MaterialReactTable table={table} />       <BillCalculate
+  return (
+    <>
+      <MaterialReactTable table={table} />{" "}
+      <BillCalculate
         show={modalShow}
         onHide={() => setModalShow(false)}
         values={value}
-     />
-;
-  </>
+      />
+      ;
+    </>
+  );
 };
 
 export default TableGrid;
