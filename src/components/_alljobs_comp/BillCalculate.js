@@ -1,20 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import BoldLabel from "../atoms/BoldLabel";
 import InputField from "../atoms/InputField";
 import html2canvas from "html2canvas";
+import GetRates from "../../API/Rates/GetRates";
 
 const BillCalculate = ({ values, onHide, show }) => {
   const targetElementRef = useRef(null);
   const [data, setData] = useState(values);
   const [currentData, setCurrentData] = useState("");
+  const [lodgingRate, setLodgingRate] = useState([]);
+  const [mealRate, setMealRate] = useState(0);
 
   const handleChange = (name, e) => {
     setCurrentData({ ...values, [name]: e.target.value });
   };
-
-  console.log(currentData);
 
   const captureScreenshot = () => {
     const element = targetElementRef.current;
@@ -33,7 +34,12 @@ const BillCalculate = ({ values, onHide, show }) => {
     });
   };
 
-  console.log(data);
+
+console.log("mealRate:" , mealRate)
+
+  useEffect(() => {
+    values === undefined || values === null ? console.log("Waiting For Values") : GetRates(values , setMealRate, setLodgingRate)
+  }, []);
 
   return (
     <>
@@ -196,6 +202,7 @@ const BillCalculate = ({ values, onHide, show }) => {
                         inpid="nonTax"
                         inpname="nonTax"
                         inpcontrol
+                        inpvalue= {lodgingRate + mealRate * 7}
                       />
                     </div>
 

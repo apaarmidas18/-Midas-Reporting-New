@@ -170,11 +170,12 @@ const TableGrid = (props) => {
         }}
       >
         Bill
-        <BillCalculate
+          {value.length !== 0  ?   <BillCalculate
           show={modalShow}
           onHide={() => setModalShow(false)}
           values={value}
-        />
+        /> :  null }
+        
       </MenuItem>,
     ],
     muiTableBodyRowProps: ({ row }) => ({
