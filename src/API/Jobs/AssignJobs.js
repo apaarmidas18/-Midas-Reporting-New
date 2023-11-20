@@ -3,6 +3,7 @@ import axios from "axios";
 import swal from "sweetalert";
 
 const AssignJobs = (assigned) => {
+  
   const options = {
     method: "POST",
     url: `${jobshost}jobAssignment/assignJob`,
@@ -12,6 +13,7 @@ const AssignJobs = (assigned) => {
     },
     data: assigned,
   };
+
   axios
     .request(options)
     .then(function (response) {
@@ -28,6 +30,7 @@ const AssignJobs = (assigned) => {
       if (
         error.response.status == 500 ||
         error.response.status == 400 ||
+
         error.response.status == 404 ||
         error.response.status == 403 ||
         error.response.status == 415

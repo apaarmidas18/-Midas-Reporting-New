@@ -30,6 +30,10 @@ import FileDownloadOffTwoTone from "@mui/icons-material/FileDownloadOffTwoTone";
 import { AccountCircle, Send } from "@mui/icons-material";
 import moment from "moment";
 import DataTable from "react-data-table-component";
+import job_table_header from "../../utils/Jobs/tableheaderrs.js/job_table_header";
+import assign_table_header from "../../utils/Jobs/tableheaderrs.js/assign_table_header";
+import feeds_table_header from "../../utils/Jobs/tableheaderrs.js/feeds_table_header";
+import BillCalculate from "./BillCalculate";
 
 const TableGrid = (props) => {
   const {
@@ -45,816 +49,22 @@ const TableGrid = (props) => {
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
   const [arrayState, setArrayState] = useState([]);
-  var assign_columns = useMemo(
-    () => [
-      // {
-      //   id: "Assignment-Status",
-      //   columns: [
-      //     {
-      //       accessorKey: "amId", //accessorFn used to join multiple data into a single cell
-      //       id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
-      //       header: "Assignment",
-      //       size: 50,
-      //       Cell: ({ renderedCellValue, row, cell }) => (
-      //         <Box
-      //           sx={(theme) => ({
-      //             backgroundColor:
-      //               renderedCellValue === 0 ||
-      //               renderedCellValue === null ||
-      //               renderedCellValue === undefined
-      //                 ? theme.palette.warning.light
-      //                 : theme.palette.success.light,
-      //             borderRadius: "0.25rem",
-      //             color: "#fff",
+  const [modalShow, setModalShow] = React.useState(false);
+  const [value, setValue] = useState([]);
+  var assign_columns = useMemo(() => assign_table_header, []);
+  var job_columns = useMemo(() => job_table_header, []);
+  var feeds_stats = useMemo(() => feeds_table_header, []);
 
-      //             p: "0.25rem",
-      //           })}
-      //         >
-      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-      //           <span>
-      //             {renderedCellValue === 0 ||
-      //             renderedCellValue === null ||
-      //             renderedCellValue === undefined
-      //               ? "Not Assigned"
-      //               : "Assigned To AM"}
-      //           </span>
-      //         </Box>
-      //       ),
-      //     },
-      //     {
-      //       accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
-      //       id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
-      //       header: "Assignment",
-      //       size: 50,
-      //       Cell: ({ renderedCellValue, row, cell }) => (
-      //         <Box
-      //           sx={(theme) => ({
-      //             backgroundColor:
-      //               renderedCellValue === 0 ||
-      //               renderedCellValue === null ||
-      //               renderedCellValue === undefined
-      //                 ? theme.palette.warning.light
-      //                 : theme.palette.success.light,
-      //             borderRadius: "0.25rem",
-      //             color: "#fff",
-
-      //             p: "0.25rem",
-      //           })}
-      //         >
-      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-      //           <span>
-      //             {renderedCellValue !== 0 ||
-      //             renderedCellValue !== null ||
-      //             renderedCellValue !== undefined
-      //               ? "Assigned To TL"
-      //               : "Not Assigned"}
-      //           </span>
-      //         </Box>
-      //       ),
-      //     },
-      //   ],
-      // },
-      {
-        id: "Job-details", //id used to define `group` column
-        columns: [
-          {
-            accessorFn: (row) => `${row.assignee}`, //accessorFn used to join multiple data into a single cell
-            id: "assignee", //id is still required when using accessorFn instead of accessorKey
-            header: "Job-Assignee",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorFn: (row) => `${row.assigner}`, //accessorFn used to join multiple data into a single cell
-            id: "assigner", //id is still required when using accessorFn instead of accessorKey
-            header: "Job-Assigner",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorFn: (row) => `${row.SourceID}`, //accessorFn used to join multiple data into a single cell
-            id: "SourceID", //id is still required when using accessorFn instead of accessorKey
-            header: "Job-Id",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "WorkType", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "WorkType",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>
-                  {renderedCellValue == "1"
-                    ? "Travel"
-                    : renderedCellValue == "2"
-                    ? "Perm"
-                    : renderedCellValue == "3"
-                    ? "Per-Diem"
-                    : ""}
-                </span>
-              </Box>
-            ),
-          },
-
-          {
-            accessorKey: "StatusString", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Status",
-            size: 100,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    cell.getValue() == "Closed"
-                      ? theme.palette.error.dark
-                      : cell.getValue() == "Cancelled" &&
-                        cell.getValue() == "Frozen"
-                      ? theme.palette.warning.dark
-                      : theme.palette.success.dark,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
-                  maxWidth: "9ch",
-                  p: "0.25rem",
-                })}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Priority", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Priority",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Degree", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Profession",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "JobSpecialty", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Speciality",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Facility", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Facility",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "City", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "City",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "State", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "State",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "FormattedStartDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Start Date",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "FormattedEndDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "End Date",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Shift", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Shift",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorFn: (row) => `${row.DurationWeeks}`, //accessorFn used to join multiple data into a single cell
-            id: "DurationWeeks", //id is still required when using accessorFn instead of accessorKey
-            header: "DurationWeeks",
-            size: 100,
-          },
-
-          {
-            accessorKey: "BillRate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            header: "Bill Rate",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}$</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "SourceName", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "VMS-Name",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "PostDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-
-            header: "Post Date",
-            size: 100,
-
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{moment(renderedCellValue).format("DD/MM/YYYY")}</span>
-              </Box>
-            ),
-          },
-        ],
-      },
-    ],
-    []
-  );
-  var job_columns = useMemo(
-    () => [
-      // {
-      //   id: "Assignment-Status",
-      //   columns: [
-      //     {
-      //       accessorKey: "amId", //accessorFn used to join multiple data into a single cell
-      //       id: "AM Assign Status", //id is still required when using accessorFn instead of accessorKey
-      //       header: "Assignment",
-      //       size: 50,
-      //       Cell: ({ renderedCellValue, row, cell }) => (
-      //         <Box
-      //           sx={(theme) => ({
-      //             backgroundColor:
-      //               renderedCellValue === 0 ||
-      //               renderedCellValue === null ||
-      //               renderedCellValue === undefined
-      //                 ? theme.palette.warning.light
-      //                 : theme.palette.success.light,
-      //             borderRadius: "0.25rem",
-      //             color: "#fff",
-
-      //             p: "0.25rem",
-      //           })}
-      //         >
-      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-      //           <span>
-      //             {renderedCellValue === 0 ||
-      //             renderedCellValue === null ||
-      //             renderedCellValue === undefined
-      //               ? "Not Assigned"
-      //               : "Assigned To AM"}
-      //           </span>
-      //         </Box>
-      //       ),
-      //     },
-      //     {
-      //       accessorKey: "tlId", //accessorFn used to join multiple data into a single cell
-      //       id: "TL Assign Status", //id is still required when using accessorFn instead of accessorKey
-      //       header: "Assignment",
-      //       size: 50,
-      //       Cell: ({ renderedCellValue, row, cell }) => (
-      //         <Box
-      //           sx={(theme) => ({
-      //             backgroundColor:
-      //               renderedCellValue === 0 ||
-      //               renderedCellValue === null ||
-      //               renderedCellValue === undefined
-      //                 ? theme.palette.warning.light
-      //                 : theme.palette.success.light,
-      //             borderRadius: "0.25rem",
-      //             color: "#fff",
-
-      //             p: "0.25rem",
-      //           })}
-      //         >
-      //           {/*using renderedCellValue instead of cell.getValue() preserves filter match highlighting*/}
-      //           <span>
-      //             {renderedCellValue === 0 ||
-      //             renderedCellValue === null ||
-      //             renderedCellValue === undefined
-      //               ? "Not Assigned"
-      //               : "Assigned To TL"}
-      //           </span>
-      //         </Box>
-      //       ),
-      //     },
-      //   ],
-      // },
-
-      {
-        id: "Job-details", //id used to define `group` column
-        columns: [
-          {
-            accessorFn: (row) => `${row.SourceID}`, //accessorFn used to join multiple data into a single cell
-            id: "SourceID", //id is still required when using accessorFn instead of accessorKey
-            header: "Job-Id",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "WorkType", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "WorkType",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>
-                  {renderedCellValue == "1"
-                    ? "Travel"
-                    : renderedCellValue == "2"
-                    ? "Perm"
-                    : renderedCellValue == "3"
-                    ? "Per-Diem"
-                    : ""}
-                </span>
-              </Box>
-            ),
-          },
-
-          {
-            accessorKey: "StatusString", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "StatusString",
-            size: 100,
-            Cell: ({ renderedCellValue, row, cell }) => (
-              <Box
-                sx={(theme) => ({
-                  backgroundColor:
-                    cell.getValue() == "Closed"
-                      ? theme.palette.error.dark
-                      : cell.getValue() == "Cancelled" &&
-                        cell.getValue() == "Frozen"
-                      ? theme.palette.warning.dark
-                      : theme.palette.success.dark,
-                  borderRadius: "0.25rem",
-                  color: "#fff",
-                  maxWidth: "9ch",
-                  p: "0.25rem",
-                })}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>
-                  {renderedCellValue === "O" ? "Open" : renderedCellValue}
-                </span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Priority", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Priority",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Degree", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "multi-select",
-            header: "Profession",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "JobSpecialty", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "multi-select",
-            header: "Speciality",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Facility", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "multi-select",
-            header: "Facility",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "City", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "City",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "State", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "State",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "FormattedStartDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Start Date",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "FormattedEndDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "End Date",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "Shift", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "Shift",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorFn: (row) => `${row.DurationWeeks}`, //accessorFn used to join multiple data into a single cell
-            id: "DurationWeeks", //id is still required when using accessorFn instead of accessorKey
-            header: "DurationWeeks",
-            size: 100,
-          },
-
-          {
-            accessorKey: "BillRate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            header: "Bill Rate",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "SourceName", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-            filterVariant: "autocomplete",
-            header: "VMS-Name",
-            size: 100,
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{renderedCellValue}</span>
-              </Box>
-            ),
-          },
-          {
-            accessorKey: "PostDate", //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
-            enableClickToCopy: true,
-
-            header: "Post Date",
-            size: 100,
-
-            Cell: ({ renderedCellValue, row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-                <span>{moment(renderedCellValue).format("DD/MM/YYYY")}</span>
-              </Box>
-            ),
-          },
-        ],
-      },
-    ],
-    []
-  );
-  const columns = route == "assigned" ? assign_columns : job_columns;
+  // var assign_columns = useMemo(() => assign_table_header, []);
+  // var job_columns = useMemo(() => job_table_header, []);
+  // var feeds_stats = useMemo(() => feeds_table_header, []);
+  console.log(data);
+  const columns =
+    route == "assigned"
+      ? assign_columns
+      : route == "feeds"
+      ? feeds_stats
+      : job_columns;
   const csvConfig = mkConfig({
     fieldSeparator: ",",
     decimalSeparator: ".",
@@ -882,7 +92,7 @@ const TableGrid = (props) => {
   var datarow = [];
 
   // const handleCondotion =
-  console.log(data);
+  console.log(disabledRow);
 
   const table = useMaterialReactTable({
     columns,
@@ -896,8 +106,6 @@ const TableGrid = (props) => {
     enableFacetedValues: true,
     filterVariant: "multi-select",
     enableStickyHeader: true,
-    enableRowActions: (row) =>
-      row.amId >= 0 && user.rollId === 7 ? false : true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -925,13 +133,11 @@ const TableGrid = (props) => {
         </Tooltip>
         <Button
           onClick={handleShow1}
-          disabled={
-            (!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()) ||
-            user.rollId === 5
-          }
+          disabled={!table.getIsSomeRowsSelected() || user.rollId === 5}
           data-toggle={"tooltip"}
           startIcon={<AssignmentIndTwoTone />}
         >
+          {console.log(table.getIsSomeRowsSelected())}
           Assign Job
         </Button>
 
@@ -952,40 +158,50 @@ const TableGrid = (props) => {
         />
       </Box>
     ),
+    renderRowActionMenuItems: ({ closeMenu, row }) => [
+      <MenuItem
+        onClick={() => {
+          setValue(row.original);
+          setModalShow(true);
+          closeMenu();
+        }}
+      >
+        Bill
+      </MenuItem>,
+    ],
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        if (route !== "assigned") {
-          // if (
-          //   user.rollId === 7 &&
-          //   row.original.amId !== 0 &&
-          //   row.original.amId !== null &&
-          //   row.original.amId !== undefined
-          // ) {
-          //   return
-          setRowSelection((prev) => ({
-            ...prev,
-            [row.id]: !prev[row.id],
-          }));
-          // } else if (
-          //   user.rollId === 7 &&
-          //   row.original.tlId !== 0 &&
-          //   row.original.tlId !== null &&
-          //   row.original.tlId !== undefined
-          // ) {
-          //   setRowSelection((prev) => ({
-          //     ...prev,
-          //     [row.id]: !prev[row.id],
-          //   }));
-          // } else {
-          //   setdisabledRow(true);
-          // }
+        if (route === "assigned") {
+          if (row.original.finalUserAssignee !== 0) {
+            setdisabledRow(true);
+          } else {
+            setRowSelection((prev) => ({
+              ...prev,
+              [row.id]: !prev[row.id],
+            }));
+          }
         } else {
-          row.original.finalUserAssignee !== 0
-            ? setdisabledRow(true)
-            : setRowSelection((prev) => ({
-                ...prev,
-                [row.id]: !prev[row.id],
-              }));
+          if (
+            (user.rollId === 7 && row.original.amId === 0) ||
+            row.original.amId === null ||
+            row.original.amId === undefined
+          ) {
+            setRowSelection((prev) => ({
+              ...prev,
+              [row.id]: !prev[row.id],
+            }));
+          } else if (
+            (user.rollId === 6 && row.original.tlId === 0) ||
+            row.original.tlId === null ||
+            row.original.tlId === undefined
+          ) {
+            setRowSelection((prev) => ({
+              ...prev,
+              [row.id]: !prev[row.id],
+            }));
+          } else {
+            setdisabledRow(true);
+          }
         }
 
         if (row.original.ProviderJobID) {
@@ -1010,9 +226,7 @@ const TableGrid = (props) => {
         cursor: "pointer",
       },
     }),
-    onRowSelectionChange: setRowSelection,
     state: { rowSelection },
-
     positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {
       size: "small",
@@ -1253,22 +467,18 @@ const TableGrid = (props) => {
       };
     },
   });
+  console.log(value);
   return (
-    <MaterialReactTable
-      table={table}
-      options={{
-        paging: false,
-        headerStyle: {
-          backgroundColor: "#378FC3",
-          color: "#FFF",
-          fontSize: "17px",
-          textAlign: "center",
-          fontWeight: "bold",
-          pageSize: 30,
-        },
-        rowStyle: (row) => console.log(row),
-      }}
-    />
+    <>
+      <MaterialReactTable table={table} />
+      {value.length !== 0 ? (
+        <BillCalculate
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          values={value}
+        />
+      ) : null}
+    </>
   );
 };
 

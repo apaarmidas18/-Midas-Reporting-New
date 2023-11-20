@@ -1,18 +1,26 @@
 import React from "react";
 import { host } from "../../static";
 
-const GetRolesAssignment = async (setDataByRole, rollId) => {
+const GetRolesAssignment = async (
+  setDataByRole,
+  rollId,
+  name,
+  setDataforRecruiter
+) => {
   var requestOptions = {
-    method: "POST",
+    method: "GET",
     redirect: "follow",
-    body: "{}",
   };
 
-  await fetch(`${host}auth/users/all-users?rollId=${rollId}`, requestOptions)
+  await fetch(`${host}auth/users/getUsersByManager/${rollId}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result) {
-        return setDataByRole(result.payload);
+        if (name == "teamLead") {
+          return setDataByRole(result.payload);
+        } else if (name == "recruiter") {
+          return setDataforRecruiter(result.payload);
+        }
       }
     })
     .catch((error) => console.log("error"));

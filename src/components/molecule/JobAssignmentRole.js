@@ -13,13 +13,17 @@ const JobAssignmentRole = (props) => {
   const [isValidate, setIsValidate] = useState(false);
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
-
+  const [teamlead, setTeamLead] = useState(false);
+  const [recruiter, setRecruiter] = useState(false);
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
     jobIds: finalClickInfo.map((item, index) => JSON.parse(item)),
     assignType: "",
   });
+
+  const [aType, setAType] = useState("");
+
   console.log(assigned);
 
   const handleSubmit = async (e) => {
@@ -27,9 +31,26 @@ const JobAssignmentRole = (props) => {
     e.preventDefault();
   };
 
-  const handleChange = (name, value) => {
+  // const assigned_tl = user.rollId === 7 && teamlead === true ? true : false;
+  // const assigned_recruiter =
+  //   user.rollId === 7 && recruiter === true ? true : false;
+  // const tl_recruiter = user.rollId === 6 && recruiter === true ? true : false;
+  // var type =
+  //   assigned_tl == true
+  //     ? "AM_ASSIGNED_TL"
+  //     : assigned_recruiter == true
+  //     ? "AM_ASSIGNED_RECRUITER"
+  //     : tl_recruiter == true
+  //     ? "TL_ASSIGNED_FINAL_ASSIGNEE"
+  //     : "";
+
+  const handleDropChange = (name, value) => {
     if (name == "assignerUserId" || name == "assigneeUserId") {
-      setAssigned({ ...assigned, [name]: JSON.parse(value) });
+      setAssigned({
+        ...assigned,
+        [name]: JSON.parse(value),
+        assignType: aType,
+      });
     } else {
       setAssigned({ ...assigned, [name]: value });
     }
@@ -44,6 +65,7 @@ const JobAssignmentRole = (props) => {
       return null;
     }
   };
+
   useEffect(() => {
     userRoles();
   }, []);
@@ -65,11 +87,11 @@ const JobAssignmentRole = (props) => {
                 inpname="assigner"
                 inpvalue={user.name}
                 style={{ fontSize: "15px", fontWeight: "500" }}
-                inpchange={() => handleChange("assigneeUserId", user.id)}
+                inpchange={() => handleDropChange("assigneeUserId", user.id)}
                 disabled
               />
             </div>
-            <div className="col-md-6 ">
+            {/* <div className="col-md-6 ">
               <BoldLabel boldName="Assignee Type" boldFor="Assignee Type" />
               <Select
                 array={user.rollId == 6 ? tl_assignee_stat : assignee_stat}
@@ -81,7 +103,7 @@ const JobAssignmentRole = (props) => {
                   handleChange("assignType", selValue.value);
                 }}
               />
-            </div>
+            </div> */}
 
             <div className="col-md-6 ">
               <BoldLabel boldName="Team Lead" boldFor="Team Lead" />
@@ -92,16 +114,18 @@ const JobAssignmentRole = (props) => {
                 required={true}
                 name="Teamlead"
                 disabled={
-                  (assigned.assignType === "TL_ASSIGNED_FINAL_ASSIGNEE" &&
-                    true) ||
+                  (assigned.assignType === "AM_ASSIGNED_TL" && true) ||
                   (user.rollId === 6 && true)
                 }
                 onChange={(e) => {
-                  handleChange("assigneeUserId", JSON.parse(e.target.value));
-                  setIsValidate(false);
+                  handleDropChange(
+                    "assigneeUserId",
+                    JSON.parse(e.target.value)
+                  );
                 }}
               >
                 <option selected>Open this select menu</option>
+
                 {teamLeadID.map((item, index) => {
                   return <option value={item.id}>{item.name}</option>;
                 })}
@@ -115,12 +139,18 @@ const JobAssignmentRole = (props) => {
                 name="assigneeUserId"
                 required={true}
                 disabled={
-                  (assigned.assignType === "AM_ASSIGNED_TL" && true) ||
-                  (assigned.assignType === "" && true)
+                  assigned.assignType === "TL_ASSIGNED_FINAL_ASSIGNEE" ||
+                  (assigned.assignType === "AM_ASSIGNED_TL" && true)
                 }
-                onChange={(e) =>
-                  handleChange("assigneeUserId", JSON.parse(e.target.value))
-                }
+                onChange={(e) => {
+                  user.rollId === 7
+                    ? setAType("AM_ASSIGNED_RECRUITER")
+                    : setAType("TL_ASSIGNED_FINAL_ASSIGNEE");
+                  handleDropChange(
+                    "assigneeUserId",
+                    JSON.parse(e.target.value)
+                  );
+                }}
               >
                 <option selected>Please Select Recruiter</option>
                 {dataByRole.map((item, index) => {

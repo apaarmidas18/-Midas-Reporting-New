@@ -90,6 +90,7 @@ import VMSConfig from "../pages/Job/VMSConfig";
 import PortalDash from "../pages/Job/PortalDash";
 import Jobs from "../pages/Job/Jobs";
 import AllJobsFeeds from "../pages/Job/AllJobsFeeds";
+import FeedUpdateStat from "../pages/Job/FeedUpdateStat";
 
 export const Router = () => {
   return useRoutes([
@@ -246,6 +247,7 @@ export const Router = () => {
         { path: "availability-log", element: <AvailabilityLog /> },
         { path: "job-vms", element: <ActiveVMS /> },
         { path: "vms-config", element: <VMSConfig /> },
+        { path: "feed-stats", element: <FeedUpdateStat /> },
       ],
     },
   ]);

@@ -59,12 +59,14 @@ const PortalSidebar = () => {
                 ? "Team Lead"
                 : user.rollId == 5
                 ? "Recruiter"
+                : user.rollId == 1 || user.rollId == 1
+                ? "Admin"
                 : null}
             </h6>
           </div>
-          {/* <div className="sidebar-logo text-center">
+          <div className="sidebar-logo text-center">
             <img src="/images/logob.png" />
-          </div> */}
+          </div>
           <div className="nav-tabs mt-3" style={{ borderBottom: "none" }}>
             <ul className="new-sidebar-list">
               {Routes.map((item, index) => {

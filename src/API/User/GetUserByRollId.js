@@ -1,6 +1,6 @@
 import { host } from "../../static";
 
-const GetUserByRollId = ({ setOnBoardingData }) => {
+const GetUserByRollId = ({ setOnBoardingData ,  }) => {
   var requestOptions = {
     method: "GET",
     redirect: "follow",

@@ -5,10 +5,13 @@ import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DashCard from "../../components/portaldash/DashCard";
 import { Chart } from "react-google-charts";
 
+
 // import ExampleTable from "./ExampleTable";
 
 
 const PortalDash = () => {
+
+
   const data = [
     ["Task", "Total Jobs"],
     ["Closed", 17219],
@@ -136,9 +139,7 @@ const PortalDash = () => {
             </div>
           </div>
         
-          {/* <div className="container">
-         <ExampleTable/>
-          </div> */}
+         
         </div>
       </div>
     </>

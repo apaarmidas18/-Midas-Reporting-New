@@ -130,8 +130,8 @@ const AllJobsFeeds = () => {
   };
   
   useEffect(() => {
-    GetAllTeamLeads({ setTeamLead });
-    GetRecruiterById({ setRecuiterData });
+    // GetAllTeamLeads({ setTeamLead });
+    // GetRecruiterById({ setRecuiterData });
     AdminJobs(setAllJobs, setIsloading)
   }, []);
  
