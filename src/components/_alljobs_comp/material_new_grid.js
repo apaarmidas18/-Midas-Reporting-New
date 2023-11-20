@@ -106,6 +106,7 @@ const TableGrid = (props) => {
     enableFacetedValues: true,
     filterVariant: "multi-select",
     enableStickyHeader: true,
+    enableRowActions: true,
     initialState: {
       showColumnFilters: false,
       showGlobalFilter: true,
@@ -137,7 +138,6 @@ const TableGrid = (props) => {
           data-toggle={"tooltip"}
           startIcon={<AssignmentIndTwoTone />}
         >
-          {console.log(table.getIsSomeRowsSelected())}
           Assign Job
         </Button>
 
@@ -186,6 +186,18 @@ const TableGrid = (props) => {
             row.original.amId === null ||
             row.original.amId === undefined
           ) {
+            if (
+              arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
+              true
+            ) {
+              var dataOut = arrayState.indexOf(
+                JSON.stringify(row.original.ProviderJobID)
+              );
+              let a = arrayState.splice(dataOut, 1);
+              return a;
+            } else {
+              arrayState.push(JSON.stringify(row.original.ProviderJobID));
+            }
             setRowSelection((prev) => ({
               ...prev,
               [row.id]: !prev[row.id],
@@ -195,6 +207,18 @@ const TableGrid = (props) => {
             row.original.tlId === null ||
             row.original.tlId === undefined
           ) {
+            if (
+              arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
+              true
+            ) {
+              var dataOut = arrayState.indexOf(
+                JSON.stringify(row.original.ProviderJobID)
+              );
+              let a = arrayState.splice(dataOut, 1);
+              return a;
+            } else {
+              arrayState.push(JSON.stringify(row.original.ProviderJobID));
+            }
             setRowSelection((prev) => ({
               ...prev,
               [row.id]: !prev[row.id],
@@ -202,23 +226,6 @@ const TableGrid = (props) => {
           } else {
             setdisabledRow(true);
           }
-        }
-
-        if (row.original.ProviderJobID) {
-          if (
-            arrayState.includes(JSON.stringify(row.original.ProviderJobID)) ==
-            true
-          ) {
-            var dataOut = arrayState.indexOf(
-              JSON.stringify(row.original.ProviderJobID)
-            );
-            let a = arrayState.splice(dataOut, 1);
-            return a;
-          } else {
-            arrayState.push(JSON.stringify(row.original.ProviderJobID));
-          }
-        } else {
-          return null;
         }
       },
       selected: rowSelection[row.id],

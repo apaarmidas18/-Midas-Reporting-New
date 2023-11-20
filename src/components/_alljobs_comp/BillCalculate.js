@@ -77,7 +77,7 @@ const BillCalculate = ({ values, onHide, show }) => {
           ""
         ) : (
           <Modal.Body>
-            <div className="container" ref={targetElementRef}>
+            <div className="container">
               <div className="row calculator-row">
                 <div className="col-md-6 input-div">
                   <h3>Input Parameters</h3>
@@ -159,7 +159,7 @@ const BillCalculate = ({ values, onHide, show }) => {
 
                 <div className="col-md-6">
                   <h3>Output Parameters</h3>
-                  <div className="row">
+                  <div className="row" ref={targetElementRef}>
                     <div className="input-parameters col-md-6">
                       <BoldLabel boldFor="Location" boldName="Location" />
                       <InputField

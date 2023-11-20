@@ -14,9 +14,6 @@ const PortalSidebar = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   const { isSidebarExpanded, handleToggleSidebar } =
     useContext(Sidebar_Context);
-  // const handleToggleSidebar = (item) => {
-  //   setIsSidebarExpanded((prevExpanded) => !prevExpanded);
-  // };
 
   const liColor = (item) => {
     setSelectedItem(item);
@@ -25,7 +22,7 @@ const PortalSidebar = () => {
   const highlightedItemClass = "light-active sidebar-span";
 
   const Routes =
-    user.rollId == 1 || user.rollId == 2
+    user.rollId == 1 || user.rollId == 2 || user.rollId == 8
       ? AdminRoutes
       : user.rollId == 6
       ? TeamLeadRoutes
@@ -37,9 +34,7 @@ const PortalSidebar = () => {
 
   return (
     <>
-      <div
-        className={"sidebar"}
-      >
+      <div className={"sidebar"}>
         {/* <div className="side-button">
           <button className="toggle-button" onClick={handleToggleSidebar}>
             <i
@@ -74,15 +69,17 @@ const PortalSidebar = () => {
                   <li key={index} onClick={() => liColor(item.tabname)}>
                     <span
                       className={
-
                         selectedItem === item.tabname
-                          ?  highlightedItemClass
+                          ? highlightedItemClass
                           : "sidebar-span"
                       }
-                    ><Link className="logo-link" to={item.tabroute}>
-                      <i className={item.fontlogo}></i>
+                    >
+                      <Link className="logo-link" to={item.tabroute}>
+                        <i className={item.fontlogo}></i>
                       </Link>
-                      <Link className="logo-tab" to={item.tabroute}>{item.tabname}</Link>
+                      <Link className="logo-tab" to={item.tabroute}>
+                        {item.tabname}
+                      </Link>
                     </span>
                   </li>
                 );

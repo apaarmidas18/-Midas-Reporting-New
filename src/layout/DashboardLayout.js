@@ -8,9 +8,10 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (
-      parsedJson.rollId === 7 ||
-      parsedJson.rollId === 6 ||
-      parsedJson.rollId === 5
+      parsedJson.rollId == 7 ||
+      parsedJson.rollId == 6 ||
+      parsedJson.rollId == 5 ||
+      parsedJson.rollId == 8
     ) {
       return navigate("/portal");
     }

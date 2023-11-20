@@ -60,6 +60,11 @@ const ROLLSSUPERADMIN = [
 
     label: "Account-Manager",
   },
+  {
+    value: 8,
+
+    label: "JR-User",
+  },
 ];
 
 const ADMINROLLS = [
@@ -96,6 +101,11 @@ const ADMINROLLS = [
     value: 7,
 
     label: "Account-Manager",
+  },
+  {
+    value: 8,
+
+    label: "JR-User",
   },
 ];
 
@@ -310,7 +320,7 @@ const Adduser = () => {
                   return <option value={item.value}>{item.label}</option>;
                 })}
               </select>
-            
+
               <span className="text-danger">
                 {formik.touched.status && formik.errors.status ? (
                   <div className="text-danger">{formik.errors.status}</div>
@@ -381,19 +391,18 @@ const Adduser = () => {
                   style={{ marginBottom: "8px" }}
                 />
                 <select
-                class="form-select"
-                aria-label="Default select example"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                name="managerId"
-              >
-                <option selected>Open this select menu</option>
+                  class="form-select"
+                  aria-label="Default select example"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  name="managerId"
+                >
+                  <option selected>Open this select menu</option>
 
-                {teamLead.map((item, index) => {
-                  return <option value={item.id}>{item.name}</option>;
-                })}
-              </select>
-                
+                  {teamLead.map((item, index) => {
+                    return <option value={item.id}>{item.name}</option>;
+                  })}
+                </select>
               </div>
             ) : null}
 

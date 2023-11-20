@@ -1848,6 +1848,10 @@ input[switch="warning"]:checked + label:before {
 .fa-download {
   color: #fff;
 }
+.chip span {
+  border: 1px dashed whitesmoke;
+  
+}
 /* .input-div {
   background-color: #f8f9fa;
   padding: 20px;

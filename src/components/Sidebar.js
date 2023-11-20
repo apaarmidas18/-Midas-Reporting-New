@@ -27,7 +27,7 @@ const Sidebar = () => {
       ? RecruiterRoutes
       : user.rollId == 6
       ? TeamLeadRoutes
-      : user.rollId == 7
+      : user.rollId == 7 || user.rollId == 8
       ? AccountManagerRoutes
       : "";
 

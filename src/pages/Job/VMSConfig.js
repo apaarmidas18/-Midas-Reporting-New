@@ -8,21 +8,50 @@ import { useContext } from "react";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
 import DatalistInput from "react-datalist-input";
 import GetManagerById from "../../API/Jobs/GetManagerById";
-import { getState } from "../../service/storage";
-import GetActiveVMSAPI from "../../API/Jobs/GetActiveVMSAPI";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import AssignedVMS from "../../API/Jobs/VMS/AssignedVMS";
 import GetAllAssignedVMS from "../../API/Jobs/VMS/GetAllAssignedVMS";
 import GetUserByIdforVmsConfig from "../../API/Jobs/VMS/GetUserByIdforVmsConfig";
-import active_vms from "../../utils/active_vms";
 import DeleteVMS from "../../API/Jobs/VMS/DeleteVMS";
+import active_vms from "../../utils/active_vms";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 300,
+    },
+  },
+};
 
 const VMSConfig = () => {
   const [loading, setLoading] = useState("");
   const [manager, setManager] = useState([]);
   const [assignedVMS, setAssignedVMS] = useState([]);
   const [managerName, setManagerName] = useState("");
+  const [vmsArray, setVMS] = useState([]);
+  const [vmsName, setVmsName] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setVmsName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   const { isSidebarExpanded } = useContext(Sidebar_Context);
   const Manager_Name = manager.map((item, index) => {
     return { id: item.id, value: item.name };
@@ -36,12 +65,12 @@ const VMSConfig = () => {
     },
     validationSchema: Yup.object({
       managerName: Yup.string().required("Account Manager is Required"),
-      vmsName: Yup.string().required("VMS Name is Required"),
     }),
     onSubmit: (values) => {
-      AssignedVMS(values);
+      AssignedVMS(values, vmsName);
     },
   });
+  console.log(vmsName);
   //Row Styling ********************************************************************
   var rows = [];
   for (let index = 0; index < assignedVMS.length; index++) {
@@ -82,19 +111,24 @@ const VMSConfig = () => {
       sortable: true,
       reorder: true,
       width: 10,
-      cell: (row) => <button className="delete-job" onClick={() => handleButtonDelete(row)}><i class="fa-solid fa-trash"></i></button>,
+      cell: (row) => (
+        <button className="delete-job" onClick={() => handleButtonDelete(row)}>
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      ),
     },
   ];
 
   const handleButtonDelete = (row) => {
-    DeleteVMS(row.id)
-    console.log('Button clicked for row:', row);
+    DeleteVMS(row.id);
+    console.log("Button clicked for row:", row);
   };
 
   useEffect(() => {
-    GetManagerById(setManager, setLoading , 7);
+    GetManagerById(setManager, setLoading, 7);
     GetAllAssignedVMS({ setAssignedVMS, setLoading });
   }, []);
+  console.log(vmsArray);
   return (
     <>
       <div
@@ -141,30 +175,45 @@ const VMSConfig = () => {
                     ) : null}
                   </span>
                 </div>
+
                 <div className="col-md-5">
-                  <DatalistInput
-                    placeholder="Please Choose VMS"
-                    label="VMS"
-                    name="vmsName"
-                    // onSelect={(item) => setFileName(item.value)}
-                    items={active_vms}
-                    onSelect={(item) => {
-                      formik.setFieldValue("vmsName", item.value);
-                    }}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.vmsName}
-                  />
-                  <span className="text-danger">
-                    {formik.touched.vmsName && formik.errors.vmsName ? (
-                      <div className="text-danger">{formik.errors.vmsName}</div>
-                    ) : null}
-                  </span>
+                  <div>
+                    <FormControl sx={{ mt: 3, width: 350 }}>
+                      <InputLabel
+                        size={"small"}
+                        id="demo-multiple-checkbox-label"
+                      >
+                        VMS
+                      </InputLabel>
+                      <Select
+                        labelId="demo-multiple-checkbox-label"
+                        id="demo-multiple-checkbox"
+                        multiple
+                        value={vmsName}
+                        onChange={handleChange}
+                        input={<OutlinedInput label="Tag" />}
+                        renderValue={(selected) => selected.join(", ")}
+                        MenuProps={MenuProps}
+                        sx={{ height: 40 }}
+                      >
+                        {active_vms.map((name) => (
+                          <MenuItem key={name.value} value={name.value}>
+                            <Checkbox
+                              checked={vmsName.indexOf(name.value) > -1}
+                            />
+                            <ListItemText primary={name.value} />
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
                 <div className="col-md-2 mt-3">
                   <button
                     type="submit"
                     onClick={() => assignedVMS()}
-                    className="btn job-common-btn "
+                    className="btn job-common-btn"
+                    disabled={vmsName.length === 0 ? true : false}
                   >
                     Assign
                   </button>

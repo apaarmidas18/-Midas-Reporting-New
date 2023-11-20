@@ -13,16 +13,13 @@ const JobAssignmentRole = (props) => {
   const [isValidate, setIsValidate] = useState(false);
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
-  const [teamlead, setTeamLead] = useState(false);
-  const [recruiter, setRecruiter] = useState(false);
+
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
     jobIds: finalClickInfo.map((item, index) => JSON.parse(item)),
     assignType: "",
   });
-
-  const [aType, setAType] = useState("");
 
   console.log(assigned);
 
@@ -31,26 +28,12 @@ const JobAssignmentRole = (props) => {
     e.preventDefault();
   };
 
-  // const assigned_tl = user.rollId === 7 && teamlead === true ? true : false;
-  // const assigned_recruiter =
-  //   user.rollId === 7 && recruiter === true ? true : false;
-  // const tl_recruiter = user.rollId === 6 && recruiter === true ? true : false;
-  // var type =
-  //   assigned_tl == true
-  //     ? "AM_ASSIGNED_TL"
-  //     : assigned_recruiter == true
-  //     ? "AM_ASSIGNED_RECRUITER"
-  //     : tl_recruiter == true
-  //     ? "TL_ASSIGNED_FINAL_ASSIGNEE"
-  //     : "";
-
-  const handleDropChange = (name, value) => {
-    if (name == "assignerUserId" || name == "assigneeUserId") {
-      setAssigned({
-        ...assigned,
-        [name]: JSON.parse(value),
-        assignType: aType,
-      });
+  const handleChange = (name, value) => {
+    console.log(value, name);
+    if (name == "assignerUserId") {
+      setAssigned({ ...assigned, [name]: JSON.parse(value) });
+    } else if (name == "assigneeUserId") {
+      setAssigned({ ...assigned, [name]: JSON.parse(value) });
     } else {
       setAssigned({ ...assigned, [name]: value });
     }
@@ -87,7 +70,7 @@ const JobAssignmentRole = (props) => {
                 inpname="assigner"
                 inpvalue={user.name}
                 style={{ fontSize: "15px", fontWeight: "500" }}
-                inpchange={() => handleDropChange("assigneeUserId", user.id)}
+                inpchange={() => handleChange("assigneeUserId", user.id)}
                 disabled
               />
             </div>
@@ -114,18 +97,17 @@ const JobAssignmentRole = (props) => {
                 required={true}
                 name="Teamlead"
                 disabled={
-                  (assigned.assignType === "AM_ASSIGNED_TL" && true) ||
+                  (assigned.assignType === "AM_ASSIGNED_RECRUITER" && true) ||
                   (user.rollId === 6 && true)
                 }
                 onChange={(e) => {
-                  handleDropChange(
-                    "assigneeUserId",
-                    JSON.parse(e.target.value)
-                  );
+                  if (user.rollId === 7) {
+                    handleChange("assigneeUserId", JSON.parse(e.target.value));
+                    handleChange("assignType", "AM_ASSIGNED_TL");
+                  }
                 }}
               >
                 <option selected>Open this select menu</option>
-
                 {teamLeadID.map((item, index) => {
                   return <option value={item.id}>{item.name}</option>;
                 })}
@@ -138,18 +120,15 @@ const JobAssignmentRole = (props) => {
                 aria-label="Default select example"
                 name="assigneeUserId"
                 required={true}
-                disabled={
-                  assigned.assignType === "TL_ASSIGNED_FINAL_ASSIGNEE" ||
-                  (assigned.assignType === "AM_ASSIGNED_TL" && true)
-                }
+                disabled={assigned.assignType === "AM_ASSIGNED_TL" && true}
                 onChange={(e) => {
-                  user.rollId === 7
-                    ? setAType("AM_ASSIGNED_RECRUITER")
-                    : setAType("TL_ASSIGNED_FINAL_ASSIGNEE");
-                  handleDropChange(
-                    "assigneeUserId",
-                    JSON.parse(e.target.value)
-                  );
+                  if (user.rollId === 7) {
+                    handleChange("assigneeUserId", JSON.parse(e.target.value));
+                    handleChange("assignType", "AM_ASSIGNED_RECRUITER");
+                  } else if (user.rollId === 6) {
+                    handleChange("assigneeUserId", JSON.parse(e.target.value));
+                    handleChange("assignType", "TL_ASSIGNED_FINAL_ASSIGNEE");
+                  }
                 }}
               >
                 <option selected>Please Select Recruiter</option>
