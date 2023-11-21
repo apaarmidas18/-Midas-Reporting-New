@@ -83,6 +83,7 @@ const TableGrid = (props) => {
   };
 
   const [show1, setShow1] = useState(false);
+  const [selectedRowColor, setSelectedRowColor] = useState("");
   const [teamLeadID, setTeamLeadID] = useState([]);
   const { finalClickInfo, setFinalClickInfo } = props;
   const [dataByRole, setDataByRole] = useState([]);
@@ -169,8 +170,10 @@ const TableGrid = (props) => {
         Bill
       </MenuItem>,
     ],
+    
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
+        console.log(rowSelection)
         if (route === "assigned") {
           if (row.original.finalUserAssignee !== 0) {
             setdisabledRow(true);
@@ -228,11 +231,15 @@ const TableGrid = (props) => {
           }
         }
       },
+
       selected: rowSelection[row.id],
       sx: {
-        cursor: "pointer",
+        cursor: row.original.isAssigned === true ? "inherit" : "pointer",
+        backgroundColor: row.original.isAssigned === true ? "#c3c3c3" : "inherit",
       },
     }),
+
+    
     state: { rowSelection },
     positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {

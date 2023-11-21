@@ -66,11 +66,11 @@ const BillCalculate = ({ values, onHide, show }) => {
           <h2 className="text-center">Bill Rate Calculator</h2>
           <div className="download-buttons">
             <button className="ss-btn" onClick={captureScreenshot}>
-              Image <i class="fa-solid fa-download"></i>
+              <i class="fa-solid fa-download"></i>
             </button>
-            <button className="export-btn">
+            {/* <button className="export-btn">
               Export <i class="fa-solid fa-download"></i>
-            </button>
+            </button> */}
           </div>
         </div>
         {values === undefined || values === null ? (
@@ -176,9 +176,9 @@ const BillCalculate = ({ values, onHide, show }) => {
                         inpid="hourRates"
                         inpname="hourRates"
                         inpvalue={
-                          currentData !== ""
+                          (currentData !== ""
                             ? currentData.BillRate * 0.7
-                            : values.BillRate * 0.7
+                            : values.BillRate * 0.7).toFixed(2)
                         }
                         inpcontrol
                       />
@@ -193,11 +193,11 @@ const BillCalculate = ({ values, onHide, show }) => {
                         inpid="grossWeekly"
                         inpname="grossWeekly"
                         inpvalue={
-                          currentData !== ""
+                         ( currentData !== ""
                             ? currentData.BillRate *
                               0.7 *
                               currentData.GuaranteedHours
-                            : values.BillRate * 0.7 * values.GuaranteedHours
+                            : values.BillRate * 0.7 * values.GuaranteedHours).toFixed(2)
                         }
                         inpcontrol
                       />
@@ -231,13 +231,13 @@ const BillCalculate = ({ values, onHide, show }) => {
                         inpname="taxRates"
                         inpcontrol
                         inpvalue={
-                          currentData !== ""
+                          (currentData !== ""
                             ? currentData.BillRate *
                                 0.7 *
                                 currentData.GuaranteedHours -
                               lodRate
                             : values.BillRate * 0.7 * values.GuaranteedHours -
-                              lodRate
+                              lodRate).toFixed(2)
                         }
                       />
                     </div>
