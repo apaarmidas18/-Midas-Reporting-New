@@ -323,14 +323,6 @@ const AllJobs = () => {
       return null;
     }
   };
-  // const defaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: loader,
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
   const masterApicall = async () => {
     await getAllVmsConfig(setVMS, setVMSDetails);
     await GetAllJobs(setAllJobs, setIsloading);
@@ -390,42 +382,3 @@ const AllJobs = () => {
 };
 
 export default AllJobs;
-// <DataGrid
-//   columns={columns}
-//   rows={allJobs}
-//   initialState={{
-//     pagination: {
-//       paginationModel: { page: 0, pageSize: 10 },
-//     },
-//   }}
-//   getRowId={(row) => row.ProviderJobID}
-//   autoHeight={true}
-//   dense
-//   checkboxSelection={true}
-//   isRowSelectable={(params) => {
-//     const { row } = params;
-//     console.log(row);
-//     return user.rollId == 7 && row.amId > 0
-//       ? false
-//       : user.rollId == 6 && row.tlId >= 0
-//       ? false
-//       : user.rollId == 5 && row.amId >= 0
-//       ? false
-//       : true;
-//   }}
-//   onRowSelectionModelChange={(row) => {
-//     // setSelectedRow(row.selectedRows);
-//     setFinalClickInfo(row);
-//   }}
-//   // onRowClicked={(row) => handleOnCellClick(row)}
-//   // selectableRowDisabled={(row) =>
-//   //   user.rollId == 7 && row.amId >= 0
-//   //     ? true
-//   //     : user.rollId == 6 && row.tlId >= 0
-//   //     ? true
-//   //     : user.rollId == 5 && row.amId >= 0
-//   //     ? true
-//   //     : false
-//   // }
-//   // dense
-// />

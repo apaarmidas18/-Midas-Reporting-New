@@ -134,7 +134,8 @@ const AllJobsFeeds = () => {
     // GetRecruiterById({ setRecuiterData });
     AdminJobs(setAllJobs, setIsloading)
   }, []);
- 
+  
+ console.log(allJobs)
 
   
 

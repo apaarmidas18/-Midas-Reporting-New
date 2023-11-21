@@ -10,6 +10,7 @@ import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
 const JobAssignmentRole = (props) => {
   const { finalClickInfo, setFinalClickInfo, selected } = props;
   const user = JSON.parse(localStorage.getItem("User"));
+  const [refreshTable, setRefreshTable] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
@@ -24,7 +25,7 @@ const JobAssignmentRole = (props) => {
   console.log(assigned);
 
   const handleSubmit = async (e) => {
-    AssignJobs(assigned);
+    AssignJobs(assigned , setRefreshTable);
     e.preventDefault();
   };
 
