@@ -34,6 +34,7 @@ import job_table_header from "../../utils/Jobs/tableheaderrs.js/job_table_header
 import assign_table_header from "../../utils/Jobs/tableheaderrs.js/assign_table_header";
 import feeds_table_header from "../../utils/Jobs/tableheaderrs.js/feeds_table_header";
 import BillCalculate from "./BillCalculate";
+import UnassignJob from "../../API/Jobs/UnassignJob";
 
 const TableGrid = (props) => {
   const {
@@ -45,6 +46,8 @@ const TableGrid = (props) => {
     dataa,
     userData,
     route,
+    teamLead,
+    recruiterData,
   } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
@@ -152,6 +155,8 @@ const TableGrid = (props) => {
               finalClickInfo={arrayState}
               setFinalClickInfo={setFinalClickInfo}
               selected={selected}
+              teamLead={teamLead}
+              recruiterData={recruiterData}
             />
           }
           jobid={0}
@@ -159,6 +164,7 @@ const TableGrid = (props) => {
         />
       </Box>
     ),
+
     renderRowActionMenuItems: ({ closeMenu, row }) => [
       <MenuItem
         onClick={() => {
@@ -169,11 +175,18 @@ const TableGrid = (props) => {
       >
         Bill
       </MenuItem>,
+      <MenuItem
+        onClick={() => {
+          UnassignJob(row.original);
+        }}
+      >
+        UnAssign Job
+      </MenuItem>,
     ],
-    
+
     muiTableBodyRowProps: ({ row }) => ({
       onClick: async () => {
-        console.log(rowSelection)
+        console.log(rowSelection);
         if (route === "assigned") {
           if (row.original.finalUserAssignee !== 0) {
             setdisabledRow(true);
@@ -235,11 +248,11 @@ const TableGrid = (props) => {
       selected: rowSelection[row.id],
       sx: {
         cursor: row.original.isAssigned === true ? "inherit" : "pointer",
-        backgroundColor: row.original.isAssigned === true ? "#c3c3c3" : "inherit",
+        backgroundColor:
+          row.original.isAssigned === true ? "#c3c3c3" : "inherit",
       },
     }),
 
-    
     state: { rowSelection },
     positionToolbarAlertBanner: "top",
     muiSearchTextFieldProps: {

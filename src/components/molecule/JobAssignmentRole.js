@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import BoldLabel from "../atoms/BoldLabel";
 import InputField from "../atoms/InputField";
-import Select from "../atoms/Select";
-import assignee_stat from "../../utils/Jobs/assignee_stat";
-import tl_assignee_stat from "../../utils/Jobs/tl_assignee_stat";
 import AssignJobs from "../../API/Jobs/AssignJobs";
-import GetRolesAssignment from "../../API/Jobs/GetRolesAssignment";
+import GetAllUsers from "../../API/User/GetAllUsers";
 
 const JobAssignmentRole = (props) => {
-  const { finalClickInfo, setFinalClickInfo, selected } = props;
+  const { finalClickInfo, teamLead, recruiterData } = props;
   const user = JSON.parse(localStorage.getItem("User"));
   const [isValidate, setIsValidate] = useState(false);
   const [teamLeadID, setTeamLeadID] = useState([]);
-  const [dataByRole, setDataByRole] = useState([]);
-
+  const [recruiter, setRecruiter] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [teamLeadId, setTeamLeadId] = useState(0);
+  const [account_manager, setAccount_manager] = useState([]);
+  const [teamlead, setTeamLead] = useState([]);
   const [assigned, setAssigned] = useState({
     assigneeUserId: 0,
     assignerUserId: user.id,
@@ -21,141 +21,177 @@ const JobAssignmentRole = (props) => {
     assignType: "",
   });
 
-  console.log(assigned);
+  const handleInputChange = (name, value, type) => {
+    setAssigned({ ...assigned, [name]: value, assignType: type });
+  };
 
   const handleSubmit = async (e) => {
     AssignJobs(assigned);
     e.preventDefault();
   };
 
-  const handleChange = (name, value) => {
-    console.log(value, name);
-    if (name == "assignerUserId") {
-      setAssigned({ ...assigned, [name]: JSON.parse(value) });
-    } else if (name == "assigneeUserId") {
-      setAssigned({ ...assigned, [name]: JSON.parse(value) });
-    } else {
-      setAssigned({ ...assigned, [name]: value });
-    }
-  };
-  const userRoles = async () => {
-    if (user.rollId === 7) {
-      await GetRolesAssignment(setTeamLeadID, 6);
-      await GetRolesAssignment(setDataByRole, 5);
-    } else if (user.rollId === 6) {
-      await GetRolesAssignment(setDataByRole, 5);
-    } else {
-      return null;
-    }
+  const handleCheckuser = () => {
+    var tel = teamLead.filter((item, index) => item.managerId === user.id);
+    setTeamLead(tel);
   };
 
-  useEffect(() => {
-    userRoles();
-  }, []);
+  useEffect(() => handleCheckuser(), []);
 
   return (
-    <>
-      <div>
-        <form
-          className="g-3 needs-validation"
-          noValidate
-          onSubmit={handleSubmit}
-        >
-          <div className="row">
-            <div className="col-md-6 ">
-              <BoldLabel boldName="Assigner" boldFor="Assigner" />
-              <InputField
-                inptype="text"
-                inpid="Assigner"
-                inpname="assigner"
-                inpvalue={user.name}
-                style={{ fontSize: "15px", fontWeight: "500" }}
-                inpchange={() => handleChange("assigneeUserId", user.id)}
-                disabled
-              />
-            </div>
-            {/* <div className="col-md-6 ">
-              <BoldLabel boldName="Assignee Type" boldFor="Assignee Type" />
-              <Select
-                array={user.rollId == 6 ? tl_assignee_stat : assignee_stat}
-                selectName="Assignee"
-                required={true}
-                selectChange={(e) => {
-                  const selValue = JSON.parse(e.target.value);
-                  console.log(selValue);
-                  handleChange("assignType", selValue.value);
-                }}
-              />
-            </div> */}
+    <div>
+      <form className="g-3 needs-validation" noValidate onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="assign-container">
+            <InputField label="Assignee" inpvalue={user.name} disabled />
+            <div className="col-md-4 mx-2 mt-2">
+              <label for="floatingSelectGrid">Select Team Lead</label>
+              <select
+                class="form-select"
+                id="floatingSelectGrid"
+                aria-label="Floating label select example"
+                onChange={(e) => {
+                  handleInputChange(
+                    "assigneeUserId",
+                    JSON.parse(e.target.value),
+                    "AM_ASSIGNED_TL"
+                  );
+                  setTeamLeadId(JSON.parse(e.target.value));
 
-            <div className="col-md-6 ">
-              <BoldLabel boldName="Team Lead" boldFor="Team Lead" />
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                aria-describedby="validationServer04Feedback"
-                required={true}
-                name="Teamlead"
-                disabled={
-                  (assigned.assignType === "AM_ASSIGNED_RECRUITER" && true) ||
-                  (user.rollId === 6 && true)
-                }
-                onChange={(e) => {
-                  if (user.rollId === 7) {
-                    handleChange("assigneeUserId", JSON.parse(e.target.value));
-                    handleChange("assignType", "AM_ASSIGNED_TL");
-                  }
+                  setRecruiter(
+                    recruiterData.filter(
+                      (item, index) =>
+                        item.managerId === JSON.parse(e.target.value)
+                    )
+                  );
                 }}
               >
-                <option selected>Open this select menu</option>
-                {teamLeadID.map((item, index) => {
-                  return <option value={item.id}>{item.name}</option>;
-                })}
-              </select>
-            </div>
-            <div className="col-md-6 ">
-              <BoldLabel boldName="Recruiter" boldFor="Recruiter" />
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                name="assigneeUserId"
-                required={true}
-                disabled={assigned.assignType === "AM_ASSIGNED_TL" && true}
-                onChange={(e) => {
-                  if (user.rollId === 7) {
-                    handleChange("assigneeUserId", JSON.parse(e.target.value));
-                    handleChange("assignType", "AM_ASSIGNED_RECRUITER");
-                  } else if (user.rollId === 6) {
-                    handleChange("assigneeUserId", JSON.parse(e.target.value));
-                    handleChange("assignType", "TL_ASSIGNED_FINAL_ASSIGNEE");
-                  }
-                }}
-              >
-                <option selected>Please Select Recruiter</option>
-                {dataByRole.map((item, index) => {
+                <option selected value={"0"}>
+                  Open this select menu
+                </option>
+                {teamlead.map((item, index) => {
                   return <option value={item.id}>{item.name}</option>;
                 })}
               </select>
             </div>
 
+            <div className="col-md-4 mx-2 mt-2">
+              <label for="floatingSelectGrid">Select Recruiter</label>
+              <select
+                class="form-select"
+                id="floatingSelectGrid"
+                aria-label="Floating label select example"
+                onChange={(e) => {
+                  if (user.rollId === 7) {
+                    handleInputChange(
+                      "assignee",
+                      JSON.parse(e.target.value),
+                      "AM_ASSIGNED_RECRUITER"
+                    );
+                  } else {
+                    handleInputChange(
+                      "assignee",
+                      JSON.parse(e.target.value),
+                      "TL_ASSIGNED_FINAL_ASSIGNEE"
+                    );
+                  }
+                }}
+              >
+                <option selected value={"0"}>
+                  Open this select menu
+                </option>
+                {recruiter.map((item, index) => {
+                  return <option value={item.id}>{item.name}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div>
             <span className="job-id-span mt-3">
-              <strong>Job ID -</strong>
-              {finalClickInfo.map((item, index) => `${item}, `)}
-            </span>
-            <div className="col-md-12 text-center">
+              <div>
+                <strong>Job ID -</strong>
+                {finalClickInfo.map((item, index) => `${item}, `)}
+              </div>
               <button
                 type="submit"
                 className="btn job-common-btn"
-                style={{ marginTop: "35px" }}
                 disabled={isValidate}
               >
                 Submit
               </button>
-            </div>
+            </span>
           </div>
-        </form>
-      </div>
-    </>
+          {/* <div className="col-md-6">
+            <BoldLabel boldName="Assigner" boldFor="Assigner" />
+            <InputField
+              inptype="text"
+              inpid="Assigner"
+              inpname="assigner"
+              inpvalue={user.name}
+              style={{ fontSize: "15px", fontWeight: "500" }}
+              inpchange={() => handleChange("assigneeUserId", user.id)}
+              disabled
+            />
+          </div>
+
+          <div className="col-md-6">
+            <BoldLabel boldName="Team Lead" boldFor="Team Lead" />
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              aria-describedby="validationServer04Feedback"
+              required={true}
+              name="Teamlead"
+              disabled={
+                (assigned.assignType === "AM_ASSIGNED_RECRUITER" && true) ||
+                (user.rollId === 6 && true)
+              }
+              onChange={(e) => {
+                if (user.rollId === 7) {
+                  handleChange("assigneeUserId", JSON.parse(e.target.value));
+                  handleChange("assignType", "AM_ASSIGNED_TL");
+                }
+              }}
+            >
+              <option selected>Open this select menu</option>
+              {teamLeadID.map((item, index) => {
+                return <option value={item.id}>{item.name}</option>;
+              })}
+            </select>
+          </div>
+
+          <div className="col-md-6">
+            <BoldLabel boldName="Recruiter" boldFor="Recruiter" />
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              name="assigneeUserId"
+              required={true}
+              disabled={assigned.assignType === "AM_ASSIGNED_TL" && true}
+              onChange={(e) => {
+                if (user.rollId === 7) {
+                  handleChange("assigneeUserId", JSON.parse(e.target.value));
+                  handleChange("assignType", "AM_ASSIGNED_RECRUITER");
+                } else if (user.rollId === 6) {
+                  handleChange("assigneeUserId", JSON.parse(e.target.value));
+                  handleChange("assignType", "TL_ASSIGNED_FINAL_ASSIGNEE");
+                }
+              }}
+            >
+              <option selected>Please Select Recruiter</option>
+              {dataByRole.map((item, index) => {
+                return <option value={item.id}>{item.name}</option>;
+              })}
+            </select>
+          </div>
+
+          
+
+          <div className="col-md-12 text-center">
+            
+          </div> */}
+        </div>
+      </form>
+    </div>
   );
 };
 

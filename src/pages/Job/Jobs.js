@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import sampledata from "../../utils/jobsampledata/sampleJobs.json";
 import NewHor from "../../components/NewHor";
 import TabName from "../../components/TabName";
 import { Modal } from "react-bootstrap";

@@ -25,7 +25,6 @@ import TableGrid from "../../components/_alljobs_comp/material_new_grid";
 // import loader from "../../lottie/search.json";
 import Loader from "../../components/atoms/Loader";
 import FeedStats from "../../API/Jobs/FeedStats";
-import FeedGrid from "../../components/_alljobs_comp/feed_grid";
 
 
 const FeedUpdateStat = () => {

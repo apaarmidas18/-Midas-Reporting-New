@@ -22,207 +22,11 @@ import JobAssignmentRole from "../../components/molecule/JobAssignmentRole";
 import Lottie from "react-lottie";
 import getAllVmsConfig from "../../API/Jobs/VMS/GetVmsById";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
-// import loader from "../../lottie/search.json";
 import Loader from "../../components/atoms/Loader";
-
-//   const { finalClickInfo, setFinalClickInfo } = props;
-
-//   return (
-//     <div>
-//       <div className="row">
-//         <div className="col-md-12">
-//           <div className="row job-select-row">
-//             <div className="col-md-4 job-select">
-//               <label>Job-ID</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.ProviderJobID}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job-Title</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.Title}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Type</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={
-//                   finalClickInfo.WorkType == 1
-//                     ? "Travel"
-//                     : finalClickInfo.WorkType == "2"
-//                     ? "Perm"
-//                     : finalClickInfo.WorkType == 3
-//                     ? "Per Diem"
-//                     : finalClickInfo.WorkType
-//                 }
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Status</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.StatusString}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Profession</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.Degree}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Speciality</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.JobSpecialty}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Facility</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.Facility}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job City</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.City}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job State</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.State}
-//                 disabled
-//               />
-//             </div>
-
-//             <div className="col-md-4 job-select">
-//               <label>Job On Call Rate</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={`$ ${finalClickInfo.OnCallRate}`}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Bill Rate</label>
-//               <input
-//                 type="number"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={`$ ${finalClickInfo.BillRate}`}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>VMS Name</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.SourceName}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Start Date</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={moment(finalClickInfo["startdate"]).format("MM/DD/YYYY")}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job End Date</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={moment(finalClickInfo.EndDate).format("MM/DD/YYYY")}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Posted On</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={moment(finalClickInfo["created-at"]).format(
-//                   "MM/DD/YYYY"
-//                 )}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Guaranteed Hours</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={finalClickInfo.GuaranteedHours}
-//                 disabled
-//               />
-//             </div>
-//             <div className="col-md-4 job-select">
-//               <label>Job Bonus</label>
-//               <input
-//                 type="text"
-//                 class="form-control"
-//                 id="exampleFormControlInput1"
-//                 value={`$ ${finalClickInfo.Bonus}`}
-//                 disabled
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+import sampleJobs from "../../utils/jobsampledata/sampleJobs";
 
 const AllJobs = () => {
   const user = JSON.parse(localStorage.getItem("User"));
-  var id = [];
   const [errorState, setErrorState] = useState("");
   const [field, setField] = useState([]);
   const [show, setShow] = useState(false);
@@ -234,6 +38,7 @@ const AllJobs = () => {
   const [endDate, setEndDate] = useState(null);
   const [teamLead, setTeamLead] = useState([]);
   const [recruiterData, setRecuiterData] = useState([]);
+
   const [filters, setFilters] = useState({
     clientName: "",
     city: "",
@@ -339,6 +144,7 @@ const AllJobs = () => {
     GetAllTeamLeads({ setTeamLead });
     GetRecruiterById({ setRecuiterData });
     masterApicall();
+    setIsloading(false);
   }, []);
 
   useEffect(() => {
@@ -346,13 +152,11 @@ const AllJobs = () => {
   }, []);
   return (
     <>
-      {/* FILTER TABS */}
       <div
         class={"container-fluid table-container"}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <NewHor tab="JOBS" />
-
         <div
           className={
             isSidebarExpanded
@@ -364,7 +168,6 @@ const AllJobs = () => {
             {isloading ? (
               <>
                 <Loader />
-                {/* <Lottie options={defaultOptions} width={100} height={100} /> */}
               </>
             ) : (
               <>
@@ -378,6 +181,8 @@ const AllJobs = () => {
                     user={user}
                     setSelected={setSelected}
                     selected={selected}
+                    teamLead={teamLead}
+                    recruiterData={recruiterData}
                   />
                 )}
               </>
@@ -390,42 +195,3 @@ const AllJobs = () => {
 };
 
 export default AllJobs;
-// <DataGrid
-//   columns={columns}
-//   rows={allJobs}
-//   initialState={{
-//     pagination: {
-//       paginationModel: { page: 0, pageSize: 10 },
-//     },
-//   }}
-//   getRowId={(row) => row.ProviderJobID}
-//   autoHeight={true}
-//   dense
-//   checkboxSelection={true}
-//   isRowSelectable={(params) => {
-//     const { row } = params;
-//     console.log(row);
-//     return user.rollId == 7 && row.amId > 0
-//       ? false
-//       : user.rollId == 6 && row.tlId >= 0
-//       ? false
-//       : user.rollId == 5 && row.amId >= 0
-//       ? false
-//       : true;
-//   }}
-//   onRowSelectionModelChange={(row) => {
-//     // setSelectedRow(row.selectedRows);
-//     setFinalClickInfo(row);
-//   }}
-//   // onRowClicked={(row) => handleOnCellClick(row)}
-//   // selectableRowDisabled={(row) =>
-//   //   user.rollId == 7 && row.amId >= 0
-//   //     ? true
-//   //     : user.rollId == 6 && row.tlId >= 0
-//   //     ? true
-//   //     : user.rollId == 5 && row.amId >= 0
-//   //     ? true
-//   //     : false
-//   // }
-//   // dense
-// />

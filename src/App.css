@@ -1089,7 +1089,7 @@ input[switch="warning"]:checked + label:before {
   font-weight: 400;
 }
 
-.job-robotix-label {
+.comp-input-div .label {
   font-size: 14px;
   font-weight: 500;
   margin-top: 20px;
@@ -1609,6 +1609,7 @@ input[switch="warning"]:checked + label:before {
   padding: 6px 13px;
   font-size: 15px !important;
   border-radius: 10px;
+  display: flex;
 }
 
 /* .portal-logout {
@@ -1850,48 +1851,10 @@ input[switch="warning"]:checked + label:before {
 }
 .chip span {
   border: 1px dashed whitesmoke;
-  
 }
-/* .input-div {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-h3 {
-  color: #007bff;
-}
-
-.input-parameters {
-  margin-bottom: 15px;
-}
-
-label {
-  font-weight: bold;
-}
-
-
-input {
+.assign-container {
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
 }
-
-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.col-md-6 {
-  margin-bottom: 20px;
-} */
