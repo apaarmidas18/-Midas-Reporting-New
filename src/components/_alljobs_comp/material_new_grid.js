@@ -61,7 +61,6 @@ const TableGrid = (props) => {
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
-
   const columns =
     route == "assigned"
       ? assign_columns
@@ -178,9 +177,10 @@ const TableGrid = (props) => {
         Bill
       </MenuItem>,
       <MenuItem
-        onClick={() =>
-          UnassignJob(row.original, setAssignedbyManager, setIsloading)
-        }
+        onClick={() => {
+         UnassignJob(row.original, setAssignedbyManager, setIsloading);
+          closeMenu();
+        }}
       >
         UnAssign Job
       </MenuItem>,
