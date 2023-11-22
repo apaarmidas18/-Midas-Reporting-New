@@ -50,7 +50,7 @@ const TableGrid = (props) => {
     recruiterData,
     setAssignedbyManager,
     setIsloading,
-    setAllJobs
+    setAllJobs,
   } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
@@ -181,9 +181,9 @@ const TableGrid = (props) => {
         Bill
       </MenuItem>,
       <MenuItem
-        onClick={() => {
-          UnassignJob(row.original, setAssignedbyManager, setIsloading);
-        }}
+        onClick={() =>
+          UnassignJob(row.original, setAssignedbyManager, setIsloading)
+        }
       >
         UnAssign Job
       </MenuItem>,
