@@ -3,8 +3,7 @@ import axios from "axios";
 import swal from "sweetalert";
 import GetAllJobs from "./GetAllJobs";
 
-const AssignJobs = (assigned , setAllJobs , setIsloading) => {
-  
+const AssignJobs = (assigned, setAllJobs, setIsloading) => {
   const options = {
     method: "POST",
     url: `${jobshost}jobAssignment/assignJob`,
@@ -23,9 +22,8 @@ const AssignJobs = (assigned , setAllJobs , setIsloading) => {
           title: "Job Assigned Successfully",
           text: `${response.data.status} Job(s) have been successfully assigned`,
           icon: "success",
-        }).then(() =>{
-          GetAllJobs(setAllJobs, setIsloading)
-
+        }).then(() => {
+          GetAllJobs(setAllJobs, setIsloading);
         });
       }
     })
@@ -33,7 +31,6 @@ const AssignJobs = (assigned , setAllJobs , setIsloading) => {
       if (
         error.response.status == 500 ||
         error.response.status == 400 ||
-
         error.response.status == 404 ||
         error.response.status == 403 ||
         error.response.status == 415

@@ -178,10 +178,9 @@ const TableGrid = (props) => {
         Bill
       </MenuItem>,
       <MenuItem
-        onClick={() => {
-          UnassignJob(row.original, setAssignedbyManager, setIsloading);
-          closeMenu();
-        }}
+        onClick={() =>
+          UnassignJob(row.original, setAssignedbyManager, setIsloading)
+        }
       >
         UnAssign Job
       </MenuItem>,
