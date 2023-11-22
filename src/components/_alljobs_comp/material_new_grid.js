@@ -61,10 +61,6 @@ const TableGrid = (props) => {
   var job_columns = useMemo(() => job_table_header, []);
   var feeds_stats = useMemo(() => feeds_table_header, []);
 
-  // var assign_columns = useMemo(() => assign_table_header, []);
-  // var job_columns = useMemo(() => job_table_header, []);
-  // var feeds_stats = useMemo(() => feeds_table_header, []);
-  console.log(data);
   const columns =
     route == "assigned"
       ? assign_columns
@@ -181,9 +177,12 @@ const TableGrid = (props) => {
         Bill
       </MenuItem>,
       <MenuItem
-        onClick={() =>
-          UnassignJob(row.original, setAssignedbyManager, setIsloading)
-        }
+        onClick={() => {
+          route !== "assigned"
+            ? null
+            : UnassignJob(row.original, setAssignedbyManager, setIsloading);
+          closeMenu();
+        }}
       >
         UnAssign Job
       </MenuItem>,
@@ -253,8 +252,10 @@ const TableGrid = (props) => {
       selected: rowSelection[row.id],
       sx: {
         cursor: row.original.isAssigned === true ? "inherit" : "pointer",
-        backgroundColor:
-          row.original.isAssigned === true ? "#c3c3c3" : "inherit",
+        backgroundColor: row.original.isAssigned === true ? "#eee" : "inherit",
+        "&:hover": {
+          color: "red",
+        },
       },
     }),
 

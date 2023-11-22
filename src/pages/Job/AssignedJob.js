@@ -15,6 +15,7 @@ import GetAllUsers from "../../API/User/GetAllUsers";
 import assignee_stat from "../../utils/Jobs/assignee_stat";
 import TableGrid from "../../components/_alljobs_comp/material_new_grid";
 import ByManager from "./AssignedAPI/ByManager";
+import Loader from "../../components/atoms/Loader";
 
 const AssignedJob = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -29,27 +30,6 @@ const AssignedJob = () => {
   const { isSidebarExpanded } = useContext(Sidebar_Context);
   const loopData = [];
 
-  const customStyles = {
-    rows: {
-      style: {
-        width: "100px",
-        fontSize: "13px",
-      },
-    },
-    headCells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-      },
-    },
-    cells: {
-      style: {
-        width: "1px",
-        fontSize: "13px",
-        borderBottom: "1px solid #dedede",
-      },
-    },
-  };
   const columns = [
     {
       id: 1,
@@ -356,7 +336,7 @@ const AssignedJob = () => {
             return (name2 = ite.name);
           });
       }
-
+      console.log("loopcalled");
       assigned_manager.push({
         ...i,
         assignee: name1,
@@ -418,16 +398,22 @@ const AssignedJob = () => {
             </div>
           ) : null}
 
-          {user.rollId == 7 ? (
-            <TableGrid
-              data={assigned_manager}
-              user={user}
-              columnsss={columns}
-              route={"assigned"}
-              userData={data_user}
-              setAssignedbyManager={setAssignedbyManager}
-              setIsloading={setIsloading}
-            />
+          {user.rollId === 7 ? (
+            <>
+              {isloading === true ? (
+                <Loader />
+              ) : (
+                <TableGrid
+                  data={assigned_manager}
+                  user={user}
+                  columnsss={columns}
+                  route={"assigned"}
+                  userData={data_user}
+                  setAssignedbyManager={setAssignedbyManager}
+                  setIsloading={setIsloading}
+                />
+              )}
+            </>
           ) : user.rollId == 6 ? (
             <>
               {active === "tab1" ? (

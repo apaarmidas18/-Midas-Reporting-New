@@ -238,7 +238,6 @@ export const Router = () => {
         { path: "jobs", element: <AllJobs /> },
         { path: "all-jobs", element: <Jobs/> },
         { path: "all-jobs-feeds", element: <AllJobsFeeds/> },
-
         { path: "active-candidates", element: <ActiveCandidates /> },
         { path: "assigned-job", element: <AssignedJob /> },
         { path: "booked-candidates", element: <Booked /> },
