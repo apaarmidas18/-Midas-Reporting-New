@@ -417,6 +417,8 @@ const AssignedJob = () => {
               columnsss={columns}
               route={"assigned"}
               userData={data_user}
+              setAssignedbyManager={setAssignedbyManager}
+              setIsloading={setIsloading}
             />
           ) : user.rollId == 6 ? (
             <>
@@ -428,6 +430,8 @@ const AssignedJob = () => {
                   route={"assigned"}
                   userData={data_user}
                   disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+                  setAssignedbyManager={setAssignedbyManager}
+                  setIsloading={setIsloading}
                 />
               ) : active === "tab2" ? (
                 <TableGrid
@@ -436,6 +440,8 @@ const AssignedJob = () => {
                   columnsss={columns}
                   route={"assigned"}
                   userData={data_user}
+                  setAssignedbyManager={setAssignedbyManager}
+                  setIsloading={setIsloading}
                 />
               ) : null}
             </>
@@ -447,6 +453,8 @@ const AssignedJob = () => {
               route={"assigned"}
               userData={data_user}
               disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+              setAssignedbyManager={setAssignedbyManager}
+              setIsloading={setIsloading}
             />
           ) : null}
         </div>

@@ -2,10 +2,11 @@ import React from "react";
 import { jobshost } from "../../static";
 import axios from "axios";
 import swal from "sweetalert";
+import ByManager from "../../pages/Job/AssignedAPI/ByManager";
 
-const UnassignJob = (jobsdata) => {
+const UnassignJob = (jobsdata, setAssignedbyManager, setIsloading) => {
   const user = JSON.parse(localStorage.getItem("User"));
- 
+
   const options = {
     method: "POST",
     url: `${jobshost}jobAssignment/unAssignManager`,
@@ -23,14 +24,14 @@ const UnassignJob = (jobsdata) => {
   axios
     .request(options)
     .then(function (response) {
-      console.log("response:", response);
       if (response.data.status == "OK") {
         swal({
           title: "Job Un-assigned Successfully",
           text: `${response.data.status} Job(s) have been successfully un-assigned`,
           icon: "success",
-        }).then(function() {
-
+        }).then(() => {
+          console.log("Ok Button was clicked");
+          ByManager(setAssignedbyManager, setIsloading);
         });
       }
     })
