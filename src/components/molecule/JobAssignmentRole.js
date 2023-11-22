@@ -35,6 +35,8 @@ const JobAssignmentRole = (props) => {
     setTeamLead(tel);
   };
 
+  console.log(assigned);
+
   useEffect(() => handleCheckuser(), []);
 
   return (
@@ -83,7 +85,7 @@ const JobAssignmentRole = (props) => {
                 onChange={(e) => {
                   if (user.rollId === 7) {
                     handleInputChange(
-                      "assignee",
+                      "assigneeUserId",
                       JSON.parse(e.target.value),
                       "AM_ASSIGNED_RECRUITER"
                     );

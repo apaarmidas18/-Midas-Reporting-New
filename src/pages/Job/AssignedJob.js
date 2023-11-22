@@ -343,11 +343,19 @@ const AssignedJob = () => {
           return (name1 = ite.name);
         });
 
-      data_user
-        .filter((item, index) => item.id === i.tlId)
-        .map((ite, index) => {
-          return (name2 = ite.name);
-        });
+      if (i.tlId === 0) {
+        data_user
+          .filter((item, index) => item.id === i.finalUserAssignee)
+          .map((ite, index) => {
+            return (name2 = ite.name);
+          });
+      } else {
+        data_user
+          .filter((item, index) => item.id === i.tlId)
+          .map((ite, index) => {
+            return (name2 = ite.name);
+          });
+      }
 
       assigned_manager.push({
         ...i,

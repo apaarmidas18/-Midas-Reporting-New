@@ -30,7 +30,6 @@ const UnassignJob = (jobsdata, setAssignedbyManager, setIsloading) => {
           text: `${response.data.status} Job(s) have been successfully un-assigned`,
           icon: "success",
         }).then(() => {
-          console.log("Ok Button was clicked");
           ByManager(setAssignedbyManager, setIsloading);
         });
       }
