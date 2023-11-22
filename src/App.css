@@ -1805,11 +1805,12 @@ input[switch="warning"]:checked + label:before {
 .calculator-row {
   border: 0.5px solid #d5d5d5;
   border-radius: 4px;
-  padding: 30px;
+  padding: 20px;
+  gap: 20px;
 }
-.input-div {
+/* .input-div {
   border-right: 0.5px solid #d5d5d5;
-}
+} */
 
 .calculator-row {
   margin-top: 20px;
@@ -1853,11 +1854,43 @@ input[switch="warning"]:checked + label:before {
   color: #fff;
 }
 .chip span {
-  border: 1px dashed whitesmoke;
+  border: 1px dashed whitesmoke; 
 }
-.assign-container {
-  justify-content: space-around;
-  display: flex;
-  align-items: center;
-  width: 100%;
+
+.bill-table td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.bill-table td{
+  background-color: #fff;
+}
+
+.bill-table tr td:first-child {
+  width: 200px;
+}
+
+.table-heading{
+  padding: 0;
+    margin: 0;
+    background: #0064ff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.table-heading h3{
+  font-size: 17px;
+  color: #fff;
+  padding: 5px 0px;
+  font-weight: 600;
+}
+.input-div{
+  background-color: #fff;
+  border-radius: 8px;
+}
+.output-table td {
+  padding: 11px 10px;
+}
+.label_display {
+  display: none;
 }

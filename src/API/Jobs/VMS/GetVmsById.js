@@ -18,7 +18,6 @@ const getAllVmsConfig = async (setVMS, setVMsDetails) => {
     (item, index) => item.accountManager === parsedData.id
   );
 
-  setVMS(resp);
 };
 
 export default getAllVmsConfig;

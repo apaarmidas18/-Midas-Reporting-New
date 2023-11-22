@@ -1,8 +1,9 @@
 import { host, jobshost } from "../../static";
 import axios from "axios";
 import swal from "sweetalert";
+import GetAllJobs from "./GetAllJobs";
 
-const AssignJobs = (assigned) => {
+const AssignJobs = (assigned , setAllJobs , setIsloading) => {
   
   const options = {
     method: "POST",
@@ -18,11 +19,13 @@ const AssignJobs = (assigned) => {
     .request(options)
     .then(function (response) {
       if (response.status == 201) {
-        window.location.reload()
         swal({
           title: "Job Assigned Successfully",
           text: `${response.data.status} Job(s) have been successfully assigned`,
           icon: "success",
+        }).then(() =>{
+          GetAllJobs(setAllJobs, setIsloading)
+
         });
       }
     })

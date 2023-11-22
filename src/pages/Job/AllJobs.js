@@ -52,10 +52,8 @@ const AllJobs = () => {
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [selectedRow, setSelectedRow] = useState([]);
   const [assignedJobs, setAssignedJobs] = useState([]);
-  const [vms, setVMS] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [dataByRole, setDataByRole] = useState([]);
-  const [vmsDetails, setVMSDetails] = useState([]);
   const [loading, setLoading] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [order, setOrder] = useState("desc");
@@ -128,16 +126,8 @@ const AllJobs = () => {
       return null;
     }
   };
-  // const defaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: loader,
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
   const masterApicall = async () => {
-    await getAllVmsConfig(setVMS, setVMSDetails);
+    await getAllVmsConfig();
     await GetAllJobs(setAllJobs, setIsloading);
   };
   useEffect(() => {
@@ -183,6 +173,8 @@ const AllJobs = () => {
                     selected={selected}
                     teamLead={teamLead}
                     recruiterData={recruiterData}
+                    setAllJobs={setAllJobs}
+                    setIsloading={setIsloading}
                   />
                 )}
               </>

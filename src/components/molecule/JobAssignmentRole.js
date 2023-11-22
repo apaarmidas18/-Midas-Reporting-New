@@ -4,8 +4,9 @@ import AssignJobs from "../../API/Jobs/AssignJobs";
 import GetAllUsers from "../../API/User/GetAllUsers";
 
 const JobAssignmentRole = (props) => {
-  const { finalClickInfo, teamLead, recruiterData } = props;
+  const { finalClickInfo, teamLead, recruiterData , setAllJobs, setIsloading } = props;
   const user = JSON.parse(localStorage.getItem("User"));
+  const [refreshTable, setRefreshTable] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
   const [teamLeadID, setTeamLeadID] = useState([]);
   const [recruiter, setRecruiter] = useState([]);
@@ -26,7 +27,7 @@ const JobAssignmentRole = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    AssignJobs(assigned);
+    AssignJobs(assigned , setAllJobs, setIsloading);
     e.preventDefault();
   };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { jobshost } from "../../../static";
 
-const GetAllAssignedVMS = ({ setAssignedVMS, setLoading }) => {
+const GetAllAssignedVMS = (setAssignedVMS, setLoading) => {
   const options = {
     method: "GET",
   };

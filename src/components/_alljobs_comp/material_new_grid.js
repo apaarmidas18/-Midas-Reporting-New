@@ -50,6 +50,7 @@ const TableGrid = (props) => {
     recruiterData,
     setAssignedbyManager,
     setIsloading,
+    setAllJobs
   } = props;
   var rowsSelected = [];
   const [rowSelection, setRowSelection] = useState({});
@@ -159,6 +160,8 @@ const TableGrid = (props) => {
               selected={selected}
               teamLead={teamLead}
               recruiterData={recruiterData}
+              setAllJobs={setAllJobs}
+              setIsloading={setIsloading}
             />
           }
           jobid={0}

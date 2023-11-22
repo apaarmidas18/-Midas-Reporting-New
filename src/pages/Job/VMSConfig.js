@@ -67,10 +67,10 @@ const VMSConfig = () => {
       managerName: Yup.string().required("Account Manager is Required"),
     }),
     onSubmit: (values) => {
-      AssignedVMS(values, vmsName);
+      AssignedVMS(values, vmsName, setAssignedVMS, setLoading);
     },
   });
-  console.log(vmsName);
+
   //Row Styling ********************************************************************
   var rows = [];
   for (let index = 0; index < assignedVMS.length; index++) {
@@ -87,6 +87,7 @@ const VMSConfig = () => {
       accountManager: name,
     });
   }
+
   const columns = [
     {
       id: 1,
@@ -120,15 +121,15 @@ const VMSConfig = () => {
   ];
 
   const handleButtonDelete = (row) => {
-    DeleteVMS(row.id);
+    DeleteVMS(row.id ,setAssignedVMS, setLoading );
     console.log("Button clicked for row:", row);
   };
 
   useEffect(() => {
     GetManagerById(setManager, setLoading, 7);
-    GetAllAssignedVMS({ setAssignedVMS, setLoading });
+    GetAllAssignedVMS( setAssignedVMS, setLoading );
   }, []);
-  console.log(vmsArray);
+
   return (
     <>
       <div
@@ -211,7 +212,6 @@ const VMSConfig = () => {
                 <div className="col-md-2 mt-3">
                   <button
                     type="submit"
-                    onClick={() => assignedVMS()}
                     className="btn job-common-btn"
                     disabled={vmsName.length === 0 ? true : false}
                   >
