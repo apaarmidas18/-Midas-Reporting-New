@@ -21,18 +21,16 @@ const AssignedVMS = (values, vmsName, setAssignedVMS, setLoading) => {
             title: "Assigned Successfully",
             text: response.message,
             icon: "success",
-          }).then(() =>{
-            GetAllAssignedVMS( setAssignedVMS, setLoading );
+          }).then(() => {
+            GetAllAssignedVMS(setAssignedVMS, setLoading);
           });
-        }
-        else if (response.data.errorCode == 100) {
+        } else if (response.data.errorCode == 100) {
           swal({
             title: "Submission Error",
             text: response.message,
             icon: "error",
-          })
-        }
-        else {
+          });
+        } else {
           swal({
             title: "Submission Error.",
             text: response.message,
