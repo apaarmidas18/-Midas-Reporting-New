@@ -11,10 +11,18 @@ const InputField = (props) => {
     disabled,
     inpstyle,
     inpname,
+    boldStyle,
+    label,
+    boldFor,
+    style,
+    max
   } = props;
 
   return (
-    <>
+    <div className={style ? style : "col-md-4"}>
+      <label className={boldStyle ?  boldStyle : "label"} for={boldFor} >
+        {label}
+      </label>
       <input
         type={inptype}
         class="form-control"
@@ -27,8 +35,9 @@ const InputField = (props) => {
         controlId={inpcontrol}
         disabled={disabled}
         style={inpstyle}
+        max={max}
       />
-    </>
+    </div>
   );
 };
 

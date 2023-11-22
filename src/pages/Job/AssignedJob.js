@@ -5,7 +5,6 @@ import moment from "moment";
 import { HiOutlineDownload } from "react-icons/hi";
 import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx/xlsx.mjs";
-import sampledata from "../../utils/jobsampledata/sampleJobs.json";
 import GetAssignedJobs from "../../API/Jobs/GetAssignedJobs";
 import { useContext } from "react";
 import { Sidebar_Context } from "../../components/hooks/ContextSidebar";
@@ -358,9 +357,6 @@ const AssignedJob = () => {
     }
   }
 
-  console.log(assignJobdetails);
-  console.log(assigned_manager);
-
   return (
     <>
       <div
@@ -421,6 +417,8 @@ const AssignedJob = () => {
               columnsss={columns}
               route={"assigned"}
               userData={data_user}
+              setAssignedbyManager={setAssignedbyManager}
+              setIsloading={setIsloading}
             />
           ) : user.rollId == 6 ? (
             <>
@@ -432,6 +430,8 @@ const AssignedJob = () => {
                   route={"assigned"}
                   userData={data_user}
                   disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+                  setAssignedbyManager={setAssignedbyManager}
+                  setIsloading={setIsloading}
                 />
               ) : active === "tab2" ? (
                 <TableGrid
@@ -440,6 +440,8 @@ const AssignedJob = () => {
                   columnsss={columns}
                   route={"assigned"}
                   userData={data_user}
+                  setAssignedbyManager={setAssignedbyManager}
+                  setIsloading={setIsloading}
                 />
               ) : null}
             </>
@@ -451,6 +453,8 @@ const AssignedJob = () => {
               route={"assigned"}
               userData={data_user}
               disabled_assigned={"TL_ASSIGNED_RECRUITER"}
+              setAssignedbyManager={setAssignedbyManager}
+              setIsloading={setIsloading}
             />
           ) : null}
         </div>

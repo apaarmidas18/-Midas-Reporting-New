@@ -16,7 +16,7 @@ export default [
     fontlogo: "fa-solid fa-chart-line",
   },
   {
-    tabname: "Active",
+    tabname: "Active", 
     tabroute: "active-candidates",
     fontlogo: "fa-solid fa-fire",
   },

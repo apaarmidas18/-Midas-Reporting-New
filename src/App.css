@@ -1089,7 +1089,7 @@ input[switch="warning"]:checked + label:before {
   font-weight: 400;
 }
 
-.job-robotix-label {
+.comp-input-div .label {
   font-size: 14px;
   font-weight: 500;
   margin-top: 20px;
@@ -1598,10 +1598,12 @@ input[switch="warning"]:checked + label:before {
   max-height: 300px;
   overflow: scroll;
 }
+
 .job-common-btn {
   background: #0033c4 !important;
   color: white !important;
   font-weight: 500 !important;
+  border-radius: 10px !important;
 }
 
 .job-id-span {
@@ -1609,6 +1611,8 @@ input[switch="warning"]:checked + label:before {
   padding: 6px 13px;
   font-size: 15px !important;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* .portal-logout {
@@ -1886,4 +1890,7 @@ input[switch="warning"]:checked + label:before {
 }
 .output-table td {
   padding: 11px 10px;
+}
+.label_display {
+  display: none;
 }

@@ -37,7 +37,7 @@ const BillCalculate = ({ values, onHide, show }) => {
       a.click();
     });
   };
-
+  
   console.log("mealRate:", lodgingRate);
 
   useEffect(() => {
@@ -171,9 +171,11 @@ const BillCalculate = ({ values, onHide, show }) => {
                         <td>
                           
                           <InputField
+                          boldStyle="label_display"
                             inptype="number"
                             inpid="bill"
                             inpname="billRate"
+                            style="col-md-12"
                             inpvalue={
                               currentData !== ""
                                 ? currentData.BillRate
@@ -181,6 +183,7 @@ const BillCalculate = ({ values, onHide, show }) => {
                             }
                             inpcontrol
                             inpchange={(e) => handleChange("BillRate", e)}
+                            max = "5"
                           />
                         </td>
                       </tr>
@@ -188,9 +191,11 @@ const BillCalculate = ({ values, onHide, show }) => {
                         <td>Guaranteed Hrs</td>
                         <td>
                           <InputField
+                          boldStyle="label_display"
                             inptype="text"
                             inpid="guarHrs"
                             inpname="guarHrs"
+                            style="col-md-12"
                             inpvalue={
                               currentData !== ""
                                 ? currentData.GuaranteedHours
@@ -208,6 +213,8 @@ const BillCalculate = ({ values, onHide, show }) => {
                         <td>
                           
                           <InputField
+                          boldStyle="label_display"
+                           style="col-md-12"
                             inptype="text"
                             inpid="city"
                             inpname="city"
@@ -220,6 +227,8 @@ const BillCalculate = ({ values, onHide, show }) => {
                         <td>State</td>
                         <td>
                           <InputField
+                          boldStyle="label_display"
+                           style="col-md-12"
                             inptype="text"
                             inpid="state"
                             inpname="state"
@@ -232,6 +241,8 @@ const BillCalculate = ({ values, onHide, show }) => {
                         <td>Job Type</td>
                         <td>
                           <InputField
+                          boldStyle="label_display"
+                           style="col-md-12"
                             inptype="text"
                             inpid="jobType"
                             inpname="jobType"
